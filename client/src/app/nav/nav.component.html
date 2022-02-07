@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
-   <a class="navbar-brand" href="#"><img class="navlogo" src="https://localhost:4200/assets/Mauripreneur-logos_white.png"></a>
+   <a class="navbar-brand" href="#"><img id="navlogo" src="https://localhost:4200/assets/Mauripreneur-logos_white.png"></a>
    <button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
    aria-controls="collapseExample">
      <span class="navbar-toggler-icon"></span>
@@ -20,10 +20,52 @@
       </ul>
      </div>    
      <div class="container">
-         <form class="d-flex">
-             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-             <button class="btn btn-outline-success" type="submit">Search</button>
-           </form>
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <img src="https://localhost:4200/assets/mauri_bleu.png" style="height:35%;width:35%;" alt="">
+        </div>
+        <div class="modal-body">
+
+          <div class="container1">
+            <div class="screen">
+              <div class="screen__content">
+                <form class="login">
+                  <div class="login__field">
+                    <i class="login__icon fas fa-user"></i>
+                    <input type="text" class="login__input" placeholder="User name / Email">
+                  </div>
+                  <div class="login__field">
+                    <i class="login__icon fas fa-lock"></i>
+                    <input type="password" class="login__input" placeholder="Password">
+                  </div>
+                  <button class="button login__submit">
+                    <span class="button__text">Log In Now</span>
+                    <i class="button__icon fas fa-chevron-right"></i>
+                  </button>				
+                </form>
+                <div class="social-login">
+                  <h3>log in via</h3>
+                  <div class="social-icons">
+                    <a href="#" class="social-login__icon fab fa-instagram"></a>
+                    <a href="#" class="social-login__icon fab fa-facebook"></a>
+                    <a href="#" class="social-login__icon fab fa-twitter"></a>
+                  </div>
+                </div>
+              </div>
+              <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>		
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+              </div>		
+            </div>
+          </div>
+
+        </div>
+       
+      </ng-template>      
+      <button class="btn btn-outline-info" (click)="open(content)">Login</button>   
+    
      </div>        
    </div>
  </div>
