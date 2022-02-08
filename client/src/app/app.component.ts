@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'The Dating App';
+  title = 'Mauripreneur';
   users: any;
 
 
@@ -31,6 +31,9 @@ export class AppComponent implements OnInit {
     this.http.get('https://localhost:5001/api/user').subscribe(response => {
       //allocating the resposne to users
        this.users = response;
+
+       
+
     },
     //catching the error and displaying it in console
     error =>{

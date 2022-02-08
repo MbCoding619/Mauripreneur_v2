@@ -3,13 +3,28 @@
 
 #navlogo{
 
-    height:40% !important;  
+    height:25% !important;  
     width:100px !important;
-    border-radius:100% !important;
+    
+}
+
+#navbar{
+	background: linear-gradient(90deg, #5D54A4,#7C78B8, #e8702a) !important;	
+	
+}
+/**/
+.hm-gradient {
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+.navbar .dropdown-menu a:hover {
+    color: #616161 !important;
+}
+.darken-grey-text {
+    color: #2E2E2E;
 }
 
 
-
+/**/
 
 .container1 {
 	display: flex;
@@ -183,5 +198,5 @@
 .modal-header{
     background: linear-gradient(90deg, #fcd6a7, #e8702a);	
     display: flex;
-justify-content: center;
+	justify-content: center;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { AccountsService } from '../_services/accounts.service';
 
 
 @Component({
@@ -10,8 +11,19 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class NavComponent implements OnInit {
   public isCollapsed = false;
   closeResult ='';
-
+  model : any ={};
+  loggedIn: boolean;
   
+  
+  
+  constructor(private modalService : NgbModal,
+    private accountService: AccountsService){};
+
+
+  ngOnInit() : void {
+
+  }
+
   private getDismissReason(reason: any) : string {
     if(reason === ModalDismissReasons.ESC){
       return 'by pressing ESC';
@@ -22,9 +34,6 @@ export class NavComponent implements OnInit {
     }
   }
 
-  
-  constructor(private modalService : NgbModal){};
-
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -33,11 +42,20 @@ export class NavComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
 
+  login(){
+    this.accountService.login(this.model).subscribe(response =>{
+      console.log(response);
+      this.loggedIn = true;
+    },error =>{
+      console.log(error);
+    })
   }
 
-
+  logout(){
+    this.loggedIn = false;
+    
+  }
   
 
 }
