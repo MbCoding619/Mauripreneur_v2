@@ -13,6 +13,8 @@ export class NavComponent implements OnInit {
   closeResult ='';
   model : any ={};
   loggedIn: boolean;
+  userWelcome ='';
+  userInform: any;
   
   
   
@@ -21,7 +23,7 @@ export class NavComponent implements OnInit {
 
 
   ngOnInit() : void {
-
+    this.getCurrentUser();
   }
 
   private getDismissReason(reason: any) : string {
@@ -53,9 +55,22 @@ export class NavComponent implements OnInit {
   }
 
   logout(){
+    this.accountService.logout();
     this.loggedIn = false;
     
   }
   
+  getCurrentUser(){
+    this.accountService.currentUser$.subscribe(user =>{
+      //double !! makes the object a boolean 
+      //Saying if Null so its false. but if not null its true.
+      this.loggedIn = !!user;
+      this.userInform = JSON.parse(localStorage.getItem('user'));
+      this.userWelcome = this.userInform.username;
+      
+    },error =>{
+      console.log(error);
+    })
+  }
 
 }

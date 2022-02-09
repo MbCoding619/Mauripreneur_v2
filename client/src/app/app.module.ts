@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './carousel/carousel.component';
 import { FormsModule } from '@angular/forms';
 import { AccountComponent } from './_services/account/account.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
 
@@ -18,7 +19,7 @@ import { AccountComponent } from './_services/account/account.component';
     AppComponent,
     NavComponent,
     CarouselComponent,
-    AccountComponent
+    AccountComponent    
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ import { AccountComponent } from './_services/account/account.component';
     HttpClientModule,
     BrowserAnimationsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

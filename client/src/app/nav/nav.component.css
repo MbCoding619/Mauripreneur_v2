@@ -8,10 +8,22 @@
     
 }
 
+#fixed-right{
+	position:fixed !important;
+    position: absolute; /*ie6 */
+    bottom: 0;
+}
+
 #navbar{
 	background: linear-gradient(90deg, #5D54A4,#7C78B8, #e8702a) !important;	
 	
 }
+
+.dropdown-toggle, .dropdown-item{
+	cursor: pointer;
+}
+
+
 /**/
 .hm-gradient {
     background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
