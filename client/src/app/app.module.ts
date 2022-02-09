@@ -11,6 +11,11 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { FormsModule } from '@angular/forms';
 import { AccountComponent } from './_services/account/account.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HomeComponent } from './home/home.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ReactiveFormsModule} from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
+
 
 
 
@@ -19,7 +24,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     AppComponent,
     NavComponent,
     CarouselComponent,
-    AccountComponent    
+    AccountComponent,
+    HomeComponent,
+    RegisterComponent    
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    MatStepperModule,
+    ReactiveFormsModule  
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
