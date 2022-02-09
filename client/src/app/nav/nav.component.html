@@ -5,20 +5,19 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExample04" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-    <ul class="navbar-nav mr-auto" *ngIf="loggedIn">
+    <!---Using the Async pipe function to see if currentUser is loggedIn // Note that when making the account service public
+    we can access it directly in the template-->
+    <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$| async">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="logout()">Logout</a>
-      </li>     
+      </li>           
     </ul>
 
-    <div class="dropdown" *ngIf="loggedIn" dropdown style="margin:1em 2em;">
-      <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{userWelcome}}</a>
+    <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown style="margin:1em 2em;">
+      <a class="dropdown-toggle text-light" dropdownToggle>Welcome User</a>
       <div class="dropdown-menu" *dropdownMenu>
         <a class="dropdown-item">Edit Profile</a>
         <div class="dropdown-divider"></div>
@@ -28,7 +27,7 @@
     <div class="fixed-right">
       <form class="form-inline my-2 my-md-0">
         <input class="form-control" type="text" placeholder="Search">
-        <a class="nav-link " href="#"><button class="btn btn-outline-info" *ngIf="!loggedIn" (click)="open(content)">Login</button></a>
+        <a class="nav-link " href="#"><button class="btn btn-outline-info" *ngIf="(accountService.currentUser$ | async) === null" (click)="open(content)">Login</button></a>
       </form>
     </div>
     

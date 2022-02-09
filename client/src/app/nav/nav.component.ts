@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { User } from '../_models/user';
 import { AccountsService } from '../_services/accounts.service';
 
 
@@ -12,18 +14,21 @@ export class NavComponent implements OnInit {
   public isCollapsed = false;
   closeResult ='';
   model : any ={};
-  loggedIn: boolean;
+  //instead of initialising the Current user Observable and then calling the account service.
+  //We just have to make the constructor for AccountService public and access it directly in the template.
+  //currentUser$ : Observable<User>;
   userWelcome ='';
   userInform: any;
+  modalReference: any;
   
   
   
   constructor(private modalService : NgbModal,
-    private accountService: AccountsService){};
+    public accountService: AccountsService){};
 
 
   ngOnInit() : void {
-    this.getCurrentUser();
+    
   }
 
   private getDismissReason(reason: any) : string {
@@ -37,7 +42,7 @@ export class NavComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalReference = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -47,8 +52,7 @@ export class NavComponent implements OnInit {
 
   login(){
     this.accountService.login(this.model).subscribe(response =>{
-      console.log(response);
-      this.loggedIn = true;
+      console.log(response);                
     },error =>{
       console.log(error);
     })
@@ -56,21 +60,21 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
-    this.loggedIn = false;
+    
     
   }
   
-  getCurrentUser(){
-    this.accountService.currentUser$.subscribe(user =>{
-      //double !! makes the object a boolean 
-      //Saying if Null so its false. but if not null its true.
-      this.loggedIn = !!user;
-      this.userInform = JSON.parse(localStorage.getItem('user'));
-      this.userWelcome = this.userInform.username;
+  // getCurrentUser(){
+  //   this.accountService.currentUser$.subscribe(user =>{
+  //     //double !! makes the object a boolean 
+  //     //Saying if Null so its false. but if not null its true.
+  //     this.loggedIn = !!user;
+  //     this.userInform = JSON.parse(localStorage.getItem('user'));
+  //     this.userWelcome = this.userInform.username;
       
-    },error =>{
-      console.log(error);
-    })
-  }
+  //   },error =>{
+  //     console.log(error);
+  //   })
+  // }
 
 }
