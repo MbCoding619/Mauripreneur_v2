@@ -7,7 +7,10 @@
             <button class="btn btn-primary btn-lg ">Learn More</button>
         </div>
     </div>
-    <div *ngIf="registerMode" class="container" id="registerContainer">        
-         <app-register [usersFromHomeComponent]="users"></app-register>
+    <div *ngIf="registerMode" class="container" id="registerContainer"> 
+        <!---When sending data from child component use []
+        when emitting data ()
+        -->       
+         <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
 </div>

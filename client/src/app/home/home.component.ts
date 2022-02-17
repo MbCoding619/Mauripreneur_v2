@@ -9,23 +9,30 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   registerMode = false;
-  users: any;  
+ // users: any;  
   
 
-  constructor(private http : HttpClient){ }
+  constructor(){ }
 
   ngOnInit(): void {
-    this.getUsers();
+    //this.getUsers();
   }
 
   registerToggle(){
     this.registerMode = !this.registerMode;
   }
 
-  getUsers(){
-    this.http.get('https://localhost:5001/api/user').subscribe(users =>{
-      this.users =users;
-    })
+  //these codes were used in parallel to @Input Annotation in Register component
+  // To understand how Parent child data communication works.
+  // getUsers(){
+  //   this.http.get('https://localhost:5001/api/user').subscribe(users =>{
+  //     this.users =users;
+  //   })
+  // }
+
+  cancelRegisterMode(event: boolean){
+
+    this.registerMode = event;
   }
 
 }

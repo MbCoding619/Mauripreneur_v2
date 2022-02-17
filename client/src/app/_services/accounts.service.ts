@@ -36,6 +36,23 @@ export class AccountsService {
     );
   }
 
+  register(model : any){
+
+    return this.http.post(this.baseUrl+'account/register',model).pipe(
+
+      map((user : User) =>{
+        if(user){
+          localStorage.setItem('user',JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    )
+  }
+
+
+
+
+
   // Setting the data of the current user to the Observable object
   //This service function is re used in the App component module with a function with same name.
   setCurrentUser(user: User){
