@@ -1,10 +1,83 @@
 
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+ <div class="container">
+  <form registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+      <h2 id="logoContain"><img id="formLogo" src="https://localhost:4200/assets/mauri_bleu.png" alt=""></h2>
+      <h2 class="text-center">Join Our Network</h2>
+  <div class="row jumbotron">
+      <div class="col-sm-6 form-group">
+          <label for="name-f">First Name</label>
+          <input type="text" class="form-control" name="fname" id="name-f" [(ngModel)]="model.RepresentName" placeholder="Enter your first name." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="name-l">Last name</label>
+          <input type="text" class="form-control" name="lname" id="name-l" [(ngModel)]="model.RepresentLName" placeholder="Enter your last name." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" id="email" [(ngModel)]="model.Email" placeholder="Enter your email." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="address-1">Address Line</label>
+          <input type="address" class="form-control" name="address" id="address-1" [(ngModel)]="model.Address" placeholder="Locality/House/Street no." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="address-2">Company Name</label>
+          <input type="address" class="form-control" name="compName" id="compName" [(ngModel)]="model.CompName" placeholder="Trade Name/Company Name" required>
+      </div>    
+    
+      <div class="col-sm-6 form-group">
+          <label for="Date">Username</label>
+          <input type="username" class="form-control" name="username" id="username" [(ngModel)]="model.username" placeholder="Username" required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="sex">Gender</label>
+          <select id="sex" class="form-control browser-default custom-select">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="unspesified">Unspecified</option>
+      </select>
+      </div>     
+      <div class="col-sm-6 form-group">
+          <label for="tel">Phone</label>
+          <input type="tel" name="phone" class="form-control" id="tel" [(ngModel)]="model.Phone" placeholder="Enter Your Contact Number." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="pass">Password</label>
+          <input type="Password" name="password" class="form-control" id="pass" [(ngModel)]="model.Password" placeholder="Enter your password." required>
+      </div>
+      <div class="col-sm-6 form-group">
+          <label for="pass2">Confirm Password</label>
+          <input type="Password" name="cnf-password" class="form-control" id="pass2" placeholder="Re-enter your password." required>
+      </div>
+      <div class="col-sm-12">
+          <input type="checkbox" class="form-check d-inline" id="chb" required><label for="chb" class="form-check-label">&nbsp;I accept all terms and conditions.
+          </label>
+      </div>
+
+      <div class="col-sm-6 form-group" style="display: flex;
+      justify-content: center; margin-top: 4%;">
+         <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+      <div class="col-sm-6 form-group" style="display: flex;
+      justify-content: center; margin-top: 4%">
+        <button class="btn btn-warning" type="button" (click)="cancel()">Cancel</button>
+     </div>
+      
+  </div>
+  </form>
+</div>
+
+
+<!----------------------------------Waaa Enba marser la0 bzn re dresser----------->
+
+
+
+<!-- <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary">Sign Up</h2>
   <hr>
   <div class="form-group">
     <input type="text" name="username" class="form-control" [(ngModel)]="model.username" placeholder="Username">
-  </div>
+  </div> -->
 
   <!-- <div class="form-group">
     <label>Who is your Favourite user?</label>
@@ -15,11 +88,11 @@
     </select>
   </div> -->
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <input type="password" name="password" class="form-control" autocomplete="off" [(ngModel)]="model.password" placeholder="Password">
   </div>
   <div class="form-group text-center">
     <button class="btn btn-success mr-2" type="submit">Register</button>
     <button class="btn btn-success mr-2" (click)="cancel()" type="button">Cancel</button>
   </div>
-</form>
+</form> -->

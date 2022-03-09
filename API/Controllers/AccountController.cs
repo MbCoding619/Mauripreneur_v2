@@ -96,7 +96,7 @@ namespace API.Controllers
 
            public async Task<ActionResult<SmeDTO>> RegisterSme(RegisterSmeDTO registerSmeDto)
         {
-            if(await UserExists(registerSmeDto.Username))
+            if(await SmeUserExists(registerSmeDto.Username))
             {
                 //This will result a bad request status 400
                 return BadRequest("Username is Taken");
@@ -110,7 +110,14 @@ namespace API.Controllers
             {
                 UserName = registerSmeDto.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerSmeDto.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                CompName = registerSmeDto.CompName,
+                Address = registerSmeDto.Address,
+                Email = registerSmeDto.Email,
+                RepresentName = registerSmeDto.RepresentName,
+                RepresentLName = registerSmeDto.RepresentLName,
+                RepresentPhone = registerSmeDto.RepresentPhone 
+                
             };
                 //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
             _context.Sme.Add(sme);

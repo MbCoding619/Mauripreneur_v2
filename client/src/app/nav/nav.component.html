@@ -17,7 +17,7 @@
     </ul>
 
     <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown style="margin:1em 2em;">
-      <a class="dropdown-toggle text-light" dropdownToggle>Welcome User</a>
+      <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{userWelcome}}</a>
       <div class="dropdown-menu" *dropdownMenu>
         <a class="dropdown-item">Edit Profile</a>
         <div class="dropdown-divider"></div>

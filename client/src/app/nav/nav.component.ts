@@ -52,7 +52,10 @@ export class NavComponent implements OnInit {
 
   login(){
     this.accountService.login(this.model).subscribe(response =>{
-      console.log(response);                
+      console.log(response);
+      this.userInform = JSON.parse(localStorage.getItem('user')); // The Variable doesn't persist.
+      this.userWelcome = this.userInform.username;
+                   
     },error =>{
       console.log(error);
     })

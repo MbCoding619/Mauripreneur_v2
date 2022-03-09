@@ -24,6 +24,8 @@ namespace API.Entities
 
         public string RepresentName { get; set; }
 
+        public string RepresentLName { get; set; }
+
         public int RepresentPhone { get; set; }
     }
 }
