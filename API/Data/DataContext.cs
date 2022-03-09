@@ -18,6 +18,8 @@ namespace API.Data
 
         public DbSet<AppUser> Users { get; set; }
 
+        public DbSet<Sme> Sme { get; set; }
+
 
     }
 }
