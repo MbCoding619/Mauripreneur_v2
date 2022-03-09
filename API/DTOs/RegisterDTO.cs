@@ -8,7 +8,7 @@ namespace API.DTOs
 {
     public class RegisterDTO
     {
-        [Required]
+        [Required]        
         public string Username { get; set; }
 
         [Required]

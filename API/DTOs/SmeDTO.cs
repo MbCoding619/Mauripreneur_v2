@@ -7,8 +7,8 @@ namespace API.DTOs
 {
     public class SmeDTO
     {
-        public string Username { get; set; }
+        public int AppUserId { get; set; }
 
-        public string Token { get; set; }
+       // public string Token { get; set; }
     }
 }

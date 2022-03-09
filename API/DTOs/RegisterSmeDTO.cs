@@ -9,11 +9,7 @@ namespace API.DTOs
     public class RegisterSmeDTO
     {
         [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-        
+        public String Username { get; set; }
         [Required]
          public string CompName { get; set; }
 

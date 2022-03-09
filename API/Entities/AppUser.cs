@@ -16,7 +16,8 @@ namespace API.Entities
 
         public byte[] PasswordSalt { get; set; }
 
-       
+       public  Sme Sme { get; set; }
+
     }
     
 }

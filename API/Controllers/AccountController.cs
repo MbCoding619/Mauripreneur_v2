@@ -90,17 +90,24 @@ namespace API.Controllers
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
 
+        private async Task<AppUser>FindUserId(string username){
+
+            return await _context.Users.FindAsync(username);
+           
+            
+        }
 
 
-        [HttpPost("registerSme")]
+               [HttpPost("registerSme")]
 
            public async Task<ActionResult<SmeDTO>> RegisterSme(RegisterSmeDTO registerSmeDto)
         {
-            if(await SmeUserExists(registerSmeDto.Username))
+            if(await UserExists(registerSmeDto.Username))
             {
-                //This will result a bad request status 400
-                return BadRequest("Username is Taken");
-            }
+            
+            //Getting the Id of the AppUser Created for the Username
+             
+            
 
             // Using means when we finish a specific class it will dispose of it
             // As the HMAC class using an IDispose interface. 'Using' ensures that
@@ -108,67 +115,41 @@ namespace API.Controllers
             
             var sme = new Sme
             {
-                UserName = registerSmeDto.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerSmeDto.Password)),
-                PasswordSalt = hmac.Key,
+                
                 CompName = registerSmeDto.CompName,
                 Address = registerSmeDto.Address,
                 Email = registerSmeDto.Email,
                 RepresentName = registerSmeDto.RepresentName,
                 RepresentLName = registerSmeDto.RepresentLName,
-                RepresentPhone = registerSmeDto.RepresentPhone 
+                RepresentPhone = registerSmeDto.RepresentPhone,
+                AppUserId = FindUserId(registerSmeDto.Username).Id                
                 
             };
-                //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
+
+              //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
             _context.Sme.Add(sme);
+               
+            }else{
+
+                //This will result a bad request status 400
+                return BadRequest("Username is Taken or Not Found");
+            }
+
+          
+              
             //This part call the database and saves it to the User table
             await _context.SaveChangesAsync();
 
-            return new SmeDTO
-             {
-                 Username = sme.UserName,
-                 Token = _tokenService.CreateToken(sme)
-             };              
-        }
+            return new SmeDTO{
 
-
-
-
-        [HttpPost("loginSme")]
-
-        public async Task<ActionResult<SmeDTO>> LoginSme(LoginDTO loginDTO)
-        {
-            var sme = await _context.Sme.SingleOrDefaultAsync(x => x.UserName == loginDTO.Username.ToLower());
-
-            if(sme == null)
-
-            {
-                return Unauthorized("Invalid Username");
-            }
-
-            using var hmac = new HMACSHA512(sme.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
-
-            for(int i=0;i< computedHash.Length;i++)
-            {
-                if(computedHash[i] != sme.PasswordHash[i]) return Unauthorized("Invalid Password");
-            }
-            return new SmeDTO
-            {
-                Username = sme.UserName,
-                
-                Token = _tokenService.CreateToken(sme)
+                AppUserId = FindUserId(registerSmeDto.Username).Id
             };
-
+                         
         }
 
-          private async Task<bool>SmeUserExists(string username)
-        {
-            // Returning an await
-            //AnyAsync needs another library ->Microsoft.EntityFrameworkCore;
-            //Use lambda expression to compare UserName to parameter username
-            return await _context.Sme.AnyAsync(x => x.UserName == username.ToLower());
-        }
+        
+
+        
 
     }
 }
