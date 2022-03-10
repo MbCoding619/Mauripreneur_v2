@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountsService } from '../_services/accounts.service';
@@ -24,13 +26,15 @@ export class NavComponent implements OnInit {
   
   
   constructor(private modalService : NgbModal,
-    public accountService: AccountsService){};
+    public accountService: AccountsService,
+    private router: Router,
+    private toastr: ToastrService){};
 
 
   ngOnInit() : void {
     
   }
-
+  // Get reasons why Modal was dismissed
   private getDismissReason(reason: any) : string {
     if(reason === ModalDismissReasons.ESC){
       return 'by pressing ESC';
@@ -53,19 +57,31 @@ export class NavComponent implements OnInit {
   login(){
     this.accountService.login(this.model).subscribe(response =>{
       console.log(response);
-      this.userInform = JSON.parse(localStorage.getItem('user')); // The Variable doesn't persist.
-      this.userWelcome = this.userInform.username;
+      //this.userInform = JSON.parse(localStorage.getItem('user')); // The Variable doesn't persist.
+      //this.userWelcome = this.userInform.username;
+      this.accountService.currentUser$.subscribe( b =>{
+        this.userWelcome = b.username;
+      }) // This above method also does not persist
+     
+      this.modalService.dismissAll({
+        'dismissed': true
+      })
+      this.router.navigateByUrl('/');
+
                    
     },error =>{
       console.log(error);
+      this.toastr.error(error.error);
     })
   }
 
   logout(){
     this.accountService.logout();
-    
+    this.router.navigateByUrl('/');   
     
   }
+
+  
   
   // getCurrentUser(){
   //   this.accountService.currentUser$.subscribe(user =>{

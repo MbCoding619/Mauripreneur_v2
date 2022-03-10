@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
+import { Sme } from '../_models/sme';
 
 
 //this is called an angular service
@@ -17,10 +18,12 @@ export class AccountsService {
   //Its an observables. of type USer from Model interface
   // of size 1
   private currentUserSource = new ReplaySubject<User>(1);
+  private currentSmeSource = new ReplaySubject<Sme>(1);
   //when declaring an observable use '$' at end of name.. its a convention
   //By creating this observable. we can persist the login of a user without using Session
   //Note that the size of this observable helps us in assigning only one user.
   currentUser$ = this.currentUserSource.asObservable();
+  currentSme$ = this.currentSmeSource.asObservable();
 
   constructor(private http: HttpClient ) { }
  
@@ -38,9 +41,9 @@ export class AccountsService {
     );
   }
 
-  register(model : any){
+  registerUser(model : any){
 
-    return this.http.post(this.baseUrl+'account/registerSme',model).pipe(
+    return this.http.post(this.baseUrl+'account/register',model).pipe(
 
       map((user : User) =>{
         if(user){
@@ -50,6 +53,21 @@ export class AccountsService {
         }
       })
     )
+  }
+
+  registerSme(model : any){
+    return this.http.post(this.baseUrl+'account/registerSme',model).pipe(
+
+      map((sme : Sme)=>{
+
+        if(sme){
+          localStorage.setItem('SmeAppId',JSON.stringify(sme));
+          return(sme);
+          this.currentSmeSource.next(sme);          
+        }
+      })
+    )
+
   }
 
 

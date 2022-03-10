@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbar">
-  <a class="navbar-brand" href="#"><img id="navlogo" src="https://localhost:4200/assets/Mauripreneur-logos_white.png" alt=""></a>
+  <a class="navbar-brand" routerLink='/'><img id="navlogo" src="https://localhost:4200/assets/Mauripreneur-logos_white.png" alt=""></a>
   <button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarsExample04" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
     <!---Using the Async pipe function to see if currentUser is loggedIn // Note that when making the account service public
     we can access it directly in the template-->
-    <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$| async">
+    <ul class="navbar-nav mr-auto" *ngIf="(accountService.currentUser$| async) !=null || (accountService.currentSme$ | async) !=null">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -16,7 +16,7 @@
       </li>           
     </ul>
 
-    <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown style="margin:1em 2em;">
+    <div class="dropdown" *ngIf="(accountService.currentUser$| async) !=null || (accountService.currentSme$ | async) !=null" dropdown style="margin:1em 2em;">
       <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{userWelcome}}</a>
       <div class="dropdown-menu" *dropdownMenu>
         <a class="dropdown-item">Edit Profile</a>
@@ -24,11 +24,23 @@
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>
-    <div class="fixed-right">
+    <div class="fixed-right" *ngIf="(accountService.currentUser$ | async) === null ">
       <form class="form-inline my-2 my-md-0">
         <input class="form-control" type="text" placeholder="Search">
-        <a class="nav-link " href="#"><button class="btn btn-outline-info" *ngIf="(accountService.currentUser$ | async) === null" (click)="open(content)">Login</button></a>
+        <a class="nav-link " href="#"><button class="btn btn-outline-info" 
+           (click)="open(content)">Login</button></a>
       </form>
+    </div>
+    <div class="dropdown" *ngIf="(accountService.currentUser$ | async) === null" dropdown style="margin:1em 2em;font-size: medium;">
+      <a class="dropdown-toggle text-light" dropdownToggle>Registration {{userWelcome}}</a>
+      <div class="dropdown-menu" *dropdownMenu>
+        <a class="dropdown-item" routerLink='/Registration/Professional'>Register as a Professional</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item">Register as a Student</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item">Register as an Organisation</a>
+        
+      </div>
     </div>
     
   </div>
@@ -60,7 +72,7 @@
                 class="login__input" 
                 placeholder="Password">
               </div>
-              <!-----LIRE LOR how to dismiss Modal on Submit -->
+              <!-----(DONE)LIRE LOR how to dismiss Modal on Submit -->
               <button class="button login__submit" type="submit" data-dismiss="modal">
                 <span class="button__text">Log In Now</span>
                 <i class="button__icon fas fa-chevron-right"></i>

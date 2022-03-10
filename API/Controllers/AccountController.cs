@@ -136,6 +136,7 @@ namespace API.Controllers
             //This part call the database and saves it to the User table
             await _context.SaveChangesAsync();
 
+            // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
             return new SmeDTO{
 
                 AppUserId = user.AppUserId
@@ -143,6 +144,64 @@ namespace API.Controllers
                          
         }
 
+        [HttpPost("registerProf")]
+
+           public async Task<ActionResult<ProfessionalDTO>> RegisterProf(RegisterProfDTO registerProfDTO)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerProfDTO.Username.ToLower());
+
+            if(await UserExists(registerProfDTO.Username))
+            {
+            // Using means when we finish a specific class it will dispose of it
+            // As the HMAC class using an IDispose interface. 'Using' ensures that
+            using var hmac = new HMACSHA512();
+
+           
+            
+            
+            var professional = new Professional
+            {
+                FName = registerProfDTO.FName,
+                LName = registerProfDTO.LName,
+                IDNum = registerProfDTO.IDNum,
+                Address = registerProfDTO.Address,
+                Phone = registerProfDTO.Phone,
+                Email = registerProfDTO.Email,
+                Qual1 = registerProfDTO.Qual1,
+                Qual2 = registerProfDTO.Qual2,
+                Qual3 = registerProfDTO.Qual3,
+                QualOther = registerProfDTO.QualOther,
+                BriefDesc = registerProfDTO.BriefDesc,
+                Portfolio = registerProfDTO.Portfolio,
+                EmploymentStatus = registerProfDTO.EmploymentStatus,
+                FieldId = registerProfDTO.FieldId,
+                AppUserId = user.AppUserId
+
+            };
+
+              //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
+            _context.Professionals.Add(professional);
+               
+            }else{
+
+                //This will result a bad request status 400
+                return BadRequest("Username is Taken or Not Found");
+            }
+
+          
+              
+            //This part call the database and saves it to the User table
+            await _context.SaveChangesAsync();
+
+            // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
+            return new ProfessionalDTO{
+
+                AppUserId = user.AppUserId
+            };
+                         
+        }
+
+        
 
     }
 }

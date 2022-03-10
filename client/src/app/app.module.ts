@@ -15,6 +15,11 @@ import { HomeComponent } from './home/home.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule} from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { RegisterProfessionalComponent } from './Registration/register-professional/register-professional.component';
+import { ToastrModule } from 'ngx-toastr';
+import { RegistrationSmeComponent } from './Registration/registration-sme/registration-sme.component';
+import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
+import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 
 
 
@@ -26,7 +31,11 @@ import { RegisterComponent } from './register/register.component';
     CarouselComponent,
     AccountComponent,
     HomeComponent,
-    RegisterComponent    
+    RegisterComponent,
+    RegisterProfessionalComponent,
+    RegistrationSmeComponent,
+    RegistrationChoiceComponent,
+    RegistrationStudentComponent    
   ],
   imports: [
     BrowserModule,
@@ -37,7 +46,10 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     BsDropdownModule.forRoot(),
     MatStepperModule,
-    ReactiveFormsModule  
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass:'toast-bottom-right'
+    })  
     
   ],
   providers: [],

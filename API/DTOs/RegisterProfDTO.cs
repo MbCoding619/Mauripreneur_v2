@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using  System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace API.Entities
+namespace API.DTOs
 {
-    public class Professional
+    public class RegisterProfDTO
     {
-        public int Id { get; set; }
+        [Required]
 
+        public string Username { get; set; }
+
+        
         public string FName { get; set; }
 
         public string LName { get; set; }
@@ -22,6 +25,7 @@ namespace API.Entities
 
         public string Email { get; set; }
 
+        
         public string Qual1 { get; set; }
 
         public string Qual2 { get; set; }
@@ -37,15 +41,7 @@ namespace API.Entities
 
         public string EmploymentStatus { get; set; }
 
-        
-        public  AppUser User { get; set; }
-        public int AppUserId { get; set; }
-
         public int FieldId { get; set; }
-
-        public Field Field { get;  set; }
-
-
-
+        
     }
 }

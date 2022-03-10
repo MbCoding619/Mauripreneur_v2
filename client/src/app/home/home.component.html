@@ -1,16 +1,21 @@
-<div class="container mt-5">
+<div *ngIf="((this.accountService.currentUser$ | async) === null)" class="container mt-5">
     <div *ngIf="!registerMode" style="text-align: center;">
-        <h1>Find your match</h1>
+        <img id="headerLogo" src="https://localhost:4200/assets/mauri_bleu.png" alt="">
+        <h1>Join our SME Ecosystem</h1>
         <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempore non dolor laborum harum itaque.</p>
         <div class="text-center">
             <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
             <button class="btn btn-primary btn-lg ">Learn More</button>
         </div>
     </div>
-    <div *ngIf="registerMode" class="container" id="registerContainer"> 
+  
+    <div *ngIf="registerMode"  class="container" id="registerContainer"> 
         <!---When sending data from child component use []
         when emitting data ()
         -->       
-         <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+         <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
+</div>
+<div *ngIf="!registerMode" class="container">
+    <app-carousel></app-carousel>
 </div>

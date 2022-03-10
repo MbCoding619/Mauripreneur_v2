@@ -20,6 +20,8 @@ namespace API.Data
 
         public DbSet<Sme> Sme { get; set; }
 
+        public DbSet<Professional> Professionals { get; set;}
+
 
     }
 }
