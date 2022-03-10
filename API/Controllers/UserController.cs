@@ -7,6 +7,10 @@ using API.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Data;
+using API.DTOs;
+using API.Entities;
+using API.Interfaces;
 
 namespace API.Controllers
 {
@@ -32,7 +36,8 @@ namespace API.Controllers
          return await _context.Users.ToListAsync();
         
    }
-    [Authorize]
+
+    [AllowAnonymous]
     [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser( int id)
         {
@@ -41,6 +46,19 @@ namespace API.Controllers
              
             
         }
+
+    [AllowAnonymous]
+    [HttpGet("Test")]
+
+     public async Task<ActionResult<String>> GetID( TestDTO TestDTO)
+        {
+
+            AppUser user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == TestDTO.test.ToLower());
+             
+             return user.AppUserId.ToString();
+            
+        }
+
 
     }  
 

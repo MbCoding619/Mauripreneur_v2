@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace API.Entities
 {
     public class AppUser
     {
-        public int Id { get; set; }
+
+        
+        
+        public int AppUserId { get; set; }
 
         public string UserName { get; set; }
 
@@ -15,8 +20,10 @@ namespace API.Entities
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
-
-       public  Sme Sme { get; set; }
+        
+        public  Sme Sme { get; set; }
+        
+        public Professional Professional { get; set; }       
 
     }
     

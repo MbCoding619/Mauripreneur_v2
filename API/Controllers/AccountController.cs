@@ -90,28 +90,23 @@ namespace API.Controllers
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
 
-        private async Task<AppUser>FindUserId(string username){
-
-            return await _context.Users.FindAsync(username);
-           
-            
-        }
+                
 
 
-               [HttpPost("registerSme")]
+         [HttpPost("registerSme")]
 
            public async Task<ActionResult<SmeDTO>> RegisterSme(RegisterSmeDTO registerSmeDto)
         {
+            var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerSmeDto.Username.ToLower());
+
             if(await UserExists(registerSmeDto.Username))
             {
-            
-            //Getting the Id of the AppUser Created for the Username
-             
-            
-
             // Using means when we finish a specific class it will dispose of it
             // As the HMAC class using an IDispose interface. 'Using' ensures that
             using var hmac = new HMACSHA512();
+
+           
+            
             
             var sme = new Sme
             {
@@ -122,7 +117,8 @@ namespace API.Controllers
                 RepresentName = registerSmeDto.RepresentName,
                 RepresentLName = registerSmeDto.RepresentLName,
                 RepresentPhone = registerSmeDto.RepresentPhone,
-                AppUserId = FindUserId(registerSmeDto.Username).Id                
+                AppUserId = user.AppUserId
+                               
                 
             };
 
@@ -142,14 +138,11 @@ namespace API.Controllers
 
             return new SmeDTO{
 
-                AppUserId = FindUserId(registerSmeDto.Username).Id
+                AppUserId = user.AppUserId
             };
                          
         }
 
-        
-
-        
 
     }
 }
