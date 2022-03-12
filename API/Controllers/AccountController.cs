@@ -214,7 +214,8 @@ namespace API.Controllers
                 Course_startDate = registerStudDTO.Course_startDate,
                 Course_endDate = registerStudDTO.Course_endDate,
                 briefDescription = registerStudDTO.briefDescription,
-                FieldId = registerStudDTO.FieldId
+                FieldId = registerStudDTO.FieldId,
+                AppUserId = user.AppUserId
             };
 
               //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
@@ -233,6 +234,52 @@ namespace API.Controllers
 
             // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
             return new StudentDTO{
+
+                AppUserId = user.AppUserId
+            };
+                         
+        }
+
+
+        
+        [HttpPost("registerOrg")]
+
+           public async Task<ActionResult<OrganizationDTO>> RegisterOrg(RegisterOrgDTO registerOrgDTO)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerOrgDTO.Username.ToLower());
+
+            if(await UserExists(registerOrgDTO.Username))
+            {
+         
+
+            var organization = new Organization
+            {
+                OrgName = registerOrgDTO.OrgName,
+                Address = registerOrgDTO.Address,
+                Email = registerOrgDTO.Email,
+                Phone = registerOrgDTO.Phone,
+                OrgRepresent_FName = registerOrgDTO.OrgRepresent_FName,
+                OrgRepresent_LName = registerOrgDTO.OrgRepresent_LName,
+                AppUserId = user.AppUserId
+
+            };
+
+              //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
+            _context.Organizations.Add(organization);
+               
+            }else{
+
+                //This will result a bad request status 400
+                return BadRequest("Username is Taken or Not Found");
+            }
+
+          
+              
+            //This part call the database and saves it to the User table
+            await _context.SaveChangesAsync();
+
+            // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
+            return new OrganizationDTO{
 
                 AppUserId = user.AppUserId
             };
