@@ -22,6 +22,15 @@ namespace API.Data
 
         public DbSet<Professional> Professionals { get; set;}
 
+        public DbSet<Field> Fields{ get; set;}
+
+        public DbSet<Student> Students{get; set;}
+
+        public DbSet<Organization> Organizations { get; set; }
+        
+
+        public DbSet<Job> Jobs { get; set; }
+
 
     }
 }

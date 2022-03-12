@@ -28,6 +28,7 @@ namespace API.Entities
         public  AppUser User { get; set; }
         public int AppUserId { get; set; }
 
+        public ICollection<Job> Job { get; set; }
 
 
     }

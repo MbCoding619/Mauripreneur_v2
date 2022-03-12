@@ -25,6 +25,7 @@ export class NavComponent implements OnInit {
   
   
   
+  
   constructor(private modalService : NgbModal,
     public accountService: AccountsService,
     private router: Router,
@@ -32,6 +33,8 @@ export class NavComponent implements OnInit {
 
 
   ngOnInit() : void {
+
+    this.getCurrentUser();
     
   }
   // Get reasons why Modal was dismissed
@@ -77,23 +80,20 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
-    this.router.navigateByUrl('/');   
+    this.router.navigateByUrl('/');  
+    this.userWelcome =''; 
     
   }
 
   
   
-  // getCurrentUser(){
-  //   this.accountService.currentUser$.subscribe(user =>{
-  //     //double !! makes the object a boolean 
-  //     //Saying if Null so its false. but if not null its true.
-  //     this.loggedIn = !!user;
-  //     this.userInform = JSON.parse(localStorage.getItem('user'));
-  //     this.userWelcome = this.userInform.username;
-      
-  //   },error =>{
-  //     console.log(error);
-  //   })
-  // }
+  getCurrentUser(){
+    this.accountService.currentUser$.subscribe(user =>{
+
+      this.userWelcome = user.username;
+    },error =>{
+      console.log(error);
+    })
+  }
 
 }

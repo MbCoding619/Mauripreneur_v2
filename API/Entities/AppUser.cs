@@ -20,10 +20,16 @@ namespace API.Entities
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
+
+        public string AppUserRole { get; set; }
         
         public  Sme Sme { get; set; }
         
-        public Professional Professional { get; set; }       
+        public Professional Professional { get; set; }    
+
+        public Student Student { get; set; }
+
+        public Organization Organization { get; set; }   
 
     }
     

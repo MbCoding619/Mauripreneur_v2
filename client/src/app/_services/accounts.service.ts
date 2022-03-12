@@ -17,7 +17,7 @@ export class AccountsService {
   //A replaySubject is a like a buffer object. 
   //Its an observables. of type USer from Model interface
   // of size 1
-  private currentUserSource = new ReplaySubject<User>(1);
+  private currentUserSource = new ReplaySubject<User>(3);
   private currentSmeSource = new ReplaySubject<Sme>(1);
   //when declaring an observable use '$' at end of name.. its a convention
   //By creating this observable. we can persist the login of a user without using Session
@@ -34,7 +34,7 @@ export class AccountsService {
         const user = response;
         if(user){
           localStorage.setItem('user',JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.currentUserSource.next(user);          
                    
         }
       })

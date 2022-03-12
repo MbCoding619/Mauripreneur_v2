@@ -101,13 +101,8 @@ namespace API.Controllers
 
             if(await UserExists(registerSmeDto.Username))
             {
-            // Using means when we finish a specific class it will dispose of it
-            // As the HMAC class using an IDispose interface. 'Using' ensures that
-            using var hmac = new HMACSHA512();
-
-           
-            
-            
+        
+                        
             var sme = new Sme
             {
                 
@@ -152,13 +147,8 @@ namespace API.Controllers
 
             if(await UserExists(registerProfDTO.Username))
             {
-            // Using means when we finish a specific class it will dispose of it
-            // As the HMAC class using an IDispose interface. 'Using' ensures that
-            using var hmac = new HMACSHA512();
+         
 
-           
-            
-            
             var professional = new Professional
             {
                 FName = registerProfDTO.FName,
@@ -195,6 +185,54 @@ namespace API.Controllers
 
             // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
             return new ProfessionalDTO{
+
+                AppUserId = user.AppUserId
+            };
+                         
+        }
+
+         [HttpPost("registerStud")]
+
+           public async Task<ActionResult<StudentDTO>> RegisterStud(RegisterStudDTO registerStudDTO)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerStudDTO.Username.ToLower());
+
+            if(await UserExists(registerStudDTO.Username))
+            {
+                   
+                        
+            var student = new Student
+            {
+                FName = registerStudDTO.FName,
+                LName = registerStudDTO.LName,
+                Phone = registerStudDTO.Phone,
+                Address = registerStudDTO.Address,
+                email = registerStudDTO.email,
+                Uni = registerStudDTO.Uni,
+                Course = registerStudDTO.Course,
+                Course_level = registerStudDTO.Course_level,
+                Course_startDate = registerStudDTO.Course_startDate,
+                Course_endDate = registerStudDTO.Course_endDate,
+                briefDescription = registerStudDTO.briefDescription,
+                FieldId = registerStudDTO.FieldId
+            };
+
+              //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
+            _context.Students.Add(student);
+               
+            }else{
+
+                //This will result a bad request status 400
+                return BadRequest("Username is Taken or Not Found");
+            }
+
+          
+              
+            //This part call the database and saves it to the User table
+            await _context.SaveChangesAsync();
+
+            // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
+            return new StudentDTO{
 
                 AppUserId = user.AppUserId
             };

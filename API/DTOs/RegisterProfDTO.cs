@@ -9,7 +9,6 @@ namespace API.DTOs
     public class RegisterProfDTO
     {
         [Required]
-
         public string Username { get; set; }
 
         
