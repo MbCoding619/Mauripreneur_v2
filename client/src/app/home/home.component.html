@@ -1,4 +1,5 @@
   <!-- ======= Hero Section ======= -->
+  
   <section id="hero" class="clearfix">
     <div class="container" *ngIf="!registerMode"  data-aos="fade-up">
 
@@ -8,10 +9,15 @@
 
       <div class="hero-info" data-aos="zoom-in" data-aos-delay="100">
         <h2>We provide<br><br><span id="span">solutions</span><br><br>for your business!</h2>
+        
         <div>
-          <a class="btn-get-started scrollto" style="cursor:pointer;" (click)="registerToggle()">Get Started</a>
+          <ng-container *ngIf="!(accountService.currentUser$| async)">
+            <a class="btn-get-started scrollto" style="cursor:pointer;" (click)="registerToggle()">Get Started</a>
+          </ng-container>         
           <a href="#services" class="btn-services scrollto">Our Services</a>
         </div>
+      
+        
       </div>
     </div>    
     <div *ngIf="registerMode"  class="container" style="width:25%;" id="registerContainer"> 
@@ -21,3 +27,6 @@
          <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
   </section><!-- End Hero Section -->
+
+
+  

@@ -23,10 +23,8 @@ export class RegistrationSmeComponent implements OnInit {
 
     this.accountService.registerSme(this.model).subscribe(response =>{
 
-      console.log(response);
-      
-      
-      this.cancel();
+      console.log(response);   
+      this.router.navigateByUrl('/');
     },error =>{
       this.toastr.error(error.error);
     })
@@ -34,7 +32,7 @@ export class RegistrationSmeComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/Registration/Choice');
   }
 
 }

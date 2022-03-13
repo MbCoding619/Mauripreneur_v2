@@ -23,31 +23,36 @@
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
         </li>
-        <li class="nav-item dropdown" dropdown>
-          <a class="nav-link dropdown-toggle" dropdownToggle>Dropdown</a>
-          <div class="dropdown-menu" *dropdownMenu>
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </li>
+        <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'">
+          <li class="nav-item dropdown" dropdown>
+            <a class="nav-link dropdown-toggle" dropdownToggle>Dropdown</a>
+            <div class="dropdown-menu" *dropdownMenu>
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </li>
+        </ng-container>       
       </ul>      
     </ng-container>
 
-    <div class="d-flex fixed-right dropdown" dropdown style="margin:1em 2em;">
-      <ng-container  *ngIf="(accountService.currentUser$| async) as user ">
+    <ng-container  *ngIf="(accountService.currentUser$| async) as user">
+
+      <div class="d-flex fixed-right dropdown" dropdown style="margin:1em 2em;">
+      
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username}}</a>
         <div class="dropdown-menu" *dropdownMenu>
           <a class="dropdown-item">Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>
-        </div>
-
-      </ng-container>
+        </div>     
       
     </div>
+
+    </ng-container>
+   
      
       <div class="d-flex fixed-right" *ngIf="(accountService.currentUser$ | async) === null">     
         <button class="btn btn-success my-2 my-sm-0" id="btn" (click)="open(content)">Login</button>        

@@ -1,112 +1,121 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
-
-.card-circle{
-    text-align:center;
-     margin-top:50px;
-     background:#27496D;    
-     border:10px solid transparent;
-     color:#fff;
-     Font-family: Montserrat;
-     padding:50px;
-     border-radius:50%;
-}
- .card-circle .card-title{
-    font-weight:600;
-     font-size:26px;
-}
- .card-circle .card-text{
-    font-weight:400;
-}
- .card-circle .card-icon i{
-     font-size:60px;
-     display:block;
-}
- .card-circle:nth-child(2){
-    background:#142850;
-}
- .card-circle .btn{
-    Font-family: Montserrat;
-    background:transparent;
-     border:1px solid #fff;
-     text-transform:uppercase;
-     padding:5px 30px;    
-     border-radius:0px;
-     Font-weight:600;
-}
-.card-circle .btn,.card-circle .card-icon i,.card-circle{
-   transition: all ease-in-out 0.2s;
-}
- .card-circle:hover .btn{
-    background:#00A8CC;
-     color:#fff;
-   border: 1px solid transparent;
-}
- .card-circle .btn:hover{
-    transform: scale(1.1);
-}
- .card-circle:hover{
-    border:10px solid #00A8CC;
-}
- .card-circle:hover i {
-   text-shadow: 0px -1px 10px #00A8CC;
-    transform:scale(1.2)rotate(20deg);
-}
- @media only screen and (min-width: 1200px) {
-     .card-circle:nth-child(3){
-         margin-left:-40px;
-         z-index:0;
+/* Sections Header
+--------------------------------*/
+.section-header h3 {
+    font-size: 36px;
+    color: #413e66;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    font-family: "Montserrat", sans-serif;
+  }
+  .section-header p {
+    text-align: center;
+    margin: auto;
+    font-size: 15px;
+    padding-bottom: 60px;
+    color: #535074;
+    width: 50%;
+  }
+  @media (max-width: 767px) {
+    .section-header p {
+      width: 100%;
     }
-     .card-circle{
-         width:350px;
-         height:350px;
-    }
-     .card-circle:nth-child(2){
-         margin-left:-20px;
-         box-shadow: 1px 2px 20px 8px rgba(241, 235, 235, 0.12);
-         transform: scale(1.2);
-         z-index:1;
-    }
-   .card-circle .card-icon i{
-      margin-top: 20px;
-     }
-}
-@media only screen and (min-width: 991px) and (max-width: 1200px) {
-   .card-circle{
-         width:340px;
-         height:340px;
-    }
-  .card-circle .card-icon i{
-     font-size:50px;
-   }
-  .card-circle .card-icon i{
-      margin-top: -25px;
-     }
-   .card-circle:nth-child(3){
-         margin-left:-50px;
-         z-index:0;
-    }
-   .card-circle:nth-child(2){
-         margin-left:-20px;
-         z-index:1;
-    }
-}
+  }
+/* Pricing Section
+--------------------------------*/
 
-#formLogo{
-
-    height:45% !important;  
-    width:200px !important;
-    margin-bottom: 5%;
-    margin-right:6em;
-    
-    
-}
-
-#logoHead{
-    display: flex;
-    justify-content: center;
-}
-
-#circleContainer{
-
-    margin: left 3em;
-}
+#pricing {
+    padding: 80px 0;
+    background-color: #F5F8FD;
+  }
+  @media (max-width: 991px) {
+    #pricing {
+      padding-bottom: 30px;
+    }
+  }
+  #pricing .card {
+    border: 0;
+    border-radius: 0px;
+    box-shadow: 0 3px 0px 0 rgba(65, 62, 102, 0.08);
+    transition: all 0.3s ease-in-out;
+    padding: 36px 0;
+    position: relative;
+  }
+  @media (max-width: 991px) {
+    #pricing .card {
+      margin-bottom: 50px;
+    }
+  }
+  #pricing .card:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 5px;
+    background-color: #1bb1dc;
+    transition: 0.5s;
+  }
+  #pricing .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.08);
+  }
+  #pricing .card:hover:after {
+    width: 100%;
+  }
+  #pricing .card .card-header {
+    background-color: white;
+    border-bottom: 0px;
+    -moz-text-align-last: center;
+    text-align-last: center;
+  }
+  #pricing .card .card-title {
+    margin-bottom: 16px;
+    color: #535074;
+  }
+  #pricing .card .card-block {
+    padding-top: 0;
+    text-align: center;
+  }
+  #pricing .card .list-group-item {
+    border: 0px;
+    padding: 6px;
+    color: #413e66;
+    font-weight: 300;
+  }
+  #pricing .card h3 {
+    font-size: 64px;
+    margin-bottom: 0px;
+    color: #535074;
+  }
+  #pricing .card h3 .currency {
+    font-size: 30px;
+    position: relative;
+    font-weight: 400;
+    top: -30px;
+    letter-spacing: 0px;
+  }
+  #pricing .card h3 .period {
+    font-size: 16px;
+    color: #6c67a3;
+    letter-spacing: 0px;
+  }
+  #pricing .card .list-group {
+    margin-bottom: 15px;
+  }
+  #pricing .card .btn {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 500;
+    color: #5f5b96;
+    border-radius: 0;
+    padding: 10px 24px;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    display: inline-block;
+    background: #1bb1dc;
+    color: #fff;
+  }
+  #pricing .card .btn:hover {
+    background: #0a98c0;
+  }

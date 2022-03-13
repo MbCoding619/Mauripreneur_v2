@@ -25,7 +25,7 @@ export class NavComponent implements OnInit {
   //We just have to make the constructor for AccountService public and access it directly in the template.
   //currentUser$ : Observable<User>;
   userWelcome ='';
-  userInform: any;
+  userRole ='';
   modalReference: any;
   
   
@@ -67,8 +67,10 @@ export class NavComponent implements OnInit {
       console.log(response);
       //this.userInform = JSON.parse(localStorage.getItem('user')); // The Variable doesn't persist.
       //this.userWelcome = this.userInform.username;
+      this.userRole = response.AppUserRole;
       this.accountService.currentUser$.subscribe( b =>{
-        this.userWelcome = b.username;
+        this.userWelcome = b.username;       
+        
       }) // This above method also does not persist
      
       this.modalService.dismissAll({
@@ -92,10 +94,11 @@ export class NavComponent implements OnInit {
 
   
   
-  getCurrentUser(){
+  getUserRole(){
     this.accountService.currentUser$.subscribe(user =>{
 
-      this.userWelcome = user.username;
+      this.userRole = user.AppUserRole;
+      console.log(this.userRole);
     },error =>{
       console.log(error);
     })
