@@ -11,5 +11,7 @@ namespace API.DTOs
 
         public string Token { get; set; }
 
+        public string AppUserRole { get; set; }
+
     }
 }

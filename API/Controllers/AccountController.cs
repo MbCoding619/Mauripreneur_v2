@@ -50,7 +50,8 @@ namespace API.Controllers
              return new UserDTO
              {
                  Username = user.UserName,
-                 Token = _tokenService.CreateToken(user)
+                 Token = _tokenService.CreateToken(user),
+                  AppUserRole = user.AppUserRole
              };   
         }
         
@@ -77,7 +78,8 @@ namespace API.Controllers
              return new UserDTO
              {
                  Username = user.UserName,
-                 Token = _tokenService.CreateToken(user)
+                 Token = _tokenService.CreateToken(user),
+                 AppUserRole = user.AppUserRole
              };
             
         }
@@ -101,6 +103,8 @@ namespace API.Controllers
 
             if(await UserExists(registerSmeDto.Username))
             {
+
+            user.AppUserRole ="SME";
         
                         
             var sme = new Sme
@@ -147,7 +151,7 @@ namespace API.Controllers
 
             if(await UserExists(registerProfDTO.Username))
             {
-         
+             user.AppUserRole ="PROFESSIONAL";
 
             var professional = new Professional
             {
@@ -199,7 +203,8 @@ namespace API.Controllers
 
             if(await UserExists(registerStudDTO.Username))
             {
-                   
+
+            user.AppUserRole ="STUDENT";       
                         
             var student = new Student
             {
@@ -250,7 +255,8 @@ namespace API.Controllers
 
             if(await UserExists(registerOrgDTO.Username))
             {
-         
+                
+            user.AppUserRole ="ORGANIZATION";
 
             var organization = new Organization
             {

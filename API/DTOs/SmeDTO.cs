@@ -9,6 +9,8 @@ namespace API.DTOs
     {
         public int AppUserId { get; set; }
 
+        
+
        // public string Token { get; set; }
     }
 }

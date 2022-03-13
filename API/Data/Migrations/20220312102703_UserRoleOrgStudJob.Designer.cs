@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220312102703_UserRoleOrgStudJob")]
+    partial class UserRoleOrgStudJob
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,7 +91,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("SmeId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Job");
                 });
 
             modelBuilder.Entity("API.Entities.Organization", b =>
@@ -124,7 +126,7 @@ namespace API.Data.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Organizations");
+                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("API.Entities.Professional", b =>
@@ -275,7 +277,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("FieldId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("API.Entities.Job", b =>
@@ -287,7 +289,7 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("API.Entities.Sme", "Sme")
-                        .WithMany("Job")
+                        .WithMany()
                         .HasForeignKey("SmeId");
 
                     b.Navigation("Field");
@@ -373,11 +375,6 @@ namespace API.Data.Migrations
                     b.Navigation("Professional");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("API.Entities.Sme", b =>
-                {
-                    b.Navigation("Job");
                 });
 #pragma warning restore 612, 618
         }
