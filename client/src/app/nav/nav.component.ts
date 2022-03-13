@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountsService } from '../_services/accounts.service';
+import { faTwitter,  faFacebookF, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
+
 
 
 @Component({
@@ -14,6 +16,9 @@ import { AccountsService } from '../_services/accounts.service';
 })
 export class NavComponent implements OnInit {
   public isCollapsed = false;
+  faTwitter = faTwitter;
+  faFacebookF = faFacebookF;
+  faInstagramSquare = faInstagramSquare;
   closeResult ='';
   model : any ={};
   //instead of initialising the Current user Observable and then calling the account service.
@@ -34,7 +39,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() : void {
 
-    this.getCurrentUser();
+    
     
   }
   // Get reasons why Modal was dismissed

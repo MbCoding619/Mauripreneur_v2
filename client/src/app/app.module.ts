@@ -20,6 +20,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { RegistrationSmeComponent } from './Registration/registration-sme/registration-sme.component';
 import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
+import { FooterComponent } from './footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 
 
@@ -35,7 +38,8 @@ import { RegistrationStudentComponent } from './Registration/registration-studen
     RegisterProfessionalComponent,
     RegistrationSmeComponent,
     RegistrationChoiceComponent,
-    RegistrationStudentComponent    
+    RegistrationStudentComponent,
+    FooterComponent    
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,8 @@ import { RegistrationStudentComponent } from './Registration/registration-studen
     ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass:'toast-bottom-right'
-    })  
+    }),
+    FontAwesomeModule   
     
   ],
   providers: [],

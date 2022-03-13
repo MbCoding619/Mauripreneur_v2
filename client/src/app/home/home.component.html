@@ -1,21 +1,23 @@
-<div *ngIf="((this.accountService.currentUser$ | async) === null)" class="container mt-5">
-    <div *ngIf="!registerMode" style="text-align: center;">
-        <img id="headerLogo" src="https://localhost:4200/assets/mauri_bleu.png" alt="">
-        <h1>Join our SME Ecosystem</h1>
-        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempore non dolor laborum harum itaque.</p>
-        <div class="text-center">
-            <button (click)="registerToggle()" class="btn btn-primary btn-lg mr-2">Register</button>
-            <button class="btn btn-primary btn-lg ">Learn More</button>
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="clearfix">
+    <div class="container" *ngIf="!registerMode"  data-aos="fade-up">
+
+      <div class="hero-img" data-aos="zoom-out" data-aos-delay="200">
+        <img src="https://localhost:4200/assets/hero-img.svg" alt="" class="img-fluid">
+      </div>
+
+      <div class="hero-info" data-aos="zoom-in" data-aos-delay="100">
+        <h2>We provide<br><br><span id="span">solutions</span><br><br>for your business!</h2>
+        <div>
+          <a class="btn-get-started scrollto" style="cursor:pointer;" (click)="registerToggle()">Get Started</a>
+          <a href="#services" class="btn-services scrollto">Our Services</a>
         </div>
-    </div>
-  
-    <div *ngIf="registerMode"  class="container" id="registerContainer"> 
+      </div>
+    </div>    
+    <div *ngIf="registerMode"  class="container" style="width:25%;" id="registerContainer"> 
         <!---When sending data from child component use []
         when emitting data ()
         -->       
          <app-register  (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
-</div>
-<div *ngIf="!registerMode" class="container">
-    <app-carousel></app-carousel>
-</div>
+  </section><!-- End Hero Section -->
