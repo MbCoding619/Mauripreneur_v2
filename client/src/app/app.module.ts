@@ -48,6 +48,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     MatStepperModule,
     ReactiveFormsModule,
