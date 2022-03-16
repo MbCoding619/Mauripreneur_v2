@@ -29,7 +29,9 @@ namespace API.Entities
 
         public Student Student { get; set; }
 
-        public Organization Organization { get; set; }   
+        public Organization Organization { get; set; }  
+
+        public Admin Admin { get; set; } 
 
     }
     

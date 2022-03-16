@@ -45,6 +45,10 @@ namespace API.Entities
 
         public Field Field { get;  set; }
 
+        public ICollection<Bid> Bid { get; set; }
+
+        public ICollection<Meeting> Meeting { get; set; }
+
 
 
     }

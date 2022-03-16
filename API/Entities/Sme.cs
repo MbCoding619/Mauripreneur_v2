@@ -30,6 +30,8 @@ namespace API.Entities
 
         public ICollection<Job> Job { get; set; }
 
+        public ICollection<Meeting> Meeting { get; set; }
+
 
     }
 }

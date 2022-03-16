@@ -26,5 +26,7 @@ namespace API.Entities
         public int Id { get; set; } 
 
         public Sme Sme { get; set; }
+
+         public ICollection<Bid> Bid { get; set; }
     }
 }

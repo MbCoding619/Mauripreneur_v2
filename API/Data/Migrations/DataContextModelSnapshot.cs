@@ -16,6 +16,29 @@ namespace API.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.5");
 
+            modelBuilder.Entity("API.Entities.Admin", b =>
+                {
+                    b.Property<int>("AdminId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("username")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AdminId");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Admin");
+                });
+
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Property<int>("AppUserId")
@@ -37,6 +60,52 @@ namespace API.Data.Migrations
                     b.HasKey("AppUserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("API.Entities.Application", b =>
+                {
+                    b.Property<int>("StudId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VacId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("StudId", "VacId");
+
+                    b.HasIndex("VacId");
+
+                    b.ToTable("Application");
+                });
+
+            modelBuilder.Entity("API.Entities.Bid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("BidDate")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("BidId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("BidResponse")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProfessionalId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.ToTable("Bid");
                 });
 
             modelBuilder.Entity("API.Entities.Field", b =>
@@ -90,6 +159,54 @@ namespace API.Data.Migrations
                     b.HasIndex("SmeId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("API.Entities.Meeting", b =>
+                {
+                    b.Property<int>("MeetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BidId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MeetTitle")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProfessionalId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SmeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StudId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VacId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("VacancyVacId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MeetId");
+
+                    b.HasIndex("BidId");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("SmeId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("VacancyVacId");
+
+                    b.ToTable("Meeting");
                 });
 
             modelBuilder.Entity("API.Entities.Organization", b =>
@@ -188,6 +305,28 @@ namespace API.Data.Migrations
                     b.ToTable("Professionals");
                 });
 
+            modelBuilder.Entity("API.Entities.Quote", b =>
+                {
+                    b.Property<int>("QuoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BidId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("tentHours")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("QuoteId");
+
+                    b.HasIndex("BidId");
+
+                    b.ToTable("Quote");
+                });
+
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
                     b.Property<int>("Id")
@@ -278,6 +417,78 @@ namespace API.Data.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("API.Entities.Vacancy", b =>
+                {
+                    b.Property<int>("VacId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Requirements")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SmeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("VacTitle")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("VacId");
+
+                    b.HasIndex("SmeId");
+
+                    b.ToTable("Vancancy");
+                });
+
+            modelBuilder.Entity("API.Entities.Admin", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "User")
+                        .WithOne("Admin")
+                        .HasForeignKey("API.Entities.Admin", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Entities.Application", b =>
+                {
+                    b.HasOne("API.Entities.Student", "Student")
+                        .WithMany("Vacancy")
+                        .HasForeignKey("StudId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Vacancy", "Vacancy")
+                        .WithMany("Students")
+                        .HasForeignKey("VacId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Vacancy");
+                });
+
+            modelBuilder.Entity("API.Entities.Bid", b =>
+                {
+                    b.HasOne("API.Entities.Job", "Job")
+                        .WithMany("Bid")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Professional", "Professional")
+                        .WithMany("Bid")
+                        .HasForeignKey("ProfessionalId");
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Professional");
+                });
+
             modelBuilder.Entity("API.Entities.Job", b =>
                 {
                     b.HasOne("API.Entities.Field", "Field")
@@ -293,6 +504,43 @@ namespace API.Data.Migrations
                     b.Navigation("Field");
 
                     b.Navigation("Sme");
+                });
+
+            modelBuilder.Entity("API.Entities.Meeting", b =>
+                {
+                    b.HasOne("API.Entities.Bid", "Bid")
+                        .WithMany("Meeting")
+                        .HasForeignKey("BidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Professional", "Professional")
+                        .WithMany("Meeting")
+                        .HasForeignKey("ProfessionalId");
+
+                    b.HasOne("API.Entities.Sme", "Sme")
+                        .WithMany("Meeting")
+                        .HasForeignKey("SmeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Student", "Student")
+                        .WithMany("Meeting")
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("API.Entities.Vacancy", "Vacancy")
+                        .WithMany("Meeting")
+                        .HasForeignKey("VacancyVacId");
+
+                    b.Navigation("Bid");
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("Sme");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Vacancy");
                 });
 
             modelBuilder.Entity("API.Entities.Organization", b =>
@@ -325,6 +573,17 @@ namespace API.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.Quote", b =>
+                {
+                    b.HasOne("API.Entities.Bid", "Bid")
+                        .WithMany("Quote")
+                        .HasForeignKey("BidId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bid");
+                });
+
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "User")
@@ -355,8 +614,21 @@ namespace API.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.Vacancy", b =>
+                {
+                    b.HasOne("API.Entities.Sme", "Sme")
+                        .WithMany()
+                        .HasForeignKey("SmeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sme");
+                });
+
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
+                    b.Navigation("Admin");
+
                     b.Navigation("Organization");
 
                     b.Navigation("Professional");
@@ -364,6 +636,13 @@ namespace API.Data.Migrations
                     b.Navigation("Sme");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("API.Entities.Bid", b =>
+                {
+                    b.Navigation("Meeting");
+
+                    b.Navigation("Quote");
                 });
 
             modelBuilder.Entity("API.Entities.Field", b =>
@@ -375,9 +654,37 @@ namespace API.Data.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("API.Entities.Job", b =>
+                {
+                    b.Navigation("Bid");
+                });
+
+            modelBuilder.Entity("API.Entities.Professional", b =>
+                {
+                    b.Navigation("Bid");
+
+                    b.Navigation("Meeting");
+                });
+
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
                     b.Navigation("Job");
+
+                    b.Navigation("Meeting");
+                });
+
+            modelBuilder.Entity("API.Entities.Student", b =>
+                {
+                    b.Navigation("Meeting");
+
+                    b.Navigation("Vacancy");
+                });
+
+            modelBuilder.Entity("API.Entities.Vacancy", b =>
+                {
+                    b.Navigation("Meeting");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }
