@@ -24,9 +24,13 @@ namespace API.Entities
 
         public int RepresentPhone { get; set; }
 
+        public string SocialLink { get; set; }
+
         
         public  AppUser User { get; set; }
         public int AppUserId { get; set; }
+
+        public ICollection<Vacancy> Vacancy { get; set; }
 
         public ICollection<Job> Job { get; set; }
 

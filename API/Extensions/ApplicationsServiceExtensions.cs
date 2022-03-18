@@ -18,6 +18,7 @@ namespace API.Extensions
         {
             //Services for the Token
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository,UserRepository>();
                 //See below format and understand.
             services.AddDbContext<DataContext>(options =>
             {

@@ -12,7 +12,7 @@ namespace API.DTOs
         public string Username { get; set; }
 
         
-        public string FName { get; set; }
+                public string FName { get; set; }
 
         public string LName { get; set; }
 
@@ -24,19 +24,18 @@ namespace API.DTOs
 
         public string Email { get; set; }
 
-        
+        public string EducationInstition { get; set; }
+
         public string Qual1 { get; set; }
+
 
         public string Qual2 { get; set; }
 
-
-        public string Qual3 { get; set; }
-
-        public string QualOther { get; set; }
+        public string LinkedInLink { get; set; }
 
         public string BriefDesc { get; set; }
 
-        public string Portfolio { get; set; }
+        public string EmploymentHistory { get; set; }
 
         public string EmploymentStatus { get; set; }
 

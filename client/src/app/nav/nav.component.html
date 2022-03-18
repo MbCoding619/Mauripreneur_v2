@@ -25,13 +25,12 @@
         </li>
         <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'">
           <li class="nav-item dropdown" dropdown>
-            <a class="nav-link dropdown-toggle" dropdownToggle>Dropdown</a>
+            <a class="nav-link dropdown-toggle" dropdownToggle>Job</a>
             <div class="dropdown-menu" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" routerLink="/Job/PostJob">Post a Job</a>
+              <a class="dropdown-item" href="#">View Job Posted</a>              
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <a class="dropdown-item" href="#">Manage Quotes</a>
             </div>
           </li>
         </ng-container>       

@@ -28,6 +28,8 @@ namespace API.DTOs
         [Required]
         public int RepresentPhone { get; set; }
 
+        public string SocialLink { get; set; }
+
 
 
     }

@@ -10,7 +10,7 @@ namespace API.Entities
     public class Bid
     {
         [Required]
-        public int BidId { get; set; }
+        public int Id { get; set; }
 
         [Column(TypeName="Date")]
         public DateTime BidDate { get; set; }
@@ -26,7 +26,7 @@ namespace API.Entities
 
         public Job Job { get; set; }
 
-        public int Id { get; set; }
+        public int ProfessionalId { get; set; }
 
         public Professional Professional { get; set; }
 

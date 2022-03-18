@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,11 +8,13 @@ namespace API.Entities
 {
     public class Job
     {
-        public int JobId { get; set; } 
+        [Required]
+        public int Id { get; set; } 
+
+        public string  JobTitle { get; set; } 
 
         public string Desc { get; set; } 
-
-        public string  DescOther { get; set; } 
+        
 
         public string Requirements { get; set; }   
 
@@ -23,7 +26,7 @@ namespace API.Entities
 
         public Field Field { get;  set; }
 
-        public int Id { get; set; } 
+        public int SmeId { get; set; } 
 
         public Sme Sme { get; set; }
 

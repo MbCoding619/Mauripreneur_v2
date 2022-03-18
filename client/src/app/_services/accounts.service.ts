@@ -4,6 +4,8 @@ import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
 import { Sme } from '../_models/sme';
+import { Professional } from '../_models/professional';
+import { Student } from '../_models/student';
 
 
 //this is called an angular service
@@ -33,6 +35,7 @@ export class AccountsService {
         const user = response;
         if(user){
           localStorage.setItem('user',JSON.stringify(user));
+          localStorage.setItem('username',JSON.stringify(user.username));
           this.currentUserSource.next(user);          
           return user;     
         }
@@ -69,6 +72,38 @@ export class AccountsService {
 
   }
 
+  registerProf(model : any){
+
+    return this.http.post(this.baseUrl+'account/registerProf',model).pipe(
+
+      map((prof : Professional)=>{
+
+        if(prof){
+          localStorage.setItem('ProfAppId',JSON.stringify(prof));
+          return(prof);
+        }
+        
+      })
+
+    )
+
+  }
+
+  registerStud(model : any){
+
+    return this.http.post(this.baseUrl+'account/registerStud',model).pipe(
+
+      map((stud : Student)=>{
+
+        if(stud){
+          localStorage.setItem('SutdAppId',JSON.stringify(stud));
+          return(stud);
+        }
+      })
+    )
+
+  }
+
 
 
 
@@ -81,6 +116,7 @@ export class AccountsService {
   
   logout(){
     localStorage.removeItem('user');
+    localStorage.clear();
     this.currentUserSource.next(null);
   }
 }

@@ -60,12 +60,26 @@ namespace API.Controllers
             };
         }
 
+
+        //Below Code doesnt work. 
+        //Need to get on the logic behind put
+        [HttpPut("editField")]
+
+        public  void UpdateField(FieldAddDTO fieldAddDTO)
+        {
+
+                _context.Entry(fieldAddDTO).State = EntityState.Modified;
+
+        }
+
+
+
     public async Task<bool>FieldExists( string description){
 
         return await _context.Fields.AnyAsync( f => f.Description.ToLower() == description.ToLower());
     }
 
-   
+    
         
     }
 }

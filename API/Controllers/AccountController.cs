@@ -116,6 +116,7 @@ namespace API.Controllers
                 RepresentName = registerSmeDto.RepresentName,
                 RepresentLName = registerSmeDto.RepresentLName,
                 RepresentPhone = registerSmeDto.RepresentPhone,
+                SocialLink = registerSmeDto.SocialLink,
                 AppUserId = user.AppUserId
                                
                 
@@ -163,10 +164,10 @@ namespace API.Controllers
                 Email = registerProfDTO.Email,
                 Qual1 = registerProfDTO.Qual1,
                 Qual2 = registerProfDTO.Qual2,
-                Qual3 = registerProfDTO.Qual3,
-                QualOther = registerProfDTO.QualOther,
+                LinkedInLink = registerProfDTO.LinkedInLink,
+                EducationInstition = registerProfDTO.EducationInstition,
                 BriefDesc = registerProfDTO.BriefDesc,
-                Portfolio = registerProfDTO.Portfolio,
+                EmploymentHistory = registerProfDTO.EmploymentHistory,
                 EmploymentStatus = registerProfDTO.EmploymentStatus,
                 FieldId = registerProfDTO.FieldId,
                 AppUserId = user.AppUserId

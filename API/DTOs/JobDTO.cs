@@ -7,6 +7,6 @@ namespace API.DTOs
 {
     public class JobDTO
     {
-        
+        public string Status { get; set; }
     }
 }

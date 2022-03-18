@@ -22,6 +22,21 @@ import { RegistrationChoiceComponent } from './Registration/registration-choice/
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 import { FooterComponent } from './footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { PostJobComponent } from './job/post-job/post-job.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+
+
+
 
 
 
@@ -39,7 +54,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RegistrationSmeComponent,
     RegistrationChoiceComponent,
     RegistrationStudentComponent,
-    FooterComponent    
+    FooterComponent,
+    TestErrorsComponent,
+    PostJobComponent    
   ],
   imports: [
     BrowserModule,
@@ -48,14 +65,25 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
+    BsDatepickerModule.forRoot(),
     ReactiveFormsModule,
-    BsDropdownModule.forRoot(),
-    MatStepperModule,
+    BsDropdownModule.forRoot(),    
     ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass:'toast-bottom-right'
     }),
-    FontAwesomeModule   
+    FontAwesomeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatRadioModule   
+         
     
   ],
   providers: [],

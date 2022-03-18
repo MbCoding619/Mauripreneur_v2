@@ -15,10 +15,10 @@ namespace API.Controllers
    
     public class UserController : BaseApiController
     {
-        private readonly DataContext _context;
-        public UserController(DataContext context)
+        private readonly IUserRepository _userRepository;
+        public UserController(IUserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
      [HttpGet]
@@ -31,30 +31,17 @@ namespace API.Controllers
      //It is recommended to use Async code.
    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
    {
-         return await _context.Users.ToListAsync();
+         return Ok(await _userRepository.GetUsersAsync());
         
    }
 
     [AllowAnonymous]
-    [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser( int id)
+    [HttpGet("{username}")]
+        public async Task<ActionResult<AppUser>> GetUser( string username)
         {
 
-            return await _context.Users.FindAsync(id);
-             
-            
-        }
-
-    [AllowAnonymous]
-    [HttpGet("Test")]
-
-     public async Task<ActionResult<String>> GetID( TestDTO TestDTO)
-        {
-
-            AppUser user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == TestDTO.test.ToLower());
-             
-             return user.AppUserId.ToString();
-            
+            return await _userRepository.GetUserByUsernameAsync(username);
+                         
         }
 
 
