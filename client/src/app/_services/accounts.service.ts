@@ -6,6 +6,7 @@ import { ReplaySubject } from 'rxjs';
 import { Sme } from '../_models/sme';
 import { Professional } from '../_models/professional';
 import { Student } from '../_models/student';
+import { Organisation } from '../_models/organisation';
 
 
 //this is called an angular service
@@ -25,6 +26,7 @@ export class AccountsService {
   //Note that the size of this observable helps us in assigning only one user.
   currentUser$ = this.currentUserSource.asObservable();
   
+  
 
   constructor(private http: HttpClient ) { }
  
@@ -35,7 +37,7 @@ export class AccountsService {
         const user = response;
         if(user){
           localStorage.setItem('user',JSON.stringify(user));
-          localStorage.setItem('username',JSON.stringify(user.username));
+          //localStorage.setItem('username',JSON.stringify(user.username));
           this.currentUserSource.next(user);          
           return user;     
         }
@@ -96,8 +98,24 @@ export class AccountsService {
       map((stud : Student)=>{
 
         if(stud){
-          localStorage.setItem('SutdAppId',JSON.stringify(stud));
+          localStorage.setItem('StudAppId',JSON.stringify(stud));
           return(stud);
+        }
+      })
+    )
+
+  }
+
+
+  registerOrg(model : any){
+
+    return this.http.post(this.baseUrl+'account/registerOrg',model).pipe(
+
+      map((org : Organisation)=>{
+
+        if(org){
+          localStorage.setItem('OrgAppId',JSON.stringify(org));
+          return(org);
         }
       })
     )

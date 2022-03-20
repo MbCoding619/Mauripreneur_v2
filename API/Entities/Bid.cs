@@ -22,15 +22,18 @@ namespace API.Entities
         [Required]
         public string BidResponse { get; set; }
 
+        public string Description { get; set; }
+
+        public int BidAmount { get; set; }
+        public string OtherDetails { get; set; }
+
         public int JobId { get; set; }
 
         public Job Job { get; set; }
 
         public int ProfessionalId { get; set; }
 
-        public Professional Professional { get; set; }
-
-        public ICollection<Quote> Quote { get; set; }
+        public Professional Professional { get; set; }      
 
         public ICollection<Meeting> Meeting { get; set; }
     }

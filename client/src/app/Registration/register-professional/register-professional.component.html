@@ -5,7 +5,7 @@
     <div class="row jumbotron">
         <div class="col-sm-6 form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" formControlName="username"  id="username">
+            <input readonly type="text" class="form-control" formControlName="username"  id="username">
         </div>
         <div class="col-sm-6 form-group">
             <label for="name-f">First Name</label>
@@ -61,14 +61,14 @@
              class="form-control" id="Qual2"  placeholder="Qualification 2/Optional" >
         </div>
         <div class="col-sm-6 form-group">
-            <label for="Qual3">Qualification 3</label>
-            <input type="Qual3" formControlName="Qual3" 
-            class="form-control" id="Qual3" placeholder="Qualification 3/Optional" >
+            <label for="Qual3">LinkedIn Link</label>
+            <input type="Qual3" formControlName="LinkedInLink" 
+            class="form-control" id="LinkedInLink" placeholder="LinkedInLink/Optional" >
         </div>
         <div class="col-sm-6 form-group">
-            <label for="Qual3">Other Qualifications</label>
-            <input type="QualOther" formControlName="QualOther" 
-            class="form-control" id="QualOther" placeholder="Other Qualifications">
+            <label for="Qual3">Education Institution</label>
+            <input type="EducationInstition" formControlName="EducationInstition" 
+            class="form-control" id="EducationInstition" placeholder="Education Institution">
         </div>
         <div class="col-sm-6 form-group">
             <div>
@@ -77,9 +77,9 @@
             <textarea rows="4" cols="50" formControlName="BriefDesc" >Brief Description....</textarea>
         </div>
         <div class="col-sm-6 form-group">
-            <label for="PortFolio">PortFolio</label>
-            <input type="PortFolio" formControlName="PortFolio" 
-            class="form-control" id="PortFolio" placeholder="PortFolio">
+            <label for="PortFolio">Employment History</label>
+            <input type="EmploymentHistory" formControlName="EmploymentHistory" 
+            class="form-control" id="EmploymentHistory" placeholder="Employment History">
         </div>
         <div class="col-sm-6 form-group">
             <label for="EmpStatus">Employment Status</label>

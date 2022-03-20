@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { SharedService } from 'src/app/_services/shared.service';
 
+
 @Component({
   selector: 'app-register-professional',
   templateUrl: './register-professional.component.html',
@@ -16,6 +17,11 @@ export class RegisterProfessionalComponent implements OnInit {
   model: any ={}; 
   fieldList: any;
   username:any;
+  testUse = this.accountService.currentUser$.subscribe(response =>{
+
+    this.username = response.username;
+
+  })
   registerForm: FormGroup;
 
   constructor(private sharedService : SharedService,
@@ -28,12 +34,12 @@ export class RegisterProfessionalComponent implements OnInit {
     this.initiliazeForm();
     this.getFields();
 
-    this.getCurrentUser();
+    
   }
 
   initiliazeForm(){
     this.registerForm = new FormGroup({
-      username: new FormControl(),
+      username: new FormControl(this.username),
       FName : new FormControl(),
       LName: new FormControl(),
       Email: new FormControl(),
@@ -43,10 +49,10 @@ export class RegisterProfessionalComponent implements OnInit {
       Phone: new FormControl(),
       Qual1: new FormControl(),
       Qual2: new FormControl(),
-      Qual3: new FormControl(),
-      QualOther: new FormControl(),
+      LinkedInLink: new FormControl(),
+      EducationInstition: new FormControl(),
       BriefDesc : new FormControl(),
-      PortFolio: new FormControl(),
+      EmploymentHistory: new FormControl(),
       EmploymentStatus: new FormControl()
     })
   }
@@ -63,14 +69,7 @@ export class RegisterProfessionalComponent implements OnInit {
     })
   }
 
-  getCurrentUser(){
-
-    this.accountService.currentUser$.subscribe(response =>{
-
-      this.username = response.username;
-
-    })
-  }
+ 
 
   getFields(){
 

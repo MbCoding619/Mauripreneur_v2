@@ -1,0 +1,56 @@
+<section id="breadcrumbs" class="breadcrumbs" style="margin-top:8%">
+    <div class="container">
+
+      <ol>
+        <li><a routerLink="/">Home</a></li>
+        <li>Job</li>
+      </ol>
+      <h2>Posted Job</h2>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+
+  <section id="blog" class="blog">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg10 entries">
+                  <div class="entry">
+                      <h2 class="entry-title">
+                          List of all Job Posted                          
+                      </h2>
+                      <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%">Title</th>
+                                <th style="width: 30%">Desc</th>
+                                <th style="width: 30%">Time Frame</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let job of jobs" >
+                                <td>{{job.jobTitle}}</td>          
+                                <td>{{job.desc}}</td>          
+                                <td>{{job.timeframe}}</td>          
+                                <td style="white-space: nowrap">
+                                    <ng-container *ngIf="(accountService.currentUser$ | async).appUserRole == 'SME'"
+                                    >
+                                    <a  class="btn btn-sm btn-primary mr-1">Edit</a>
+                                    <button  class="btn btn-sm btn-danger btn-delete-user">                                        
+                                        <span >Delete</span>
+                                    </button></ng-container>
+
+                                    <ng-container *ngIf="(accountService.currentUser$ | async).appUserRole == 'PROFESSIONAL'"
+                                    >                                    
+                                    <button  class="btn btn-sm btn-danger btn-delete-user">
+                                     <span >BID</span>
+                                    </button></ng-container>                                                   
+                                </td>
+                            </tr>        
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>

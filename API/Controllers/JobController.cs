@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.DTOs.AutoDTO;
+using API.DTOs.UpdateDTO;
 using API.Entities;
 using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +17,13 @@ namespace API.Controllers
     public class JobController : BaseApiController
     {
         private readonly DataContext _context;
-        public JobController(DataContext context)
+        private readonly IJobRepository _jobRepository;
+        
+        private readonly IMapper _mapper;
+        public JobController(DataContext context,IJobRepository jobRepository,IMapper mapper)
         {
+            _jobRepository = jobRepository;
+            _mapper = mapper;            
             _context = context;
         }
 
@@ -58,6 +66,49 @@ namespace API.Controllers
 
     
 
+    }
+
+    [HttpGet("allJob")]
+
+    public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJob(){
+
+        var jobs = await _jobRepository.GetJobMAsync();
+        
+        var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+
+        return Ok(jobToReturn);
+    }
+
+    [HttpGet("{smeId}")]
+
+    public async  Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobBySmeId(int smeId){
+         var jobs = await _jobRepository.GetJobBySmeAsync(smeId);
+
+         var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+
+        return Ok(jobToReturn);
+
+    }
+
+
+    [HttpPut]
+
+    public async Task<ActionResult> UpdateJob (JobUpdateDTO jobUpdateDTO)
+    {   
+        var job = await _jobRepository.GetJobByIdAsync(jobUpdateDTO.Id);
+        if(job !=null){
+            _mapper.Map(jobUpdateDTO, job); 
+
+            _jobRepository.Update(job);
+            return Ok("Wa DreC");
+        }else{
+
+            return BadRequest("Pa DreC");
+        }
+        
+
+        
+        
     }
 
 

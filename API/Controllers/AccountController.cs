@@ -79,7 +79,8 @@ namespace API.Controllers
              {
                  Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
-                 AppUserRole = user.AppUserRole
+                 AppUserRole = user.AppUserRole,
+                 AppUserId = user.AppUserId
              };
             
         }
@@ -216,9 +217,8 @@ namespace API.Controllers
                 email = registerStudDTO.email,
                 Uni = registerStudDTO.Uni,
                 Course = registerStudDTO.Course,
-                Course_level = registerStudDTO.Course_level,
-                Course_startDate = registerStudDTO.Course_startDate,
-                Course_endDate = registerStudDTO.Course_endDate,
+                Course_level = registerStudDTO.Course_level,  
+                LinkedInLink = registerStudDTO.LinkedInLink,             
                 briefDescription = registerStudDTO.briefDescription,
                 FieldId = registerStudDTO.FieldId,
                 AppUserId = user.AppUserId

@@ -34,6 +34,19 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import { RegistrationOrganisationComponent } from './Registration/registration-organisation/registration-organisation.component';
+import { JobPostedComponent } from './job/job-posted/job-posted.component';
+import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit.component';
+
+
 
 
 
@@ -56,7 +69,12 @@ import {MatRadioModule} from '@angular/material/radio';
     RegistrationStudentComponent,
     FooterComponent,
     TestErrorsComponent,
-    PostJobComponent    
+    PostJobComponent,
+    RegistrationOrganisationComponent,
+    JobPostedComponent,
+    CalendarViewComponent,
+    AllJobPostedComponent,
+    DialogJobEditComponent    
   ],
   imports: [
     BrowserModule,
@@ -82,8 +100,16 @@ import {MatRadioModule} from '@angular/material/radio';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
-    MatRadioModule   
-         
+    MatRadioModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
+       
     
   ],
   providers: [],

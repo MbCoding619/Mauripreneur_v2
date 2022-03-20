@@ -26,14 +26,9 @@ namespace API.DTOs
 
         public string Course { get; set; } 
 
-        public string Course_level { get; set; }    
+        public string Course_level { get; set; }   
 
-        [Column(TypeName="Date")]
-        public DateTime Course_startDate { get; set; }
-
-        [Column(TypeName ="Date")]
-        public DateTime Course_endDate { get; set; }
-
+        public string LinkedInLink { get; set; }  
         public string briefDescription { get; set; }
 
         public int FieldId { get; set; }

@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CalendarDayViewComponent } from 'angular-calendar';
+import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
 import { HomeComponent } from './home/home.component';
+import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.component';
+import { JobPostedComponent } from './job/job-posted/job-posted.component';
 import { PostJobComponent } from './job/post-job/post-job.component';
 import { RegisterProfessionalComponent } from './Registration/register-professional/register-professional.component';
 import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
+import { RegistrationOrganisationComponent } from './Registration/registration-organisation/registration-organisation.component';
 import { RegistrationSmeComponent } from './Registration/registration-sme/registration-sme.component';
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -13,8 +18,12 @@ const routes: Routes = [
   {path:'Registration/Professional',component: RegisterProfessionalComponent},
   {path:'Registration/Sme',component: RegistrationSmeComponent},
   {path:'Registration/Student',component: RegistrationStudentComponent},
+  {path:'Registration/Organization',component: RegistrationOrganisationComponent},
   {path:'Registration/Choice',component: RegistrationChoiceComponent},
   {path:'Job/PostJob',component: PostJobComponent},
+  {path:'Job/JobPosted',component: JobPostedComponent},
+  {path:'Job/AllJob',component: AllJobPostedComponent},
+  {path:'Calendar/ViewCalendar',component: CalendarViewComponent},
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

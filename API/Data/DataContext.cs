@@ -35,8 +35,6 @@ namespace API.Data
 
         public DbSet<Bid> Bid { get; set; }
 
-        public DbSet<Quote> Quote {get; set;}
-
         public DbSet<Meeting> Meeting { get; set; }       
 
         public DbSet<Vacancy> Vacancy { get ; set; }

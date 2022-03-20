@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ namespace API.Extensions
             //Services for the Token
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IJobRepository, JobRepository>();
+            //Iinitialising the dependency of Automapper in the App Service class
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
                 //See below format and understand.
             services.AddDbContext<DataContext>(options =>
             {
