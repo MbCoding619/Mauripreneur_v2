@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { Job } from 'src/app/_models/job';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { SharedService } from 'src/app/_services/shared.service';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { DialogJobEditComponent } from 'src/app/dialog/dialog-job-edit/dialog-job-edit.component';
+
 
 
 
@@ -21,16 +20,21 @@ export class AllJobPostedComponent implements OnInit {
  displayedColumns : string[] =['jobTitle','desc','timeframe','budget' , 'Action'];
  dataSource : MatTableDataSource<any>;
 
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) sort: MatSort;
 
   constructor(private sharedService : SharedService,
     private accountService : AccountsService,
-    private toastr : ToastrService,
-    private dialog : MatDialog) { }
+    private toastr : ToastrService, 
+    private dialog : MatDialog
+    ) { }
 
   ngOnInit(): void {
     this.getAllJob();
+    
+  
+   
   }
 
   getAllJob(){
@@ -39,8 +43,8 @@ export class AllJobPostedComponent implements OnInit {
       job => {
 
         this.dataSource = new MatTableDataSource(job);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        //this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;       
         console.log(job);
       },error =>{
 
@@ -59,9 +63,9 @@ export class AllJobPostedComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    this.dialog.open(DialogJobEditComponent, {
-     
+  openDialog(row : any) {
+    const dialogRef = this.dialog.open(DialogJobEditComponent,{
+        data: row
     });
   }
 
