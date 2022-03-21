@@ -1,39 +1,74 @@
-
-  <h1 mat-dialog-title>Edit Job</h1>
-  <div mat-dialog-content>  
-      <form [formGroup]='BidForm'>
-        <div class="form-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" placeholder="description">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <mat-hint>Hint</mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="form-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Amount</mat-label>
-            <input matInput formControlName="bidAmount" placeholder="Amount">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <mat-hint>Hint</mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="form-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Other Details</mat-label>
-            <input matInput formControlName="otherDetails" placeholder="Other Details">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <mat-hint>Hint</mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="form-group" style="display: flex; justify-content: center;">
-          <button mat-raised-button (click)="bid()" color="primary">Submit</button>
-          <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
-        </div>
-      </form> 
-      
-  </div>
+<div class="container">
+    <h1 mat-dialog-title>Edit Job</h1>
+    <div mat-dialog-content>  
+        <form [formGroup]='editForm'>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Job Title</mat-label>
+                  <input matInput formControlName="jobTitle" placeholder="Job Title">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label>
+          <textarea matInput formControlName="desc" placeholder="description"></textarea>            
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Requirements</mat-label>
+          <textarea matInput formControlName="requirements" placeholder="Requirements"></textarea>            
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Budget</mat-label>
+              <input matInput formControlName="budget" placeholder="Amount">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline"> <mat-label>Time Frame</mat-label>
+                      <mat-select formControlName="timeframe">
+                        <mat-option value="24-hours">24-hours</mat-option>
+                        <mat-option value="7-days">7 days</mat-option>
+                        <mat-option value="21-days">21 days</mat-option>
+                        <mat-option value="to-define">To be Defined</mat-option>
+                        </mat-select>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Other Details</mat-label>
+              <mat-select formControlName="fieldId">
+                  <mat-option *ngFor="let field of fieldList" [value]="field.fieldId" >
+                      {{field.description}}
+                  </mat-option>
+                </mat-select>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="form-group" style="display: flex; justify-content: center;">
+            <button mat-raised-button (click)="editJob()" color="primary">Submit</button>
+            <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+          </div>
+        </form> 
+        
+    </div>
+    
+    
+    
   
   
-  
-
+</div>
+ 

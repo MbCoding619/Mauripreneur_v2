@@ -45,6 +45,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit.component';
+import { DialogBidComponent } from './dialog/dialog-bid/dialog-bid.component';
 
 
 
@@ -74,7 +75,8 @@ import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit
     JobPostedComponent,
     CalendarViewComponent,
     AllJobPostedComponent,
-    DialogJobEditComponent    
+    DialogJobEditComponent,
+    DialogBidComponent    
   ],
   imports: [
     BrowserModule,

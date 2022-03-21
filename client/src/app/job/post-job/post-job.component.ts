@@ -114,9 +114,9 @@ export class PostJobComponent implements OnInit {
       'username' : this.username?.toLowerCase(),
       'jobTitle' : this.JobTitle?.get('jobTitle')?.value,
       'requirements' : this.Requirements?.get('requirements')?.value,
-      'description' : this.Description?.get('description')?.value,
+      'desc' : this.Description?.get('description')?.value,
       'fieldId' : this.Field?.get('fieldId')?.value,
-      'timeframe' : this.TimeFrame?.get('timeframe')?.value,     
+      'timeFrame' : this.TimeFrame?.get('timeframe')?.value,     
       'budget' : this.Budget?.get('budget')?.value     
     }
   }

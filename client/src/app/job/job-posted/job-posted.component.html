@@ -10,47 +10,74 @@
     </div>
   </section><!-- End Breadcrumbs -->
 
-  <section id="blog" class="blog">
-      <div class="container">
-          <div class="row">
-              <div class="col-lg10 entries">
-                  <div class="entry">
-                      <h2 class="entry-title">
-                          List of all Job Posted                          
-                      </h2>
-                      <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th style="width: 30%">Title</th>
-                                <th style="width: 30%">Desc</th>
-                                <th style="width: 30%">Time Frame</th>
-                                <th style="width: 10%"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let job of jobs" >
-                                <td>{{job.jobTitle}}</td>          
-                                <td>{{job.desc}}</td>          
-                                <td>{{job.timeframe}}</td>          
-                                <td style="white-space: nowrap">
-                                    <ng-container *ngIf="(accountService.currentUser$ | async).appUserRole == 'SME'"
-                                    >
-                                    <a  class="btn btn-sm btn-primary mr-1">Edit</a>
-                                    <button  class="btn btn-sm btn-danger btn-delete-user">                                        
-                                        <span >Delete</span>
-                                    </button></ng-container>
+  <div class="container">
+    <div style="margin-top:5px;">
+        <div class="mat-elevation-z8">
+            <mat-form-field appearance="standard">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+              </mat-form-field>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">          
 
-                                    <ng-container *ngIf="(accountService.currentUser$ | async).appUserRole == 'PROFESSIONAL'"
-                                    >                                    
-                                    <button  class="btn btn-sm btn-danger btn-delete-user">
-                                     <span >BID</span>
-                                    </button></ng-container>                                                   
-                                </td>
-                            </tr>        
-                        </tbody>
-                    </table>
-                  </div>
-              </div>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="jobTitle">
+              <th mat-header-cell *matHeaderCellDef> Title </th>
+              <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="desc">
+              <th mat-header-cell *matHeaderCellDef> Description </th>
+              <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+            </ng-container>
+        
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="timeframe">
+              <th mat-header-cell *matHeaderCellDef> Timeframe </th>
+              <td mat-cell *matCellDef="let element"> {{element.timeframe}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="budget">
+              <th mat-header-cell *matHeaderCellDef> Budget </th>
+              <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
+            </ng-container>
+
+             <!-- Symbol Column -->
+             <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef> Bid </th>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'" >
+                    <button  mat-icon-button color="primary">
+                      <mat-icon (click)="openDialog(element)">edit </mat-icon>
+                  </button> 
+                  <button mat-icon-button color="warn">
+                      <mat-icon>delete</mat-icon>
+                  </button> 
+                  </ng-container>
+                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'" >
+                    <button mat-icon-button color="accent">
+                      <mat-icon>request_quote</mat-icon>
+                  </button>
+                    
+                  </ng-container>                   
+                  
+                </td>
+              </ng-container>
+           
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                         showFirstLastButtons 
+                         aria-label="Select page of periodic elements">
+          </mat-paginator>
+    </div>              
+           
           </div>
-      </div>
-  </section>
+
+    </div>
+</div>

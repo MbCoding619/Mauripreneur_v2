@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { validateEvents } from 'calendar-utils';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { SharedService } from 'src/app/_services/shared.service';
@@ -16,25 +17,38 @@ export class DialogJobEditComponent implements OnInit {
   private accountService : AccountsService,
   private toastr : ToastrService  
     ) { }
-   BidForm : FormGroup;
+   editForm : FormGroup;
+   fieldList : any ={};
    model : any ={};
    username ='';
-  ngOnInit(): void {
+   id : any;
 
-    console.log(this.editData);
+
+  ngOnInit(): void {
     this.initialiseForm();
+    this.id = this.editData.id;
+
+    console.log(this.editData.id);
+    
     this.accountService.currentUser$.subscribe(uname =>{
       this.username = uname.username;
 });
 
+this.getFields();
+
   }
 
   initialiseForm(){
-    this.BidForm = new FormGroup({
-      description : new FormControl(),
-      bidAmount : new FormControl(),
-      otherDetails : new FormControl()
+
+    this.editForm = new FormGroup({
+      jobTitle : new FormControl(this.editData.jobTitle, Validators.required),
+      desc : new FormControl(this.editData.desc, Validators.required),
+      requirements : new FormControl(this.editData.requirements,Validators.required),
+      budget : new FormControl(this.editData.budget,Validators.required),
+      timeframe : new FormControl(this.editData.timeframe,Validators.required),
+      fieldId : new FormControl(this.editData.fieldId),
     })
+  
   }
 
   onNoClick(): void {
@@ -45,31 +59,47 @@ export class DialogJobEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  populateModel(){
 
-    this.model ={
-      'username' : this.username?.toLowerCase(),
-      'jobId' : this.editData,
-      'description' : this.BidForm.controls['description'].value,
-      'bidAmount' : this.BidForm.controls['bidAmount'].value,
-      'otherDetails': this.BidForm.controls['otherDetails'].value      
+  editJob()
+  {
+    this.populateModel(this.id);
+     if(this.model !=null)
+    {
+     
+      this.sharedService.editJob(this.model).subscribe((response :any)=>{
+        console.log(response);
+        this.toastr.success();        
+      },error =>{
+        this.toastr.error(error.error);       
+      })  
+      this.dialogRef.close();   
     }
-
-    console.log(this.model)   
-
+    
   }
 
-  bid(){
+  getFields(){
 
-    this.populateModel();
-    if(this.model !=null){
-      this.sharedService.placeBid(this.model).subscribe(response =>{
-        console.log(response);
-        this.toastr.show(response.Status);
-      },error=>{
-        this.toastr.error(error.error);
-      })
+    this.sharedService.getFields().subscribe((response:any)=>{
+
+      this.fieldList = response;
+
+    })
+  }
+
+  populateModel(id? : any){
+
+    this.model ={
+      'jobTitle' : this.editForm?.controls['jobTitle'].value,
+      'Id' : id,
+      'desc' : this.editForm?.controls['desc'].value,
+      'requirements' : this.editForm?.controls['requirements'].value,
+      'budget' : this.editForm.controls['budget'].value,
+      'timeframe': this.editForm.controls['timeframe'].value,      
+      'fieldId': this.editForm.controls['fieldId'].value      
     }
+
+    console.log(this.model);
+      
 
   }
 
