@@ -1,28 +1,28 @@
 
-  <h1 mat-dialog-title>Edit Job</h1>
+  <h1 mat-dialog-title>Send Bid </h1>
   <div mat-dialog-content>  
-      <form [formGroup]='BidForm'>
+      <form [formGroup]='BidForm' autocomplete="off">
         <div class="form-group">
           <mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
-            <input matInput formControlName="description" placeholder="description">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <input matInput formControlName="description" placeholder="Describe your intent for the bid">
+            <mat-icon matSuffix>description</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-form-field appearance="outline">
             <mat-label>Amount</mat-label>
-            <input matInput formControlName="bidAmount" placeholder="Amount">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <input matInput formControlName="bidAmount" placeholder="State the amount of your bid">
+            <mat-icon matSuffix>paid</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-form-field appearance="outline">
             <mat-label>Other Details</mat-label>
-            <input matInput formControlName="otherDetails" placeholder="Other Details">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <input matInput formControlName="otherDetails" placeholder="Any other information you may find appropriate">
+            <mat-icon matSuffix>info</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
         </div>

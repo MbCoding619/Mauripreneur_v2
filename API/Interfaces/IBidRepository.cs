@@ -10,6 +10,9 @@ namespace API.Interfaces
     {
         void Update(Bid bid);
 
+        void Delete(Bid bid);
+        
+
         Task<bool> SaveAllAsync();
         Task<IEnumerable<Bid>> GetBidAsync();
 
@@ -18,5 +21,7 @@ namespace API.Interfaces
         Task<IEnumerable<Bid>> GetBidByProfIdAsync(int profId);
 
         Task<IEnumerable<Bid>> GetBidByJobIdAsync(int jobId);
+
+        Task<Bid> GetBidByJobIdProfId(int jobId,int profId);
     }
 }

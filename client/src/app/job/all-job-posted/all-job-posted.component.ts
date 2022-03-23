@@ -26,7 +26,7 @@ export class AllJobPostedComponent implements OnInit {
   @ViewChild(MatPaginator) sort: MatSort;
 
   constructor(private sharedService : SharedService,
-    private accountService : AccountsService,
+    public accountService : AccountsService,
     private toastr : ToastrService, 
     private dialog : MatDialog
     ) { }

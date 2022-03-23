@@ -32,8 +32,13 @@ namespace API.Entities
         public Job Job { get; set; }
 
         public int ProfessionalId { get; set; }
+        
 
-        public Professional Professional { get; set; }      
+        public Professional Professional { get; set; }  
+
+        public int? SmeId { get; set; }
+
+        public Sme Sme { get; set; }    
 
         public ICollection<Meeting> Meeting { get; set; }
     }

@@ -38,7 +38,6 @@ namespace API.Controllers
             if( user != null){
                 var sme = await _context.Sme.SingleOrDefaultAsync( s => s.AppUserId == user.AppUserId);
                  var job = new Job {
-            
 
               JobTitle = jobAddDTO.JobTitle,
               Desc = jobAddDTO.Desc,
@@ -79,19 +78,30 @@ namespace API.Controllers
         return Ok(jobToReturn);
     }
 
-    [HttpGet("{smeId}")]
+    [HttpGet("{username}")]
 
-    public async  Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobBySmeId(int smeId){
-         var jobs = await _jobRepository.GetJobBySmeAsync(smeId);
+    public async  Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobBySmeId(string username){
+        var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == username);
+
+        if(user !=null){
+
+            var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
+
+        var jobs = await _jobRepository.GetJobBySmeAsync(sme.Id);
 
          var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
 
         return Ok(jobToReturn);
+        }else
+        {
+            return BadRequest("Something Went Wrong!");
+        }
 
+         
     }
 
 
-    [HttpPut]
+    [HttpPut("editJob")]
 
     public async Task<ActionResult> UpdateJob (JobUpdateDTO jobUpdateDTO)
     {   

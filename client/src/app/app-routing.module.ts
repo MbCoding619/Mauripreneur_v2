@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarDayViewComponent } from 'angular-calendar';
+import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
+import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
 import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
 import { HomeComponent } from './home/home.component';
 import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.component';
 import { JobPostedComponent } from './job/job-posted/job-posted.component';
 import { PostJobComponent } from './job/post-job/post-job.component';
+import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
 import { RegisterProfessionalComponent } from './Registration/register-professional/register-professional.component';
 import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
 import { RegistrationOrganisationComponent } from './Registration/registration-organisation/registration-organisation.component';
@@ -24,6 +27,9 @@ const routes: Routes = [
   {path:'Job/JobPosted',component: JobPostedComponent},
   {path:'Job/AllJob',component: AllJobPostedComponent},
   {path:'Calendar/ViewCalendar',component: CalendarViewComponent},
+  {path:'User/UserProfile',component: UserProfileComponent},
+  {path:'Admin/Dashboard',component: AdminDashboardComponent},
+  {path:'Bid/ViewBid',component: BidSmeComponent},
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

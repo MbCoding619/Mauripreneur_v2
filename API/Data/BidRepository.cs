@@ -19,6 +19,8 @@ namespace API.Data
             _context = context;
         }
 
+       
+
         public async Task<IEnumerable<Bid>> GetBidAsync()
         {
             return await _context.Bid.ToListAsync();
@@ -29,9 +31,14 @@ namespace API.Data
             return await _context.Bid.FindAsync(id);
         }
 
-        public Task<IEnumerable<Bid>> GetBidByJobIdAsync(int jobId)
+        public async Task<IEnumerable<Bid>> GetBidByJobIdAsync(int jobId)
         {
-            throw new NotImplementedException();
+            return await _context.Bid.Where(b => b.JobId == jobId).ToListAsync();
+        }
+
+        public async Task<Bid> GetBidByJobIdProfId(int jobId, int profId)
+        {
+            return await _context.Bid.SingleOrDefaultAsync(b => b.JobId == jobId && b.ProfessionalId == profId);
         }
 
         public Task<IEnumerable<Bid>> GetBidByProfIdAsync(int profId)
@@ -47,6 +54,15 @@ namespace API.Data
         public void Update(Bid bid)
         {
             _context.Entry(bid).State = EntityState.Modified;
+            _context.SaveChangesAsync();
         }
+
+         public void Delete(Bid bid)
+        {
+            _context.Entry(bid).State = EntityState.Deleted;
+            _context.SaveChangesAsync();
+        }
+
+        
     }
 }

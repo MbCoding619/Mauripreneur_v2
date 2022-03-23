@@ -21,6 +21,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IJobRepository, JobRepository>();
+            services.AddScoped<IBidRepository,BidRepository>();
             //Iinitialising the dependency of Automapper in the App Service class
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
                 //See below format and understand.

@@ -46,18 +46,10 @@
             </ng-container>
 
              <!-- Symbol Column -->
-             <ng-container matColumnDef="Action">
+             <ng-container matColumnDef="Action" >
                 <th mat-header-cell *matHeaderCellDef> Bid </th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'" >
-                    <button  mat-icon-button color="primary">
-                      <mat-icon>edit </mat-icon>
-                  </button> 
-                  <button mat-icon-button color="warn">
-                      <mat-icon>delete</mat-icon>
-                  </button> 
-                  </ng-container>
-                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'" >
+                <td mat-cell *matCellDef="let element">                 
+                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'"  >
                     <button mat-icon-button color="accent">
                       <mat-icon (click)="openDialog(element.id)">request_quote</mat-icon>
                   </button>

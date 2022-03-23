@@ -32,7 +32,7 @@ namespace API.Data
 
         public async Task<IEnumerable<Job>> GetJobBySmeAsync(int id)
         {
-            return await _context.Job.Where( jb => jb.SmeId == id).ToListAsync();
+            return await _context.Job.Where( jb => jb.SmeId == id).Include(jb => jb.Bid).ToListAsync();
         }
 
         public async Task<IEnumerable<Job>> GetJobMAsync()
@@ -53,6 +53,7 @@ namespace API.Data
         public void Update(Job job)
         {
             _context.Entry(job).State = EntityState.Modified;
+            _context.SaveChangesAsync();
         }
     }
 }

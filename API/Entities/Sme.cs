@@ -36,6 +36,8 @@ namespace API.Entities
 
         public ICollection<Meeting> Meeting { get; set; }
 
+        public ICollection<Bid> Bid { get; set; }
+
 
     }
 }

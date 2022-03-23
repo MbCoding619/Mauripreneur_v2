@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Job } from '../_models/job';
 import { addBid } from '../_models/addBid';
 import { editJob } from '../_models/editJob';
+import { acceptBid } from '../_models/acceptBid';
 
 
 @Injectable({
@@ -82,6 +83,25 @@ export class SharedService {
         {
           this.toastr.success();;
           return(job);
+        }
+      })
+    )
+  }
+
+
+  getBidQuery(username : any){
+    return this.http.get<any>(`${this.baseUrl}bid/${username}`);
+  }
+
+  acceptBid(model : any){
+
+    return this.http.put(this.baseUrl+'bid/acceptBid',model).pipe(
+      map((bidAccept : acceptBid)=>{
+
+        if(bidAccept){
+
+          this.toastr.success();
+          return(bidAccept);
         }
       })
     )

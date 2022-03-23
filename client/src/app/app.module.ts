@@ -46,6 +46,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit.component';
 import { DialogBidComponent } from './dialog/dialog-bid/dialog-bid.component';
+import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
+import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
+import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
 
 
 
@@ -76,7 +79,10 @@ import { DialogBidComponent } from './dialog/dialog-bid/dialog-bid.component';
     CalendarViewComponent,
     AllJobPostedComponent,
     DialogJobEditComponent,
-    DialogBidComponent    
+    DialogBidComponent,
+    UserProfileComponent,
+    AdminDashboardComponent,
+    BidSmeComponent    
   ],
   imports: [
     BrowserModule,

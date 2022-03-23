@@ -35,7 +35,20 @@
               <a class="dropdown-item" routerLink="/Job/AllJob">View All Job Posted</a>
             </div>
           </li>
-        </ng-container>       
+        </ng-container>
+        <ng-container>
+          <li class="nav-item dropdown" dropdown>
+            <a class="nav-link dropdown-toggle" dropdownToggle>Bid</a>
+            <div class="dropdown-menu" *dropdownMenu>
+              <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'" >
+                <a class="dropdown-item" routerLink="/Bid/ViewBid" >View Bid</a>
+                <a class="dropdown-item" routerLink="/Job/JobPosted">View Bid Approved</a>              
+                <div class="dropdown-divider"></div>
+              </ng-container>              
+              <a class="dropdown-item" routerLink="/Job/AllJob">View Bid Sent</a>
+            </div>
+          </li>
+        </ng-container>        
       </ul>      
     </ng-container>
 
@@ -45,7 +58,7 @@
       
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.username}}</a>
         <div class="dropdown-menu" *dropdownMenu>
-          <a class="dropdown-item">Edit Profile</a>
+          <a class="dropdown-item" routerLink="/User/UserProfile">Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>     
