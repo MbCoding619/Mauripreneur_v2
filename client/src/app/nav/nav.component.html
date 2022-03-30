@@ -42,10 +42,15 @@
             <div class="dropdown-menu" *dropdownMenu>
               <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='SME'" >
                 <a class="dropdown-item" routerLink="/Bid/ViewBid" >View Bid</a>
-                <a class="dropdown-item" routerLink="/Job/JobPosted">View Bid Approved</a>              
-                <div class="dropdown-divider"></div>
-              </ng-container>              
-              <a class="dropdown-item" routerLink="/Job/AllJob">View Bid Sent</a>
+                <a class="dropdown-item" routerLink="/Bid/BidApproved">View Bid Approved</a>              
+               
+              </ng-container > 
+              <ng-container *ngIf="(accountService.currentUser$ | async).appUserRole == 'PROFESSIONAL'"
+              >
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" routerLink="/Bid/BidSent">View Bid Sent</a>
+            </ng-container>             
+              
             </div>
           </li>
         </ng-container>        

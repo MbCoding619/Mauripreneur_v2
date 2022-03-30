@@ -5,7 +5,7 @@
         <li><a routerLink="/">Home</a></li>
         <li>Bid</li>
       </ol>
-      <h2>View Bid</h2>
+      <h2>View Bid Sent</h2>
 
     </div>
   </section><!-- End Breadcrumbs -->
@@ -59,27 +59,7 @@
               <td mat-cell *matCellDef="let element"> {{element.response}} </td>
             </ng-container>
 
-             <!-- Symbol Column -->
-             <ng-container matColumnDef="Action">
-                <th mat-header-cell *matHeaderCellDef>Accept or Decline</th>
-                <td mat-cell *matCellDef="let element">
-                  <ng-container *ngIf="element.response == 'PENDING'" >
-                    <button  mat-icon-button color="primary">
-                      <mat-icon (click)="acceptBid(element.bidId)">check_circle_outline</mat-icon>
-                  </button> 
-                  <button mat-icon-button color="warn">
-                      <mat-icon>clear</mat-icon>
-                  </button> 
-                  </ng-container>
-                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'" >
-                    <button mat-icon-button color="accent">
-                      <mat-icon>request_quote</mat-icon>
-                  </button>
-                    
-                  </ng-container>                   
-                  
-                </td>
-              </ng-container>
+          
            
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -96,3 +76,4 @@
 
     </div>
 </div>
+

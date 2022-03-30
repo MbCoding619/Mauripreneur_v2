@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +49,10 @@ import { DialogBidComponent } from './dialog/dialog-bid/dialog-bid.component';
 import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
 import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
+import { DialogScheduleMeetingComponent } from './dialog/dialog-schedule-meeting/dialog-schedule-meeting.component';
+import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
+import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
 
 
 
@@ -82,7 +86,10 @@ import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
     DialogBidComponent,
     UserProfileComponent,
     AdminDashboardComponent,
-    BidSmeComponent    
+    BidSmeComponent,
+    DialogScheduleMeetingComponent,
+    BidSentComponent,
+    BidApprovedComponent    
   ],
   imports: [
     BrowserModule,
@@ -120,7 +127,9 @@ import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
        
     
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

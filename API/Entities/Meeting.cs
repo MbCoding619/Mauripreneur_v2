@@ -9,9 +9,13 @@ namespace API.Entities
     {
         public int MeetId  { get; set; }
 
-        public int MeetTitle { get; set; }        
+        public string MeetTitle { get; set; }        
 
         public int? SmeId { get; set; }
+        
+        public DateTime startDate { get; set; }
+        
+        public DateTime endDate { get; set; }
         
         public Sme Sme { get; set; }
 

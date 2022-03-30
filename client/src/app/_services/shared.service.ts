@@ -11,7 +11,7 @@ import { Job } from '../_models/job';
 import { addBid } from '../_models/addBid';
 import { editJob } from '../_models/editJob';
 import { acceptBid } from '../_models/acceptBid';
-
+import { meetingResponse } from '../_models/meetingResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class SharedService {
       map((job : addJob)=>{
 
         if(job){
-         this.toastr.show(job.Status)
+         this.toastr.success();
           return(job);
                   
         }
@@ -81,7 +81,7 @@ export class SharedService {
 
         if(job)
         {
-          this.toastr.success();;
+          this.toastr.success();
           return(job);
         }
       })
@@ -91,6 +91,10 @@ export class SharedService {
 
   getBidQuery(username : any){
     return this.http.get<any>(`${this.baseUrl}bid/${username}`);
+  }
+
+  getBidAccepted(username : any){
+    return this.http.get<any>(`${this.baseUrl}bid/getBidAccepted/${username}`)
   }
 
   acceptBid(model : any){
@@ -106,6 +110,25 @@ export class SharedService {
       })
     )
   }
+
+  getBidSent(username :any){
+    return this.http.get<any>(`${this.baseUrl}bid/getBidSent/${username}`)
+  }
+
+  scheduleMeeting(model : any){
+
+    return this.http.post(this.baseUrl+'meeting/createMeeting',model).pipe(
+      map((meetResponse : meetingResponse)=>{
+
+        if(meetResponse){
+          this.toastr.success();
+          return(meetResponse);
+        }
+      })
+    )
+  }
+
+ 
 
 
 }

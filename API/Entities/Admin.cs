@@ -9,10 +9,11 @@ namespace API.Entities
     {
         public int AdminId { get; set; }
     
-        public string username { get; set; }
+        public string FName { get; set; }
 
-        public string password { get; set; }
+        public string LName { get; set; }
 
+        
         public  AppUser User { get; set; }
         public int AppUserId { get; set; }
     }

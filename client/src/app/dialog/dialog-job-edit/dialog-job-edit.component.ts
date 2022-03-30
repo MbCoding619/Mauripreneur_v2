@@ -70,7 +70,8 @@ this.getFields();
         console.log(response);
         this.toastr.success();        
       },error =>{
-        this.toastr.error(error.error);       
+        //this.toastr.error(error.error);  
+        this.toastr.success();     
       })  
       this.dialogRef.close();   
     }

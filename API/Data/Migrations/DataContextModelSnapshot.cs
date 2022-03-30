@@ -25,10 +25,10 @@ namespace API.Data.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("password")
+                    b.Property<string>("FName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("username")
+                    b.Property<string>("LName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AdminId");
@@ -57,6 +57,9 @@ namespace API.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("accountStatus")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("AppUserId");
 
                     b.ToTable("Users");
@@ -83,6 +86,9 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("BidAmount")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("BidDate")
                         .HasColumnType("Date");
 
@@ -90,10 +96,19 @@ namespace API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("JobId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("OtherDetails")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ProfessionalId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("SmeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -101,6 +116,8 @@ namespace API.Data.Migrations
                     b.HasIndex("JobId");
 
                     b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("SmeId");
 
                     b.ToTable("Bid");
                 });
@@ -112,6 +129,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("fieldStatus")
                         .HasColumnType("TEXT");
 
                     b.HasKey("FieldId");
@@ -164,8 +184,8 @@ namespace API.Data.Migrations
                     b.Property<int?>("BidId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MeetTitle")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("MeetTitle")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ProfId")
                         .HasColumnType("INTEGER");
@@ -178,6 +198,12 @@ namespace API.Data.Migrations
 
                     b.Property<int?>("VacId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("endDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("startDate")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("MeetId");
 
@@ -290,28 +316,6 @@ namespace API.Data.Migrations
                     b.ToTable("Professionals");
                 });
 
-            modelBuilder.Entity("API.Entities.Quote", b =>
-                {
-                    b.Property<int>("QuoteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BidId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("tentHours")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("QuoteId");
-
-                    b.HasIndex("BidId");
-
-                    b.ToTable("Quote");
-                });
-
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
                     b.Property<int>("Id")
@@ -365,14 +369,8 @@ namespace API.Data.Migrations
                     b.Property<string>("Course")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Course_endDate")
-                        .HasColumnType("Date");
-
                     b.Property<string>("Course_level")
                         .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Course_startDate")
-                        .HasColumnType("Date");
 
                     b.Property<string>("FName")
                         .HasColumnType("TEXT");
@@ -381,6 +379,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LinkedInLink")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Phone")
@@ -474,9 +475,15 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.Entities.Sme", "Sme")
+                        .WithMany("Bid")
+                        .HasForeignKey("SmeId");
+
                     b.Navigation("Job");
 
                     b.Navigation("Professional");
+
+                    b.Navigation("Sme");
                 });
 
             modelBuilder.Entity("API.Entities.Job", b =>
@@ -561,17 +568,6 @@ namespace API.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API.Entities.Quote", b =>
-                {
-                    b.HasOne("API.Entities.Bid", "Bid")
-                        .WithMany("Quote")
-                        .HasForeignKey("BidId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bid");
-                });
-
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "User")
@@ -629,8 +625,6 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Bid", b =>
                 {
                     b.Navigation("Meeting");
-
-                    b.Navigation("Quote");
                 });
 
             modelBuilder.Entity("API.Entities.Field", b =>
@@ -656,6 +650,8 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Sme", b =>
                 {
+                    b.Navigation("Bid");
+
                     b.Navigation("Job");
 
                     b.Navigation("Meeting");

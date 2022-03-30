@@ -23,6 +23,8 @@ namespace API.Entities
 
         public string AppUserRole { get; set; }
         
+        public string accountStatus { get; set; }
+        
         public  Sme Sme { get; set; }
         
         public Professional Professional { get; set; }    

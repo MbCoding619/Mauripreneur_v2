@@ -20,6 +20,16 @@ import { Component, ChangeDetectionStrategy,
     CalendarView,
   } from 'angular-calendar';
 
+import { ToastrService } from 'ngx-toastr';
+import { AccountsService } from 'src/app/_services/accounts.service';
+import { SharedService } from 'src/app/_services/shared.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogScheduleMeetingComponent } from 'src/app/dialog/dialog-schedule-meeting/dialog-schedule-meeting.component';
+
+
   const colors: any = {
     red: {
       primary: '#ad2121',
@@ -52,6 +62,7 @@ export class CalendarViewComponent{
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  DateTry : '2022-03-24T14:00:00';
 
   modalData: {
     action: string;
@@ -78,52 +89,56 @@ export class CalendarViewComponent{
   ];
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
   ];
 
   refresh = new Subject<void>();
 
   activeDayIsOpen: boolean = true;
 
+  displayedColumns : string[] =['bidId','jobTitle','description','name','budget','bidAmount','response' , 'Action'];
+  dataSource : MatTableDataSource<any>;
+  model : any ={};
+  username = '';
 
-  constructor(private modal: NgbModal) {}
+
+  constructor(private modal: NgbModal,private sharedService : SharedService,
+    public accountService : AccountsService,
+    private toastr : ToastrService,
+    private routr : Router,
+    private dialog : MatDialog) {}
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
+  ngOnInit(): void {
+    this.accountService.currentUser$.subscribe(response =>{
+      this.username = response.username;
+    })
+
+    this.getJobBySme(this.username);
+  }
+
+  getJobBySme(username :any){
+
+    this.sharedService.getBidAccepted(username).subscribe( response =>{
+
+      this.dataSource = new MatTableDataSource(response);
+      //this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;       
+      console.log(response);
+    },error =>{
+
+      this.toastr.error(error.error);
+    })
+
+  }
+
+  openDialog(row : any) {
+    const dialogRef = this.dialog.open(DialogScheduleMeetingComponent,{
+        data: row,
+        
+    });
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -166,9 +181,9 @@ export class CalendarViewComponent{
     this.events = [
       ...this.events,
       {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
+        title: localStorage.getItem('meetTitle'),
+        start: startOfDay(new Date(localStorage.getItem('startDate'))),
+        end: endOfDay(new Date(localStorage.getItem('endDate'))),
         color: colors.red,
         draggable: true,
         resizable: {
@@ -177,6 +192,10 @@ export class CalendarViewComponent{
         },
       },
     ];
+
+    localStorage.removeItem('meetTitle');
+    localStorage.removeItem('startDate');
+    localStorage.removeItem('endDate');
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

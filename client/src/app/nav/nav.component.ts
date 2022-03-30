@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountsService } from '../_services/accounts.service';
 import { faTwitter,  faFacebookF, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
+import { take } from 'rxjs/operators';
+import { el } from 'date-fns/locale';
 
 
 
@@ -19,13 +21,14 @@ export class NavComponent implements OnInit {
   faTwitter = faTwitter;
   faFacebookF = faFacebookF;
   faInstagramSquare = faInstagramSquare;
-  closeResult ='';
+  closeResult ='';  
   model : any ={};
   //instead of initialising the Current user Observable and then calling the account service.
   //We just have to make the constructor for AccountService public and access it directly in the template.
   //currentUser$ : Observable<User>;
-  userWelcome ='';
+  userWelcome :any;
   userRole ='';
+  currentUser : User;
   modalReference: any;
   
   
@@ -64,25 +67,25 @@ export class NavComponent implements OnInit {
 
   login(){
     this.accountService.login(this.model).subscribe(response =>{
-      console.log(response);
-      //this.userInform = JSON.parse(localStorage.getItem('user')); // The Variable doesn't persist.
-      //this.userWelcome = this.userInform.username;
-      this.userRole = response.AppUserRole;
-      this.accountService.currentUser$.subscribe( b =>{
-        this.userWelcome = b.username;       
-        
-      }) // This above method also does not persist
-     
+      console.log(response.appUserId);
+      if(response.appUserRole  == "ADMIN"){
+        this.router.navigateByUrl('Admin/Dashboard');
+        console.log(response.appUserRole);
+      }else{
+        this.router.navigateByUrl('User/UserProfile');
+        console.log(response.appUserRole)
+      }   
+         
       this.modalService.dismissAll({
         'dismissed': true
-      })
-      this.router.navigateByUrl('/');
-
-                   
+      })                   
     },error =>{
       console.log(error);
       this.toastr.error(error.error);
     })
+
+    
+        
   }
 
   logout(){
@@ -95,13 +98,7 @@ export class NavComponent implements OnInit {
   
   
   getUserRole(){
-    this.accountService.currentUser$.subscribe(user =>{
-
-      this.userRole = user.AppUserRole;
-      console.log(this.userRole);
-    },error =>{
-      console.log(error);
-    })
+    this.accountService.currentUser$.pipe(take(1)).subscribe( user => this.currentUser = user);
   }
 
 }
