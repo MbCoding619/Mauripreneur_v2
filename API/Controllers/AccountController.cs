@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,8 +106,11 @@ namespace API.Controllers
 
             if(await UserExists(registerSmeDto.Username))
             {
-
+            
+         
             user.AppUserRole ="SME";
+             
+            
         
                         
             var sme = new Sme

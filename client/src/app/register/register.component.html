@@ -1,21 +1,29 @@
-
 <div class="container">
-  <form #registerForm="ngForm" (ngSubmit)="registerUser()" autocomplete="off">
+  <form [formGroup]='registerForm' (ngSubmit)="registerUser()" autocomplete="off">
     <h2 class="text-center text-primary">Sign Up</h2>
     <hr>
-    <div class="form-group">
-      <input type="text" name="username" class="form-control" [(ngModel)]="model.username" placeholder="Username">
+    <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'></app-text-input>
+
+
+
+    <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"' [type]='"password"'>
+    </app-text-input>
+    <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm Password"'
+      [type]='"password"'></app-text-input>
+
+      <div class="row" *ngIf="validationErrors.length > 0">
+        <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">
+                {{error}}
+            </li>
+        </ul>
     </div> 
-  
-  
-  
-    <div class="form-group">
-      <input type="password" name="password" class="form-control" autocomplete="off" [(ngModel)]="model.password" placeholder="Password">
-    </div>
     <div class="form-group text-center">
-      <button class="btn btn-success mr-2" type="submit">Next</button>
+      <button [disabled]='!registerForm.valid' class="btn btn-success mr-2" type="submit">Next</button>
       <button class="btn btn-success mr-2" (click)="cancel()" type="button">Cancel</button>
     </div>
   </form>
-</div>
 
+
+
+</div>

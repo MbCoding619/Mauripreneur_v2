@@ -53,6 +53,10 @@ import { DialogScheduleMeetingComponent } from './dialog/dialog-schedule-meeting
 import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
 import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { TestUploadComponent } from './_tests/test-upload/test-upload.component';
+import { TextAreaComponent } from './_forms/text-area/text-area.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 
 
@@ -89,7 +93,10 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     BidSmeComponent,
     DialogScheduleMeetingComponent,
     BidSentComponent,
-    BidApprovedComponent    
+    BidApprovedComponent,
+    TextInputComponent,
+    TestUploadComponent,
+    TextAreaComponent    
   ],
   imports: [
     BrowserModule,
@@ -128,7 +135,8 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS,useClass: ErrorInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS,useClass: JwtInterceptor, multi:true},
   ],
   bootstrap: [AppComponent]
 })

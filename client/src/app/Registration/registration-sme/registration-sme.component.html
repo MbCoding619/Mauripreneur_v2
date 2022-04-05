@@ -1,48 +1,49 @@
-
-
-
-
 <div class="container">
-    <form registerForm="ngForm" (ngSubmit)="registerSme()" autocomplete="off">
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && registerSme()" autocomplete="off">
         <h2 id="logoContain"><img id="formLogo" src="https://localhost:4200/assets/mauri_bleu.png" alt=""></h2>
         <h2 class="text-center">Join Our Network</h2>
     <div class="row jumbotron">
+ 
         <div class="col-sm-6 form-group">
             <label for="name-f">First Name</label>
-            <input type="text" class="form-control" name="fname" id="name-f" [(ngModel)]="model.RepresentName" placeholder="Enter your first name." required>
+            <app-text-input [formControl]='registerForm.controls["representName"]'
+            [label]='"First Name"' ></app-text-input>
         </div>
+       
         <div class="col-sm-6 form-group">
-            <label for="name-l">Last name</label>
-            <input type="text" class="form-control" name="lname" id="name-l" [(ngModel)]="model.RepresentLName" placeholder="Enter your last name." required>
+            <label for="name-f">last Name</label>
+            <app-text-input [formControl]='registerForm.controls["representLName"]'
+            [label]='"Last Name"' ></app-text-input>
         </div>
+
         <div class="col-sm-6 form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" id="email" [(ngModel)]="model.Email" placeholder="Enter your email." required>
+            <label for="name-f">Email Address</label>
+            <app-text-input [formControl]='registerForm.controls["email"]'
+            [label]='"Email"' ></app-text-input>
         </div>
+
         <div class="col-sm-6 form-group">
-            <label for="address-1">Address Line</label>
-            <input type="address" class="form-control" name="address" id="address-1" [(ngModel)]="model.Address" placeholder="Locality/House/Street no." required>
+            <label for="name-f">Address</label>
+            <app-text-input [formControl]='registerForm.controls["address"]'
+            [label]='"Address"' ></app-text-input>
         </div>
+
         <div class="col-sm-6 form-group">
-            <label for="address-2">Company Name</label>
-            <input type="address" class="form-control" name="compName" id="compName" [(ngModel)]="model.CompName" placeholder="Trade Name/Company Name" required>
-        </div>    
-      
-        <div class="col-sm-6 form-group">
-            <label for="Date">Username</label>
-            <input type="username" class="form-control" name="username" id="username" [(ngModel)]="model.username" placeholder="Username" required>
+            <label for="name-f">Company Name</label>
+            <app-text-input [formControl]='registerForm.controls["compName"]'
+            [label]='"Company Name"' ></app-text-input>
         </div>
+
         <div class="col-sm-6 form-group">
-            <label for="sex">Gender</label>
-            <select id="sex" class="form-control browser-default custom-select">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="unspesified">Unspecified</option>
-        </select>
-        </div>     
+            <label for="name-f">Username</label>
+            <app-text-input [formControl]='registerForm.controls["username"]'
+            [label]='""' readonly ></app-text-input>
+        </div>
+
         <div class="col-sm-6 form-group">
-            <label for="tel">Phone</label>
-            <input type="tel" name="phone" class="form-control" id="tel" [(ngModel)]="model.RepresentPhone" placeholder="Enter Your Contact Number." required>
+            <label for="name-f">Phone</label>
+            <app-text-input [formControl]='registerForm.controls["representPhone"]'
+            [label]='"Phonenumber"' readonly ></app-text-input>
         </div>
       
         <div class="col-sm-12">

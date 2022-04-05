@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
      [HttpGet]
-     [AllowAnonymous]
+     [Authorize]
      //making code async to enable Scalability 
      // This will API to serve any HIT while quering database for a previous hit.
      //this is achieved by putting async in the method and Encapsulating the ActionResult in Task container
@@ -51,6 +51,8 @@ namespace API.Controllers
             return _mapper.Map<ATMemberDTO>(user);
                          
         }
+
+     
 
 
     }  

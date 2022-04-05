@@ -17,6 +17,10 @@ namespace API.Helpers
             CreateMap<Job, ATJobDTO>();  
             CreateMap<Bid ,ATBidDTO>();          
             CreateMap<JobUpdateDTO , Job>();
+            CreateMap<Sme,ATSmeDTO>();
+            CreateMap<SmeUpdateDTO,Sme>();
+            CreateMap<Professional,ATProfessionalDTO>();
+            CreateMap<ProfUpdateDTO,Professional>();
         }
     }
 }

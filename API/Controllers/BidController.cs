@@ -121,7 +121,7 @@ namespace API.Controllers
                                 join jb in _context.Job on bd.JobId equals jb.Id
                                 join pr in _context.Professionals on bd.ProfessionalId equals pr.Id
                                 join sm in _context.Sme on jb.SmeId equals sm.Id
-                                where sm.Id == sme.Id
+                                where sm.Id == sme.Id                               
                                 select new {
                                     BidId = bd.Id,
                                     Description = bd.Description,
@@ -130,6 +130,59 @@ namespace API.Controllers
                                     BidAmount = bd.BidAmount,
                                     Name = pr.FName,
                                     Response = bd.BidResponse
+                                });
+
+               
+            return Ok(bidToReturn);
+
+        }
+
+        [HttpGet("getBidAccepted/{username}")]
+  public async Task<ActionResult> queryBidAccepted(string username)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
+            var sme = await _context.Sme.SingleOrDefaultAsync( s => s.AppUserId == user.AppUserId);
+
+            var bidToReturn =  (from bd in _context.Bid
+                                join jb in _context.Job on bd.JobId equals jb.Id
+                                join pr in _context.Professionals on bd.ProfessionalId equals pr.Id
+                                join sm in _context.Sme on jb.SmeId equals sm.Id
+                                where (sm.Id == sme.Id && bd.BidResponse == "Accepted")                              
+                                select new {
+                                    BidId = bd.Id,
+                                    Description = bd.Description,
+                                    JobTitle = jb.JobTitle,
+                                    Budget = jb.Budget,
+                                    BidAmount = bd.BidAmount,
+                                    Name = pr.FName,
+                                    Response = bd.BidResponse,
+                                    ProfId = pr.Id
+                                });
+
+               
+            return Ok(bidToReturn);
+
+        }
+
+            [HttpGet("getBidSent/{username}")]
+  public async Task<ActionResult> queryBidSent(string username)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
+            var prof = await _context.Professionals.SingleOrDefaultAsync( s => s.AppUserId == user.AppUserId);
+
+            var bidToReturn =  (from bd in _context.Bid
+                                join jb in _context.Job on bd.JobId equals jb.Id
+                                join pr in _context.Professionals on bd.ProfessionalId equals pr.Id                                
+                                where (pr.Id == prof.Id)                              
+                                select new {
+                                    BidId = bd.Id,
+                                    Description = bd.Description,
+                                    JobTitle = jb.JobTitle,
+                                    Budget = jb.Budget,
+                                    BidAmount = bd.BidAmount,
+                                    Name = pr.FName,
+                                    Response = bd.BidResponse,
+                                    ProfId = pr.Id
                                 });
 
                

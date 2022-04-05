@@ -18,6 +18,7 @@ import { RegistrationOrganisationComponent } from './Registration/registration-o
 import { RegistrationSmeComponent } from './Registration/registration-sme/registration-sme.component';
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { TestUploadComponent } from './_tests/test-upload/test-upload.component';
 
 const routes: Routes = [
   {path:'',component: HomeComponent},
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path:'Bid/BidSent',component: BidSentComponent},
   {path:'Bid/BidApproved',component: BidApprovedComponent},
   {path:'errors',component: TestErrorsComponent},
+  {path:'Test/Upload',component: TestUploadComponent},
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

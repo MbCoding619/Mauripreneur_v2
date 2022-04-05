@@ -7,6 +7,7 @@ import { Sme } from '../_models/sme';
 import { Professional } from '../_models/professional';
 import { Student } from '../_models/student';
 import { Organisation } from '../_models/organisation';
+import { environment } from 'src/environments/environment';
 
 
 //this is called an angular service
@@ -16,7 +17,7 @@ import { Organisation } from '../_models/organisation';
   providedIn: 'root'
 })
 export class AccountsService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   //A replaySubject is a like a buffer object. 
   //Its an observables. of type USer from Model interface
   // of size 1

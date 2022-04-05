@@ -12,12 +12,13 @@ import { addBid } from '../_models/addBid';
 import { editJob } from '../_models/editJob';
 import { acceptBid } from '../_models/acceptBid';
 import { meetingResponse } from '../_models/meetingResponse';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   field: any;
   field$ : any;
   
@@ -82,7 +83,7 @@ export class SharedService {
         if(job)
         {
           this.toastr.success();
-          return(job);
+          //return(job);
         }
       })
     )
@@ -126,6 +127,24 @@ export class SharedService {
         }
       })
     )
+  }
+
+
+  //testing
+
+  public download(fileUrl: string) {
+    return this.http.get(`${this.baseUrl}/FileManager/download?fileUrl=${fileUrl}`, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob',
+    });
+  }
+
+  public upload(formData: FormData,id : any) {
+    return this.http.post(`${this.baseUrl}FileManager/upload/${id}`, formData, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 
  

@@ -41,6 +41,8 @@ namespace API.Data
 
         public DbSet<Application> Application { get; set; }
 
+        
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

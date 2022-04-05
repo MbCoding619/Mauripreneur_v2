@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using  System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace API.Entities
+namespace API.DTOs.UpdateDTO
 {
-    public class Sme
+    public class SmeUpdateDTO
     {
-      
-        public int Id { get; set; }       
+         public int Id { get; set; }       
 
         public string CompName { get; set; }
 
@@ -27,20 +24,5 @@ namespace API.Entities
         public string SocialLink { get; set; }
 
         public string compDescription { get; set; }
-
-        
-        public  AppUser User { get; set; }
-        public int AppUserId { get; set; }
-
-        public ICollection<Vacancy> Vacancy { get; set; }
-
-        public ICollection<Job> Job { get; set; }
-
-        public ICollection<Meeting> Meeting { get; set; }
-
-        public ICollection<Bid> Bid { get; set; }
-
-       
-
     }
 }

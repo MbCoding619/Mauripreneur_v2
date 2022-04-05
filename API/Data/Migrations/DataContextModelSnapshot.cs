@@ -60,6 +60,9 @@ namespace API.Data.Migrations
                     b.Property<string>("accountStatus")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("imagePath")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("AppUserId");
 
                     b.ToTable("Users");
@@ -164,6 +167,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Timeframe")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("filePath")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -344,6 +350,9 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SocialLink")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("compDescription")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

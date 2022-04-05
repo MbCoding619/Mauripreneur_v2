@@ -1,0 +1,8 @@
+<div class="form-group">
+    <textarea rows="4" 
+    cols="50"
+    clas="form-control" 
+    [formControl]="ngControl.control"
+    placeholder={{label}} ></textarea>
+    <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">Please enter a {{label}}</div>
+</div>

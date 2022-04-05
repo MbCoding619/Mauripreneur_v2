@@ -22,11 +22,9 @@ namespace API.DTOs.AutoDTO
 
         public int FieldId { get; set; }
 
-        
+        public string filePath { get; set; }        
 
-        public int SmeId { get; set; } 
-
-        
+        public int SmeId { get; set; }         
 
          public ICollection<ATBidDTO> Bid { get; set; }
     }

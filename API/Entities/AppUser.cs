@@ -24,6 +24,8 @@ namespace API.Entities
         public string AppUserRole { get; set; }
         
         public string accountStatus { get; set; }
+
+        public string imagePath { get; set; }
         
         public  Sme Sme { get; set; }
         

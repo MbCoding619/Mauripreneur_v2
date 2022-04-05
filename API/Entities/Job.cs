@@ -23,6 +23,8 @@ namespace API.Entities
         public int Budget { get; set; }
 
         public int FieldId { get; set; }
+        
+        public string filePath { get; set; }
 
         public Field Field { get;  set; }
 

@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from '../_services/accounts.service';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import Validation from '../_utils/validation';
+
 
 
 @Component({
@@ -31,17 +34,20 @@ export class RegisterComponent implements OnInit {
 
   @Output() cancelRegister = new EventEmitter();
   model: any ={}; 
+  registerForm : FormGroup;
+  submitted = false;
+  validationErrors: string[] = [];
 
   constructor(private accountService : AccountsService,
     private toastr: ToastrService,
-    private router : Router) { }
+    private router : Router,private fb : FormBuilder) { }
 
   ngOnInit(): void {
-   
+   this.initializeForm();
   }
 
   registerUser(){
-    this.accountService.registerUser(this.model).subscribe(response =>{
+    this.accountService.registerUser(this.registerForm.value).subscribe(response =>{
       console.log(response);
       this.router.navigateByUrl('Registration/Choice');
     },error =>{
@@ -49,7 +55,30 @@ export class RegisterComponent implements OnInit {
       this.toastr.error(error.error);
     })
   }
+  initializeForm(){
+    this.registerForm = this.fb.group(
+      {
+        username : ['', Validators.required],
+        password : ['',[Validators.required,Validators.minLength(6), Validators.maxLength(16)]],
+        confirmPassword : ['',[Validators.required, this.matchValues('password')]]
 
+      }
+    )
+  }
+
+
+  matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value === control?.parent?.controls[matchTo].value 
+        ? null : {isMatching: true}
+    }
+  }
+
+  
+
+
+
+ 
  
 
   cancel(){

@@ -16,12 +16,17 @@ namespace API.Extensions
     public static class ApplicationsServiceExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
-        {
+        {   
+
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             //Services for the Token
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPhotoService,PhotoService>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IJobRepository, JobRepository>();
             services.AddScoped<IBidRepository,BidRepository>();
+            services.AddScoped<ISmeRepository,SmeRepository>();
+            services.AddScoped<IProfRepository,ProfRepository>();
             //Iinitialising the dependency of Automapper in the App Service class
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
                 //See below format and understand.
