@@ -140,7 +140,7 @@
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
         <div class="card h-100">
             <div class="card-body">
-                <form [formGroup]="editFormSme" (ngSubmit)="editFormSme.valid && editSme()" >
+                <form [formGroup]="editFormProf" (ngSubmit)="editFormProf.valid  && editProf()" >
                     <div class="row gutters">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <h4 class="mb-2 text-primary">Personal Details</h4>
@@ -148,35 +148,35 @@
                         <div hidden class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">id</label>
-                                <app-text-input [formControl]='editFormSme.controls["id"]'
+                                <app-text-input [formControl]='editFormProf.controls["id"]'
                                 [label]="'id'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">First Name</label>
-                                <app-text-input [formControl]='editFormSme.controls["representName"]'
+                                <app-text-input [formControl]='editFormProf.controls["fName"]'
                                 [label]="'First Name'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="fullName">Last Name</label>
-                                <app-text-input [formControl]='editFormSme.controls["representLName"]'
+                                <app-text-input [formControl]='editFormProf.controls["lName"]'
                                 [label]="'Last Name'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="Email">Email</label>
-                                <app-text-input [formControl]='editFormSme.controls["email"]'
+                                <app-text-input [formControl]='editFormProf.controls["email"]'
                                 [label]="'Email'" ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <app-text-input [formControl]='editFormSme.controls["representPhone"]'
+                                <app-text-input [formControl]='editFormProf.controls["phone"]'
                                 [label]="'Phone number'"  ></app-text-input>
                             </div>
                         </div>
@@ -184,34 +184,93 @@
                     </div>
                     <div class="row gutters">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h4 class="mt-3 mb-2 text-primary">Company Information</h4>
+                            <h4 class="mt-3 mb-2 text-primary">Other Information</h4>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="Street">Address</label>
-                                <app-text-input [formControl]='editFormSme.controls["address"]'
+                                <app-text-input [formControl]='editFormProf.controls["address"]'
                                 [label]="'Address'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="ciTy">Company Name</label>
-                                <app-text-input [formControl]='editFormSme.controls["compName"]'
-                                [label]="'Company Name'"  ></app-text-input>
+                                <label for="ciTy">ID number</label>
+                                <app-text-input [formControl]='editFormProf.controls["idNum"]'
+                                [label]="'ID number'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="sTate">Website / Social Url</label>
-                                <app-text-input [formControl]='editFormSme.controls["socialLink"]'
+                                <label for="sTate">LinkedIn Url</label>
+                                <app-text-input [formControl]='editFormProf.controls["linkedInLink"]'
                                 [label]="'www.linkedIn.com'"  ></app-text-input>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="zIp">Company Description</label>
-                                <app-text-area [formControl]='editFormSme.controls["compDescription"]'
+                                <label for="zIp">Brief Description</label>
+                                <app-text-area [formControl]='editFormProf.controls["briefDesc"]'
                                 [label]="'Company Description'"  ></app-text-area>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h4 class="mt-3 mb-2 text-primary">Qualification</h4>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="Street">Institution</label>
+                                <app-text-input [formControl]='editFormProf.controls["educationInstition"]'
+                                [label]="'Institution'"  ></app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="ciTy">Qualification</label>
+                                <app-text-input [formControl]='editFormProf.controls["qual1"]'
+                                [label]="'Qualification'"  ></app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="sTate">Other Qualification</label>
+                                <app-text-input [formControl]='editFormProf.controls["qual2"]'
+                                [label]="'Other Qualification'"  ></app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="field">Field</label>
+                                <select id="field" formControlName="fieldId" 
+                                class="form-control browser-default custom-select">
+                                <option>--Select--</option>
+                                <option *ngFor="let field of fieldList"
+                                [value]="field.fieldId">
+                                    {{field.description}}
+                                    <!-- {{field | json}}                 -->
+                            </option>            
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h4 class="mt-3 mb-2 text-primary">Employment Information</h4>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="Street">Employment Status</label>
+                                <app-text-input [formControl]='editFormProf.controls["employmentStatus"]'
+                                [label]="'Employed/Freelancer/Unemployed'"  ></app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="ciTy">Employment History</label>
+                                <app-text-input [formControl]='editFormProf.controls["employmentHistory"]'
+                                [label]="'Places where you worked'"  ></app-text-input>
                             </div>
                         </div>
                     </div>

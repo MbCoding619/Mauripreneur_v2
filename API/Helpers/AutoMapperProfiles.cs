@@ -21,6 +21,7 @@ namespace API.Helpers
             CreateMap<SmeUpdateDTO,Sme>();
             CreateMap<Professional,ATProfessionalDTO>();
             CreateMap<ProfUpdateDTO,Professional>();
+            CreateMap<FieldUpdateDTO,Field>();
         }
     }
 }

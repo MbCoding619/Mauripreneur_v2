@@ -1,0 +1,97 @@
+<div id="menu1" class="tab-pane active">
+    <div class="row justify-content-center">
+        <div class="col-11">
+            <div class="form-card">
+                <div class="row justify-content-center">
+                    <div class="text-center" id="test">Fields</div>
+                </div>
+                <form [formGroup]="editForm" >
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group"> <input readonly formControlName="fieldId" type="text" id="bk_nm" placeholder="Field Id"> <label>Field Id</label> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group"> <input formControlName="description" type="text"  id="ben-nm" placeholder="Description"> <label>Description</label> </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group"> <input formControlName="fieldStatus" type="text" placeholder="Field Status" class="placeicon" minlength="8" maxlength="11"> <label>Field Status</label> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"> <input (click)="addField()" value="Add Field" class="btn btn-success placeicon"> </div>
+                        <div class="col-md-4"> <input (click)="editField()" value="Edit Field" class="btn btn-success placeicon"> </div>
+                        <div class="col-md-4"> <input (click)="clearForm()" value="Cancel" class="btn btn-danger placeicon"> </div>
+                    </div>                   
+                </form>
+                <!--Table Starts here-->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="container">
+                            <div style="margin-top:5px;">
+                                <div class="mat-elevation-z8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Filter</mat-label>
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                                      </mat-form-field>
+                            <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="dataSource">          
+                        
+                                  
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="fieldId">
+                                      <th mat-header-cell *matHeaderCellDef> Field Id </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.fieldId}} </td>
+                                    </ng-container>
+                                
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="description">
+                                      <th mat-header-cell *matHeaderCellDef> Description </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                                    </ng-container>
+                                
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="fieldStatus">
+                                      <th mat-header-cell *matHeaderCellDef> fieldStatus </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.fieldStatus}} </td>
+                                    </ng-container>
+                                    
+                        
+                                     <!-- Symbol Column -->
+                                     <ng-container matColumnDef="Action" >
+                                        <th mat-header-cell *matHeaderCellDef> Edit </th>
+                                        <td mat-cell *matCellDef="let element">                 
+                                          <ng-container >
+                                            <button mat-icon-button color="accent">
+                                              <mat-icon (click)="getData(element)">auto_fix_normal</mat-icon>
+                                          </button>
+                                            
+                                          </ng-container>                   
+                                          
+                                        </td>
+                                      </ng-container>
+                                   
+                                
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                  </table>
+                                
+                                  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                                 showFirstLastButtons 
+                                                 aria-label="Select page of periodic elements">
+                                  </mat-paginator>
+                            </div>              
+                                   
+                                  </div>
+                        
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

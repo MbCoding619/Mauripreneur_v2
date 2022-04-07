@@ -6,19 +6,25 @@ using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.DTOs;
+using API.DTOs.UpdateDTO;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace API.Controllers
 {
     public class FieldController : BaseApiController
     {
          private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        private readonly IFieldRepository _repository;
         
-        public FieldController(DataContext context  )
+        public FieldController(DataContext context, IMapper mapper, IFieldRepository repository  )
         {
+            _repository = repository;
+            _mapper = mapper;
             
             _context = context;
         }
@@ -41,7 +47,8 @@ namespace API.Controllers
 
                 var newField = new Field {
 
-                    Description = fieldAddDTO.Description
+                    Description = fieldAddDTO.Description,
+                    fieldStatus = fieldAddDTO.fieldStatus
                 };
 
                 _context.Fields.Add(newField);
@@ -65,10 +72,20 @@ namespace API.Controllers
         //Need to get on the logic behind put
         [HttpPut("editField")]
 
-        public  void UpdateField(FieldAddDTO fieldAddDTO)
-        {
+        public  async Task<ActionResult> UpdateField(FieldUpdateDTO fieldUpateDTO)
+        {       
+            var field = await _repository.GetFieldByIdAsync(fieldUpateDTO.FieldId);
+            if(field !=null )
+            {
+                _mapper.Map(fieldUpateDTO,field);
+                _repository.Update(field);
 
-                _context.Entry(fieldAddDTO).State = EntityState.Modified;
+                return Ok();
+            }
+            else{
+                return BadRequest("Something went wrong");
+            }
+
 
         }
 

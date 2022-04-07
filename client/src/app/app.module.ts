@@ -57,6 +57,8 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { TestUploadComponent } from './_tests/test-upload/test-upload.component';
 import { TextAreaComponent } from './_forms/text-area/text-area.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
 
 
 
@@ -96,7 +98,8 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     BidApprovedComponent,
     TextInputComponent,
     TestUploadComponent,
-    TextAreaComponent    
+    TextAreaComponent,
+    EditFieldsComponent    
   ],
   imports: [
     BrowserModule,
@@ -131,6 +134,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule
+    
        
     
   ],

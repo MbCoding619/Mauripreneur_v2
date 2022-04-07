@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarDayViewComponent } from 'angular-calendar';
+import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
 import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
 import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
@@ -32,12 +33,18 @@ const routes: Routes = [
   {path:'Job/AllJob',component: AllJobPostedComponent},
   {path:'Calendar/ViewCalendar',component: CalendarViewComponent},
   {path:'User/UserProfile',component: UserProfileComponent},
-  {path:'Admin/Dashboard',component: AdminDashboardComponent},
+  {path:'Admin/Dashboard',component: AdminDashboardComponent,
+      children:[
+        {
+          path:'EditFields',
+          component : EditFieldsComponent
+        }
+      ]},
   {path:'Bid/ViewBid',component: BidSmeComponent},
   {path:'Bid/BidSent',component: BidSentComponent},
   {path:'Bid/BidApproved',component: BidApprovedComponent},
   {path:'errors',component: TestErrorsComponent},
-  {path:'Test/Upload',component: TestUploadComponent},
+  {path:'Test/Upload',component: TestUploadComponent}, 
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

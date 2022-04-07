@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { smeProfile } from '../_models/smeProfile';
+import { profProfile } from '../_models/profProfile';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,20 @@ export class MembersService {
   editSmeProfile(model : any){
     return this.http.put(this.baseUrl+'sme/editSme',model).pipe(map(()=>{
       this.toastr.success("Profile updated successfully");
+    }))
+  }
+
+  getProfs(){
+    return this.http.get<profProfile>(this.baseUrl+`prof/allProf`);
+  }
+
+  getProfByUsername(username:string){
+    return this.http.get<profProfile>(this.baseUrl+`prof/${username}`);
+  }
+
+  editProfProile(model : any){
+    return this.http.put(this.baseUrl+'prof/editProf',model).pipe(map(()=>{
+      this.toastr.success("Profile updated Sucessfully");
     }))
   }
 

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -6,10 +10,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-
-  constructor() { }
+  public isCollapsed = false;
+  constructor(private router : Router, private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+    
   }
+
+  editFieldsRoute(){
+    this.router.navigate(['EditFields'],{relativeTo:this.route});
+  }
+
+
 
 }
