@@ -34,6 +34,8 @@ export class PostJobComponent implements OnInit {
   Budget : FormGroup;
   selectedValue : string;
   username = '';
+  formData1 : FormData;
+  formDataSubmit = new FormData();
  
   timeframes : timeFrame[] = [
 
@@ -121,9 +123,29 @@ export class PostJobComponent implements OnInit {
     }
   }
 
+  // addJob(){
+
+  //   this.sharedService.addJob(this.test).subscribe(response =>{
+
+  //     console.log(response);
+  //   },error =>{
+
+  //      this.toastr.error(error.error);
+  //      console.log(error);
+  //   })
+  // }
+
   addJob(){
 
-    this.sharedService.addJob(this.test).subscribe(response =>{
+    this.formDataSubmit.append('username',this.username?.toLocaleLowerCase());
+    this.formDataSubmit.append('jobTitle',this.JobTitle?.get('jobTitle')?.value);
+    this.formDataSubmit.append('requirements',this.Requirements?.get('requirements')?.value);
+    this.formDataSubmit.append('desc',this.Description?.get('description')?.value);
+    this.formDataSubmit.append('fieldId',this.Field?.get('fieldId')?.value);
+    this.formDataSubmit.append('timeFrame',this.TimeFrame?.get('timeframe')?.value);
+    this.formDataSubmit.append('budget',this.Budget?.get('budget')?.value );
+
+    this.sharedService.addJob(this.formDataSubmit).subscribe(response =>{
 
       console.log(response);
     },error =>{
@@ -132,6 +154,21 @@ export class PostJobComponent implements OnInit {
        console.log(error);
     })
   }
+
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let fileToUpload = <File>files[0];
+    //const formData = new FormData();
+    this.formDataSubmit.append('file', fileToUpload, fileToUpload.name);  
+  };
+
+  
+
+
+
 
   pushData(){
 

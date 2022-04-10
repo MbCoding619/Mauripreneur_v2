@@ -126,8 +126,7 @@ export class SharedService {
     return this.http.post(this.baseUrl+'meeting/createMeeting',model).pipe(
       map((meetResponse : meetingResponse)=>{
 
-        if(meetResponse){
-          this.toastr.success();
+        if(meetResponse){          
           return(meetResponse);
         }
       })

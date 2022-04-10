@@ -28,6 +28,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogScheduleMeetingComponent } from 'src/app/dialog/dialog-schedule-meeting/dialog-schedule-meeting.component';
+import { CalendarService } from 'src/app/_services/calendar.service';
+import { meeting } from 'src/app/_models/meeting';
 
 
   const colors: any = {
@@ -88,8 +90,7 @@ export class CalendarViewComponent{
     },
   ];
 
-  events: CalendarEvent[] = [
-  ];
+  events: CalendarEvent[] = [];
 
   refresh = new Subject<void>();
 
@@ -99,13 +100,14 @@ export class CalendarViewComponent{
   dataSource : MatTableDataSource<any>;
   model : any ={};
   username = '';
+  calendarResponse : any;
 
 
   constructor(private modal: NgbModal,private sharedService : SharedService,
     public accountService : AccountsService,
     private toastr : ToastrService,
     private routr : Router,
-    private dialog : MatDialog) {}
+    private dialog : MatDialog, private calendarService : CalendarService) {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -115,7 +117,9 @@ export class CalendarViewComponent{
       this.username = response.username;
     })
 
-    this.getJobBySme(this.username);
+    this.getMeetingProf(this.username);
+   
+   // this.getJobBySme(this.username);
   }
 
   getJobBySme(username :any){
@@ -131,6 +135,28 @@ export class CalendarViewComponent{
       this.toastr.error(error.error);
     })
 
+  }
+
+  getMeetingProf(username :string){
+    this.calendarService.getMeetingByProf(username).subscribe( response =>{
+      this.calendarResponse = response;
+      for(let item of this.calendarResponse){
+        this.events = [
+          ...this.events,
+          {
+            title: item['meetTitle'],
+            start: startOfDay(new Date(item['startDate'])),
+            end: endOfDay(new Date(item['endDate'])),
+            color: colors.red,
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+          },
+        ];
+      }
+    })
   }
 
   openDialog(row : any) {
