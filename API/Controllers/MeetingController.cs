@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.DTOs.AutoDTO;
 using API.Entities;
+using API.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +16,12 @@ namespace API.Controllers
     public class MeetingController : BaseApiController
     {
         private readonly DataContext _context;
-        public MeetingController(DataContext context)
+        private readonly IMeetingRepository _meetingRepository;
+        private readonly IMapper _mapper;
+        public MeetingController(DataContext context, IMeetingRepository meetingRepository, IMapper mapper)
         {
+            _mapper = mapper;
+            _meetingRepository = meetingRepository;
             _context = context;
         }
 
@@ -25,13 +32,15 @@ namespace API.Controllers
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == meetingAddDTO.username.ToLower());
 
             if(user !=null){
-                var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
+                if(user.AppUserRole =="SME")
+                {
+                 var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
 
                 var meeting = new Meeting{
 
                     MeetTitle = meetingAddDTO.MeetTitle,
                     SmeId = sme.Id,
-                    BidId = meetingAddDTO.BidId,
+                    meetingDetails = meetingAddDTO.meetingDetails,                    
                     ProfId = meetingAddDTO.ProfId,
                     startDate = Convert.ToDateTime(meetingAddDTO.startDate),
                     endDate = Convert.ToDateTime(meetingAddDTO.endDate)
@@ -39,6 +48,25 @@ namespace API.Controllers
                 };
 
                 _context.Meeting.Add(meeting);
+                }
+                else if(user.AppUserRole =="PROFESSIONAL")
+                {
+                    var prof = await _context.Professionals.SingleOrDefaultAsync(p => p.AppUserId == user.AppUserId);
+
+                    var meeting = new Meeting{
+
+                        MeetTitle = meetingAddDTO.MeetTitle,
+                        SmeId = meetingAddDTO.SmeId,
+                        meetingDetails = meetingAddDTO.meetingDetails,
+                        ProfId = prof.Id,
+                        startDate = Convert.ToDateTime(meetingAddDTO.startDate),
+                        endDate = Convert.ToDateTime(meetingAddDTO.endDate)
+                        
+                    };
+                 _context.Meeting.Add(meeting); 
+                }else{
+                    return BadRequest("User not found");
+                }
             }else
             {
                 return BadRequest("Meeting not Set!");
@@ -49,5 +77,16 @@ namespace API.Controllers
                 status = " Meeting Scheduled"
             };
         }
+
+        [HttpGet("meetingByProf/{username}")]
+        public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> GetMeetingByProf(string username)
+        {
+            var meeting = await _meetingRepository.GetMeetingByProf(username);
+
+            var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
+
+            return Ok(meetingToReturn);
+        }
+
     }
 }

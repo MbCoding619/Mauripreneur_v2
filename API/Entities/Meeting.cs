@@ -9,7 +9,9 @@ namespace API.Entities
     {
         public int MeetId  { get; set; }
 
-        public string MeetTitle { get; set; }        
+        public string MeetTitle { get; set; }  
+
+        public string meetingDetails { get; set; }      
 
         public int? SmeId { get; set; }
         

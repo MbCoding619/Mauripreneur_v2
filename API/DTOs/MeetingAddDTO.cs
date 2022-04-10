@@ -12,7 +12,9 @@ namespace API.DTOs
         
         public string MeetTitle { get; set; }       
 
-        public int? SmeId { get; set; }        
+        public int? SmeId { get; set; }  
+
+        public string meetingDetails { get; set; }      
         public DateTime startDate { get; set; }        
         public DateTime endDate { get; set; }        
        

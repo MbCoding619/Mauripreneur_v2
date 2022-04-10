@@ -9,5 +9,7 @@ namespace API.Interfaces
     public interface IMeetingRepository
     {
         void Update(Meeting meeting);
+
+        Task<IEnumerable<Meeting>> GetMeetingByProf(string username);
     }
 }
