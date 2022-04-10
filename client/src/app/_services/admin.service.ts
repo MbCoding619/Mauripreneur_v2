@@ -6,13 +6,14 @@ import { environment } from 'src/environments/environment';
 import { editJob } from '../_models/editJob';
 import { field } from '../_models/field';
 import { fieldAdd } from '../_models/fieldAdd';
+import { manageUser } from '../_models/manageUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   baseUrl = environment.apiUrl;
-
+  
   constructor(private http : HttpClient, private toastr: ToastrService) { }
 
   getFields(){
@@ -44,6 +45,36 @@ export class AdminService {
           //return(job);
         }
       })
+    )
+  }
+
+  getUsers(){
+    return this.http.get<manageUser[]>(this.baseUrl+'user');
+  }
+
+  deactivatUser(appUserId : number,model : any){
+    return this.http.put(this.baseUrl+'admin/deactivateUser/'+appUserId,model).pipe(
+      map((user : editJob)=>{
+        if(user)
+        {
+          this.toastr.success();
+        }
+      }
+
+      )
+    )
+  }
+
+  activateUser(appUserId : number,model : any){
+    return this.http.put(this.baseUrl+'admin/activateUser/'+appUserId,model).pipe(
+      map((user : editJob)=>{
+        if(user)
+        {
+          this.toastr.success();
+        }
+      }
+
+      )
     )
   }
 

@@ -18,8 +18,10 @@ namespace API.Controllers
         private readonly DataContext _context;      
         private readonly IMapper _mapper;
         private readonly ISmeRepository _smeRepository;
-        public SmeController(DataContext context , ISmeRepository smeRepository , IMapper mapper)
+        private readonly IUserRepository _userRepository;
+        public SmeController(DataContext context , ISmeRepository smeRepository , IMapper mapper, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _smeRepository = smeRepository;
             _mapper = mapper;            
             _context = context;
@@ -72,6 +74,21 @@ namespace API.Controllers
             {
                 return BadRequest("Something went wrong");
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("smeById/{id}")]
+        public async Task<ActionResult<ATSmeDTO>> getSmeById(int id)
+        {
+            var sme = await _smeRepository.GetSmeById(id);
+            
+            var user = await _userRepository.GetUserByIdAsync(sme.AppUserId);
+
+
+            var smeToReturn = _mapper.Map<ATSmeDTO>(sme);
+            smeToReturn.imagePath = user.imagePath;
+            
+            return smeToReturn;
         }
     }
 }

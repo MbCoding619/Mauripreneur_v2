@@ -21,6 +21,10 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['EditFields'],{relativeTo:this.route});
   }
 
+  manageUserRoute(){
+    this.router.navigate(['ManageUsers'],{relativeTo:this.route});
+  }
+
 
 
 }

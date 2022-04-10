@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.EmailService;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,11 @@ namespace API.Controllers
     public class AdminController : BaseApiController
     {
         private readonly DataContext _context; 
-        public AdminController(DataContext context)
+        private readonly IEmailSender _emailSender;
+        public AdminController(DataContext context, IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         [HttpPost("addAdmin")]
@@ -54,6 +57,8 @@ namespace API.Controllers
                 {
                     user.accountStatus = "INACTIVE";
                     await _context.SaveChangesAsync();
+
+                    
                     return Ok("User: "+user.UserName+" account Deactivated");
                 }
                 else

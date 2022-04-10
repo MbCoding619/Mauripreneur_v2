@@ -16,7 +16,11 @@ namespace API.DTOs.AutoDTO
 
         public byte[] PasswordSalt { get; set; }
 
-        public string AppUserRole { get; set; }     
+        public string AppUserRole { get; set; }   
+
+         public string accountStatus { get; set; }
+
+        public string imagePath { get; set; }  
         
         
     }

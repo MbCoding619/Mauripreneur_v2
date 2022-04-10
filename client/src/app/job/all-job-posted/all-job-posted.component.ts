@@ -8,6 +8,7 @@ import { SharedService } from 'src/app/_services/shared.service';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogJobEditComponent } from 'src/app/dialog/dialog-job-edit/dialog-job-edit.component';
 import { DialogBidComponent } from 'src/app/dialog/dialog-bid/dialog-bid.component';
+import { SmeProfileComponent } from 'src/app/dialog/sme-profile/sme-profile.component';
 
 
 
@@ -65,7 +66,7 @@ export class AllJobPostedComponent implements OnInit {
   }
 
   openDialog(row : any) {
-    const dialogRef = this.dialog.open(DialogBidComponent,{
+    const dialogRef = this.dialog.open(SmeProfileComponent,{
         data: row
     });
   }

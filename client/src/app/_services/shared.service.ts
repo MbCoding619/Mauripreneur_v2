@@ -60,6 +60,11 @@ export class SharedService {
     return this.http.get<any>(this.baseUrl+'Job/allJob');
   }
 
+  getJobById(id:any){
+
+    return this.http.get<Job>(this.baseUrl+'job/jobById/'+id);
+  }
+
   placeBid(model : any){
 
     return this.http.post(this.baseUrl+'bid/addBid',model).pipe(
@@ -133,7 +138,7 @@ export class SharedService {
   //testing
 
   public download(fileUrl: string) {
-    return this.http.get(`${this.baseUrl}/FileManager/download?fileUrl=${fileUrl}`, {
+    return this.http.get(`${this.baseUrl}FileManager/download?fileUrl=${fileUrl}`, {
       reportProgress: true,
       observe: 'events',
       responseType: 'blob',

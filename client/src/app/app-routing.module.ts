@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarDayViewComponent } from 'angular-calendar';
 import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
+import { ManageUsersComponent } from './Admin/admin-components/manage-users/manage-users.component';
 import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
 import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
         {
           path:'EditFields',
           component : EditFieldsComponent
+        },
+        {
+          path :'ManageUsers',
+          component : ManageUsersComponent
         }
       ]},
   {path:'Bid/ViewBid',component: BidSmeComponent},

@@ -9,5 +9,6 @@ export interface smeProfile{
     representPhone : number,
     socialLink: string,
     compDescription: string,
-    appUserId : number
+    appUserId : number,
+    imagePath : string
 }

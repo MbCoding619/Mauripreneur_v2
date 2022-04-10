@@ -6,5 +6,6 @@ export interface Job{
     requirements: string;
     timeframe: string;
     fieldId: any;
+    filePath : string;
 
 }

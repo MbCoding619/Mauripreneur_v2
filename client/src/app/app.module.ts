@@ -59,6 +59,10 @@ import { TextAreaComponent } from './_forms/text-area/text-area.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
+import { ManageUsersComponent } from './Admin/admin-components/manage-users/manage-users.component';
+import { SmeProfileComponent } from './dialog/sme-profile/sme-profile.component';
+import {TabsModule} from 'ngx-bootstrap/tabs';
+import { QRCodeModule } from 'angular2-qrcode';
 
 
 
@@ -99,7 +103,9 @@ import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-f
     TextInputComponent,
     TestUploadComponent,
     TextAreaComponent,
-    EditFieldsComponent    
+    EditFieldsComponent,
+    ManageUsersComponent,
+    SmeProfileComponent    
   ],
   imports: [
     BrowserModule,
@@ -133,7 +139,9 @@ import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-f
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    TabsModule.forRoot(),
+    QRCodeModule
     
        
     

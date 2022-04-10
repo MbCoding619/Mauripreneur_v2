@@ -1,0 +1,17 @@
+
+Chapter 6: System Design
+
+·        Architectural Diagram
+
+·        Data dictionary
+
+·        ERD (logical and physical data model)
+
+·        Class diagram
+
+·        Use case Diagram / Written Use case
+
+·        Sequence diagram, Activity diagram
+
+·        Interface Design of Website
+

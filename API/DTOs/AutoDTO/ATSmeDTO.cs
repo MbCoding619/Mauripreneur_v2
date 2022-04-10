@@ -26,6 +26,8 @@ namespace API.DTOs.AutoDTO
         public string SocialLink { get; set; }
 
         public string compDescription { get; set; }
+
+        public string imagePath { get; set; }
         
         
         public int AppUserId { get; set; }
