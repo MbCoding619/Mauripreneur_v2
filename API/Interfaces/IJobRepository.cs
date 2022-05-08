@@ -14,6 +14,7 @@ namespace API.Interfaces
         Task<bool> SaveAllAsync();
 
         Task<IEnumerable<Job>> GetJobMAsync();
+        Task<IEnumerable<Job>> GetAllJobAsync();
 
         Task<Job> GetJobByIdAsync(int id);
 

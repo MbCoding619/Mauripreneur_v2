@@ -63,6 +63,10 @@ import { ManageUsersComponent } from './Admin/admin-components/manage-users/mana
 import { SmeProfileComponent } from './dialog/sme-profile/sme-profile.component';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import { QRCodeModule } from 'angular2-qrcode';
+import { ManageJobsComponent } from './Admin/admin-components/manage-jobs/manage-jobs.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { SendBidComponent } from './bid/send-bid/send-bid.component';
 
 
 
@@ -105,7 +109,11 @@ import { QRCodeModule } from 'angular2-qrcode';
     TextAreaComponent,
     EditFieldsComponent,
     ManageUsersComponent,
-    SmeProfileComponent    
+    SmeProfileComponent,
+    ManageJobsComponent,
+    MemberCardComponent,
+    MemberListComponent,
+    SendBidComponent    
   ],
   imports: [
     BrowserModule,

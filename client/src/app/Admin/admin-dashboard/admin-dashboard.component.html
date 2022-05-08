@@ -7,17 +7,17 @@
                     <div  #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"   class="bg-light border-right" id="sidebar-wrapper">
                         <div class="sidebar-heading pt-5 pb-4"><strong>ADMIN DASHBOARD</strong></div>
                         <div class="list-group list-group-flush"> <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
-                        </a> <a data-toggle="tab" (click)="editFieldsRoute()" id="tab2" class="tabs list-group-item active1">
+                        </a> <a  (click)="editFieldsRoute()" id="tab2" class="tabs list-group-item active1">
                                 <div class="list-div my-2">
                                     <div class="fa fa-tags"></div> &nbsp;&nbsp; Manage Fields
                                 </div>
-                            </a> <a data-toggle="tab" (click)="manageUserRoute()" id="tab2" class="tabs list-group-item bg-light ">
+                            </a> <a  (click)="manageUserRoute()" id="tab2" class="tabs list-group-item bg-light ">
                                 <div class="list-div my-2">
-                                    <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
+                                    <div class="fa fa-users"></div> &nbsp;&nbsp; Manage Users
                                 </div>
-                            </a> <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
+                            </a> <a (click)="manageJobsRoute()" id="tab3" class="tabs list-group-item bg-light">
                                 <div class="list-div my-2">
-                                    <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Visa QR <span id="new-label">NEW</span>
+                                    <div class="fa fa-object-group"></div> &nbsp;&nbsp;&nbsp; Manage Jobs
                                 </div>
                             </a> </div>
                     </div> <!-- Page Content -->

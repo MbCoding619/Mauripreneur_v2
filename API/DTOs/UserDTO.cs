@@ -14,5 +14,7 @@ namespace API.DTOs
 
         public string AppUserRole { get; set; }
 
+        public string imagePath { get; set; }
+
     }
 }

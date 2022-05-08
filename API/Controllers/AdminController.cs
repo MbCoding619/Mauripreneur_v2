@@ -95,5 +95,86 @@ namespace API.Controllers
             }
         }
 
+        [HttpPut("approveJob/{id}")]
+        public async Task<ActionResult<ActionStatusDTO>> approveJob(int id)
+        {
+            var job = await _context.Job.SingleOrDefaultAsync(jb => jb.Id == id);            
+            if(job !=null)
+            {
+                var sme = await _context.Sme.SingleOrDefaultAsync(s => s.Id == job.SmeId);
+                if(job.jobStatus == "PENDING")
+                {
+                    job.jobStatus = "APPROVED";
+                    await _context.SaveChangesAsync();
+                     var message = new Message(new string[]{sme.Email}, "Job Status", job.JobTitle,"APPROVED");
+                     _emailSender.SendEmail(message);
+                    return new ActionStatusDTO
+                    {
+                        status ="Job Approved"
+                    };
+                }else if(job.jobStatus == "APPROVED")
+                {
+                    return new ActionStatusDTO
+                    {
+                        status = "Job Already Approved"
+                    };
+                }else
+                {
+                    return new ActionStatusDTO
+                    {
+                        status ="Something Went Wrong"
+                    };
+                }
+            }else
+            {
+               return new ActionStatusDTO
+               {
+                    status ="No Job Found"
+               }; 
+            }
+            
+        }
+
+
+        [HttpPut("declineJob/{id}")]
+        public async Task<ActionResult<ActionStatusDTO>> declineJob(int id)
+        {
+            var job = await _context.Job.SingleOrDefaultAsync(jb => jb.Id == id);            
+            if(job !=null)
+            {
+                var sme = await _context.Sme.SingleOrDefaultAsync(s => s.Id == job.SmeId);
+                if(job.jobStatus == "PENDING")
+                {
+                    job.jobStatus = "DECLINED";
+                    await _context.SaveChangesAsync();
+                     var message = new Message(new string[]{sme.Email}, "Job Status", job.JobTitle,"DECLINED");
+                     _emailSender.SendEmail(message);
+                    return new ActionStatusDTO
+                    {
+                        status ="Job Declined"
+                    };
+                }else if(job.jobStatus == "DECLINED")
+                {
+                    return new ActionStatusDTO
+                    {
+                        status = "Job Already Declined"
+                    };
+                }else
+                {
+                    return new ActionStatusDTO
+                    {
+                        status ="Something Went Wrong"
+                    };
+                }
+            }else
+            {
+               return new ActionStatusDTO
+               {
+                    status ="No Job Found"
+               }; 
+            }
+            
+        }
+
     }
 }

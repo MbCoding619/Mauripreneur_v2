@@ -17,6 +17,7 @@ export class RegisterProfessionalComponent implements OnInit {
   model: any ={}; 
   fieldList: any;
   username:any;
+  formDataSubmit = new FormData();
   testUse = this.accountService.currentUser$.subscribe(response =>{
 
     this.username = response.username;
@@ -59,7 +60,21 @@ export class RegisterProfessionalComponent implements OnInit {
 
 
   registerProf(){
-    this.accountService.registerProf(this.registerForm.value).subscribe(response =>{
+    this.formDataSubmit.append('username',this.registerForm.controls["username"]?.value);
+    this.formDataSubmit.append('fName',this.registerForm.controls["FName"]?.value);
+    this.formDataSubmit.append('lName',this.registerForm.controls["LName"]?.value);
+    this.formDataSubmit.append('address',this.registerForm.controls["Address"]?.value);
+    this.formDataSubmit.append('iDNum',this.registerForm.controls["IDNum"]?.value);
+    this.formDataSubmit.append('phone',this.registerForm.controls["Phone"]?.value);
+    this.formDataSubmit.append('qual1',this.registerForm.controls["Qual1"]?.value);
+    this.formDataSubmit.append('qual2',this.registerForm.controls["Qual2"]?.value);
+    this.formDataSubmit.append('fieldId',this.registerForm.controls["FieldId"]?.value);
+    this.formDataSubmit.append('educationInstition',this.registerForm.controls["EducationInstition"]?.value);
+    this.formDataSubmit.append('briefDesc',this.registerForm.controls["BriefDesc"]?.value);
+    this.formDataSubmit.append('employmentHistory',this.registerForm.controls["EmploymentHistory"]?.value);
+    this.formDataSubmit.append('employmentStatus',this.registerForm.controls["EmploymentStatus"]?.value);
+
+    this.accountService.registerProf(this.formDataSubmit).subscribe(response =>{
       
       console.log(response);
       this.router.navigateByUrl('/');
@@ -79,5 +94,16 @@ export class RegisterProfessionalComponent implements OnInit {
 
     })
   }
+
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let fileToUpload = <File>files[0];
+    //const formData = new FormData();
+    this.formDataSubmit.append('file', fileToUpload, fileToUpload.name);  
+  };
+
 
 }

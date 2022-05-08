@@ -53,7 +53,8 @@ namespace API.Controllers
              {
                  Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
-                  AppUserRole = user.AppUserRole
+                  AppUserRole = user.AppUserRole,
+                  
              };   
         }
         
@@ -82,7 +83,8 @@ namespace API.Controllers
                  Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
                  AppUserRole = user.AppUserRole,
-                 AppUserId = user.AppUserId
+                 AppUserId = user.AppUserId,
+                 imagePath = user.imagePath
              };
             
         }
@@ -100,15 +102,28 @@ namespace API.Controllers
 
          [HttpPost("registerSme")]
 
-           public async Task<ActionResult<SmeDTO>> RegisterSme(RegisterSmeDTO registerSmeDto)
+           public async Task<ActionResult<SmeDTO>> RegisterSme([FromForm] RegisterSmeDTO registerSmeDto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerSmeDto.Username.ToLower());
 
             if(await UserExists(registerSmeDto.Username))
             {
-            
-         
-            user.AppUserRole ="SME";
+        try
+            {
+               var file = Request.Form.Files[0];
+               var folderName = Path.Combine("Resources","Images");
+               var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),folderName);
+               if(file.Length > 0){
+                   var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                   var fullPath = Path.Combine(pathToSave, fileName);
+                   var dbPath = Path.Combine(folderName, fileName);
+                     using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                 user.AppUserRole ="SME";
+                 user.imagePath = dbPath;
              
             
         
@@ -130,6 +145,20 @@ namespace API.Controllers
 
               //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
             _context.Sme.Add(sme);
+           
+
+       
+
+        }else{
+
+            return BadRequest("File Missing");
+        }     
+
+         }catch(Exception ex){
+            return StatusCode(500,$"Internal Server error :{ex}");
+        }   
+
+ 
                
             }else{
 
@@ -152,13 +181,27 @@ namespace API.Controllers
 
         [HttpPost("registerProf")]
 
-           public async Task<ActionResult<ProfessionalDTO>> RegisterProf(RegisterProfDTO registerProfDTO)
+           public async Task<ActionResult<ProfessionalDTO>> RegisterProf([FromForm] RegisterProfDTO registerProfDTO)
         {
             var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerProfDTO.Username.ToLower());
 
             if(await UserExists(registerProfDTO.Username))
             {
+            try
+            {
+               var file = Request.Form.Files[0];
+               var folderName = Path.Combine("Resources","Images");
+               var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),folderName);
+               if(file.Length > 0){
+                   var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                   var fullPath = Path.Combine(pathToSave, fileName);
+                   var dbPath = Path.Combine(folderName, fileName);
+                     using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
              user.AppUserRole ="PROFESSIONAL";
+             user.imagePath = dbPath;
 
             var professional = new Professional
             {
@@ -182,6 +225,17 @@ namespace API.Controllers
 
               //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
             _context.Professionals.Add(professional);
+      
+       
+
+               }else{
+                   return BadRequest("File Missing");
+               }     
+
+            }catch(Exception ex){
+                return StatusCode(500,$"Internal Server error :{ex}");
+            }
+
                
             }else{
 
@@ -204,14 +258,28 @@ namespace API.Controllers
 
          [HttpPost("registerStud")]
 
-           public async Task<ActionResult<StudentDTO>> RegisterStud(RegisterStudDTO registerStudDTO)
+           public async Task<ActionResult<StudentDTO>> RegisterStud([FromForm] RegisterStudDTO registerStudDTO)
         {
             var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerStudDTO.Username.ToLower());
 
             if(await UserExists(registerStudDTO.Username))
             {
+            try
+            {
+               var file = Request.Form.Files[0];
+               var folderName = Path.Combine("Resources","Images");
+               var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),folderName);
+               if(file.Length > 0){
+                   var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                   var fullPath = Path.Combine(pathToSave, fileName);
+                   var dbPath = Path.Combine(folderName, fileName);
+                     using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
 
-            user.AppUserRole ="STUDENT";       
+            user.AppUserRole ="STUDENT";
+            user.imagePath = dbPath;       
                         
             var student = new Student
             {
@@ -230,7 +298,17 @@ namespace API.Controllers
             };
 
               //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
-            _context.Students.Add(student);
+            _context.Students.Add(student);         
+
+               }else{
+                   return BadRequest("File Missing");
+               }     
+
+            }catch(Exception ex){
+                return StatusCode(500,$"Internal Server error :{ex}");
+            }
+
+
                
             }else{
 
@@ -255,14 +333,29 @@ namespace API.Controllers
         
         [HttpPost("registerOrg")]
 
-           public async Task<ActionResult<OrganizationDTO>> RegisterOrg(RegisterOrgDTO registerOrgDTO)
+           public async Task<ActionResult<OrganizationDTO>> RegisterOrg([FromForm] RegisterOrgDTO registerOrgDTO)
         {
             var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerOrgDTO.Username.ToLower());
 
             if(await UserExists(registerOrgDTO.Username))
             {
-                
+
+            try
+            {
+               var file = Request.Form.Files[0];
+               var folderName = Path.Combine("Resources","Images");
+               var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),folderName);
+               if(file.Length > 0){
+                   var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                   var fullPath = Path.Combine(pathToSave, fileName);
+                   var dbPath = Path.Combine(folderName, fileName);
+                     using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
             user.AppUserRole ="ORGANIZATION";
+            user.imagePath = dbPath;
 
             var organization = new Organization
             {
@@ -278,6 +371,16 @@ namespace API.Controllers
 
               //The below code track the entity using the ORM(Entity Framework) and add the given data but does not save it in the table
             _context.Organizations.Add(organization);
+
+               }else{
+                   return BadRequest("File Missing");
+               }     
+
+            }catch(Exception ex){
+                return StatusCode(500,$"Internal Server error :{ex}");
+            }
+
+
                
             }else{
 

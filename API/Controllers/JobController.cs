@@ -62,7 +62,8 @@ namespace API.Controllers
               Timeframe = jobAddDTO.Timeframe,
               Budget = jobAddDTO.Budget,
               SmeId = sme.Id,
-              filePath = dbPath
+              filePath = dbPath,
+              jobStatus = "PENDING"
               
 
           } ;
@@ -102,7 +103,19 @@ namespace API.Controllers
 
     public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJob(){
 
-        var jobs = await _jobRepository.GetJobMAsync();
+        var jobs = await _jobRepository.GetJobMAsync();        
+        
+        var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+
+        return Ok(jobToReturn);
+    }
+
+
+    [HttpGet("allJobAdmin")]
+
+    public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobAdmin(){
+
+        var jobs = await _jobRepository.GetAllJobAsync();        
         
         var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
 
@@ -118,9 +131,9 @@ namespace API.Controllers
 
             var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
 
-        var jobs = await _jobRepository.GetJobBySmeAsync(sme.Id);
+            var jobs = await _jobRepository.GetJobBySmeAsync(sme.Id);        
 
-         var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+             var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
 
         return Ok(jobToReturn);
         }else
@@ -159,6 +172,31 @@ namespace API.Controllers
         var jobToReturn = _mapper.Map<ATJobDTO>(job);
 
         return jobToReturn;
+    }
+
+    [HttpGet("jobDetails")]
+
+    public IActionResult getJobDetails(){
+
+        var jobDetails = (from j in _context.Job
+                          join s in _context.Sme on j.SmeId equals s.Id
+                          join u in _context.Users on s.AppUserId equals u.AppUserId
+                          join f in _context.Fields on j.FieldId equals f.FieldId
+                          orderby f.Description
+                          select new {
+                            jobId = j.Id,
+                            JobTitle = j.JobTitle,
+                            smeId = s.Id,
+                            SocialLink = s.SocialLink,
+                            Description = f.Description,
+                            Desc = j.Desc,
+                            filePath = j.filePath,
+                            imagePath = u.imagePath,
+                            CompName = s.CompName,
+                            RepresentName = s.RepresentName
+                          });
+
+        return Ok(jobDetails);
     }
 
 

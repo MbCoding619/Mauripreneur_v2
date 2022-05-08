@@ -41,5 +41,6 @@ namespace API.Entities
         public Sme Sme { get; set; }    
 
         public ICollection<Meeting> Meeting { get; set; }
+        public ICollection<Timeline> Timeline { get; set; }
     }
 }

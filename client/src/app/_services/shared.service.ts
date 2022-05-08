@@ -13,6 +13,7 @@ import { editJob } from '../_models/editJob';
 import { acceptBid } from '../_models/acceptBid';
 import { meetingResponse } from '../_models/meetingResponse';
 import { environment } from 'src/environments/environment';
+import { jobDetails } from '../_models/jobDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,10 @@ export class SharedService {
     return this.http.get<Job>(this.baseUrl+'job/jobById/'+id);
   }
 
+  getJobDetails(){
+    return this.http.get<jobDetails>(this.baseUrl+'Job/jobDetails');
+  }
+
   placeBid(model : any){
 
     return this.http.post(this.baseUrl+'bid/addBid',model).pipe(
@@ -72,7 +77,7 @@ export class SharedService {
       map((bid : addBid)=>{
 
         if(bid){
-         this.toastr.show(bid.Status)
+         this.toastr.show(bid.status)
           return(bid);                  
         }
       })

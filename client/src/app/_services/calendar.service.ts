@@ -16,4 +16,8 @@ export class CalendarService {
     return this.http.get<meeting>(this.baseUrl+'meeting/meetingByProf/'+username);
   }
 
+  getMeetingBySme(username:string){
+    return this.http.get<meeting>(this.baseUrl+'meeting/meetingBySme/'+username);
+  }
+
 }

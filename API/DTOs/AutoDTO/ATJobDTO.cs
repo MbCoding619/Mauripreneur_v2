@@ -24,7 +24,11 @@ namespace API.DTOs.AutoDTO
 
         public string filePath { get; set; }        
 
-        public int SmeId { get; set; }         
+        public int SmeId { get; set; }
+
+        public string CompName { get; set; } 
+
+        public string jobStatus { get; set; }        
 
          public ICollection<ATBidDTO> Bid { get; set; }
     }

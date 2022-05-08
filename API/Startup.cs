@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using API.Data;
+using API.EmailService;
 using API.Extensions;
 using API.Interfaces;
 using API.Middleware;
@@ -46,6 +47,10 @@ namespace API
             services.AddControllers();
             services.AddCors();
             services.AddIdentityServices(_config);
+            var emailConfig = _config.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender,EmailSender>();
+         
 
             services.Configure<FormOptions>(o =>
             {
@@ -66,7 +71,16 @@ namespace API
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();          
+            // the below allow static files to be served using path defined
+            //below to get access to images via url.
+            app.UseStaticFiles();  
+
+                app.UseStaticFiles(new StaticFileOptions()
+                {
+                             FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Images")),
+                            RequestPath = new PathString("/Resources/Images")
+                });        
 
             app.UseRouting();
             

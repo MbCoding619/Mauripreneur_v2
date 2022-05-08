@@ -2,17 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarDayViewComponent } from 'angular-calendar';
 import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
+import { ManageJobsComponent } from './Admin/admin-components/manage-jobs/manage-jobs.component';
 import { ManageUsersComponent } from './Admin/admin-components/manage-users/manage-users.component';
 import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
 import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
 import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
+import { SendBidComponent } from './bid/send-bid/send-bid.component';
 import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.component';
 import { JobPostedComponent } from './job/job-posted/job-posted.component';
 import { PostJobComponent } from './job/post-job/post-job.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
 import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
 import { RegisterProfessionalComponent } from './Registration/register-professional/register-professional.component';
 import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
@@ -43,11 +46,17 @@ const routes: Routes = [
         {
           path :'ManageUsers',
           component : ManageUsersComponent
+        },
+        {
+          path :'ManageJobs',
+          component : ManageJobsComponent
         }
       ]},
   {path:'Bid/ViewBid',component: BidSmeComponent},
   {path:'Bid/BidSent',component: BidSentComponent},
   {path:'Bid/BidApproved',component: BidApprovedComponent},
+  {path:'Bid/sendBid',component: SendBidComponent},
+  {path:'Members/ViewMembers',component: MemberListComponent},
   {path:'errors',component: TestErrorsComponent},
   {path:'Test/Upload',component: TestUploadComponent}, 
   {path:'**',component: HomeComponent,pathMatch:'full'}  

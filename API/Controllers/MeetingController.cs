@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,6 +82,16 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> GetMeetingByProf(string username)
         {
             var meeting = await _meetingRepository.GetMeetingByProf(username);
+
+            var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
+
+            return Ok(meetingToReturn);
+        }
+
+        [HttpGet("meetingBySme/{username}")]
+        public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> GetMeetingBySme(string username)
+        {
+            var meeting = await _meetingRepository.GetMeetingBySme(username);
 
             var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
 

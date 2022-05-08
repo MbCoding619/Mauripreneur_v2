@@ -69,6 +69,10 @@ export class ManageUsersComponent implements OnInit {
     this.getUsers();
   }
 
+  createImgPath(serverPath : string){
+    return `https://localhost:5001/${serverPath}`;
+  }
+
   
 
 }

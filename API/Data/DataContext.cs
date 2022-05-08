@@ -41,6 +41,8 @@ namespace API.Data
 
         public DbSet<Application> Application { get; set; }
 
+        public DbSet<Timeline> Timeline {get; set;}
+
         
 
 
@@ -117,7 +119,9 @@ namespace API.Data
             builder.Entity<Bid>()
                    .HasOne(bd => bd.Professional)
                    .WithMany(bd => bd.Bid)
-                   .HasForeignKey(bd => bd.ProfessionalId);       
+                   .HasForeignKey(bd => bd.ProfessionalId);  
+
+     
 
 
             

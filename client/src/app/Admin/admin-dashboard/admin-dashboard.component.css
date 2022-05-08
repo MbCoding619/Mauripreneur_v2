@@ -43,7 +43,9 @@ body {
 }
 
 .list-group .tabs {
-  color: #000000
+  color: #000000;
+  cursor: pointer;
+  
 }
 
 #menu-toggle {

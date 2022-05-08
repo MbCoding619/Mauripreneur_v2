@@ -68,7 +68,7 @@ export class DialogBidComponent implements OnInit {
     if(this.model !=null){
       this.sharedService.placeBid(this.model).subscribe(response =>{
         console.log(response);
-        this.toastr.success(response.Status);
+        this.toastr.success("Bid sent");
         this.dialogRef.close();
       },error=>{
         this.toastr.error(error.error);

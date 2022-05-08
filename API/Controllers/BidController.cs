@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.DTOs.AutoDTO;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
@@ -31,12 +32,17 @@ namespace API.Controllers
         public async Task<ActionResult<BidReponseDTO>> addBid( BidAddDTO bidAddDTO)
         {
              var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == bidAddDTO.username.ToLower());
+             var bid = new Bid();
 
              if(user !=null)
              {
                  var prof = await _context.Professionals.SingleOrDefaultAsync( p => p.AppUserId == user.AppUserId);
+                
+                var bidCheck = await _context.Bid.FirstOrDefaultAsync(b => b.JobId == bidAddDTO.JobId && b.ProfessionalId == prof.Id);
 
-                 var bid = new Bid {
+                if(bidCheck == null)
+                {
+                    bid = new Bid {
 
                      JobId = bidAddDTO.JobId,
                      ProfessionalId = prof.Id,
@@ -48,6 +54,12 @@ namespace API.Controllers
                  };
 
                  _context.Bid.Add(bid);
+                }else
+                {
+                    return BadRequest("Already Bid for the job");
+                }
+
+
              }else{
 
                  return BadRequest("Error Happened");
@@ -56,7 +68,7 @@ namespace API.Controllers
              await _context.SaveChangesAsync();
 
              return new BidReponseDTO{
-
+                BidId = bid.Id,
                  Status = "Added"
              };
 
@@ -164,7 +176,7 @@ namespace API.Controllers
 
         }
 
-            [HttpGet("getBidSent/{username}")]
+[HttpGet("getBidSent/{username}")]
   public async Task<ActionResult> queryBidSent(string username)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
@@ -190,7 +202,51 @@ namespace API.Controllers
 
         }
 
-        
+    [HttpPost("addTimelines")]
+
+    public async Task<ActionResult<ReponseDTO>> addTimeline(TimelineAddDTO timelineAddDTO)
+    {
+        var bid = await _bidRepository.GetBidByIdAsync(timelineAddDTO.BidId);
+
+        if(bid !=null)
+        {
+            var timeline = new Timeline
+            {
+                Title = timelineAddDTO.Title,
+                Description =timelineAddDTO.Description,
+                Date = timelineAddDTO.Date,
+                BidId = timelineAddDTO.BidId
+            };
+            _context.Timeline.Add(timeline);
+            await _context.SaveChangesAsync();
+
+            return new ReponseDTO{
+                Response = "Timeline Added"
+            };
+        }else
+        {
+            return BadRequest();
+        }
+    }
+
+
+    [HttpGet("getTimelines/{bidId}")]
+
+    public async Task<ActionResult<IEnumerable<ATTimelineDTO>>> getTimeline(int bidId)
+    {
+        var bid = await _bidRepository.GetBidByIdAsync(bidId);
+        if(bid !=null)
+        {
+            var timelines = await _context.Timeline.Where(t => t.BidId == bidId).ToListAsync();
+
+            var timelineToReturn = _mapper.Map<IEnumerable<ATTimelineDTO>>(timelines);
+
+            return Ok(timelineToReturn);
+        }else
+        {
+            return BadRequest();
+        }
+    }   
 
         
     }

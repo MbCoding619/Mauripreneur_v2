@@ -26,6 +26,8 @@ namespace API.Entities
         
         public string filePath { get; set; }
 
+        public string jobStatus { get; set; }
+
         public Field Field { get;  set; }
 
         public int SmeId { get; set; } 

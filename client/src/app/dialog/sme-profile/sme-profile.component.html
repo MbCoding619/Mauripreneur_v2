@@ -15,13 +15,9 @@
                     <strong>Representative:</strong>
                     <p>{{smeProfile.representName}}</p>
                 </div>
-                <div class="card-item">
-                    <strong>Scan me for Socials:</strong>
-                    <p><qr-code [value]="smeProfile.socialLink"></qr-code></p>                    
-                </div>
                 <div class="card-footer">
                     <div class="btn-group d-flex ">
-                        <button class="btn btn-primary">Like</button>
+                        <button (click)="goToBid()" class="btn btn-primary">Bid</button>
                     </div>
                     <div class="btn-group d-flex ">
                         <button class="btn btn-primary">Message</button>
@@ -32,22 +28,90 @@
     </div>
     <div class="col-8">
         <tabset class="member-tabset">
+            <!---Tab Job Description-->
             <tab heading="Job Description">
-                Hold Jobs Description
+                
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <form [formGroup]="formJob" >
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h4 class="mb-2 text-primary">Personal Details</h4>
+                                    </div>
+                                    <div hidden class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="fullName">id</label>
+                                            <app-text-input [formControl]='formJob.controls["id"]'
+                                            [label]="'id'"  ></app-text-input>
+                                        </div>
+                                    </div>
+                                    <div style=" pointer-events: none;" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="fullName">Title</label>
+                                            <app-text-input  [formControl]='formJob.controls["jobTitle"]' 
+                                            [label]="'First Name'"  ></app-text-input>
+                                        </div>
+                                    </div>
+                                    <div style=" pointer-events: none;"  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="fullName">Description</label>
+                                            <app-text-input  [formControl]='formJob.controls["desc"]' 
+                                            [label]="'Last Name'"  ></app-text-input>
+                                        </div>
+                                    </div>
+                                    <div style=" pointer-events: none;"  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="Email">TimeFrame</label>
+                                            <app-text-input   [formControl]='formJob.controls["timeFrame"]' 
+                                            [label]="'Email'" ></app-text-input>
+                                        </div>
+                                    </div>
+                                    <div style=" pointer-events: none;"  class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="phone">Budget</label>
+                                            <app-text-input  [formControl]='formJob.controls["budget"]' 
+                                            [label]="'Phone number'"  ></app-text-input>
+                                        </div>
+                                    </div>
+                    
+                                </div>
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="text-right">
+                                            <button (click)="download()" class="btn btn-primary">Download File</button>
+                                            <div class="col-md-4">
+                                                <span class="download" *ngIf="progress > 0">
+                                                  {{progress}}%
+                                                </span>
+                                                <span class="download">
+                                                  {{message}}
+                                                </span>
+                                              </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                
+                        </div>
+                    </div>
+                    </div>
 
-                <button (click)="download()" class="btn btn-primary">Download File</button>
-                <div class="col-md-4">
-                    <span class="download" *ngIf="progress > 0">
-                      {{progress}}%
-                    </span>
-                    <span class="download">
-                      {{message}}
-                    </span>
-                  </div>               
+
+
+
+                             
             </tab>
+            <!---Tab SME Description-->
             <tab heading="SME Description">
                 Holds Company Description
+
+                <div class="card-item">
+                    <strong>Scan me for Socials:</strong>
+                    <p><qr-code [value]="smeSocialLink"></qr-code></p>                    
+                </div>
             </tab>
+            <!--Tab Meeting-->
             <tab heading="Schedule Meeting">
                 <div class="container" id="meeting">
                     <h1 mat-dialog-title>Schedule Meeting </h1>

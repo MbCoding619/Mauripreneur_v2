@@ -23,6 +23,7 @@ namespace API.Helpers
             CreateMap<ProfUpdateDTO,Professional>();
             CreateMap<FieldUpdateDTO,Field>();
             CreateMap<Meeting,ATMeetingDTO>();
+            CreateMap<Timeline,ATTimelineDTO>();
         }
     }
 }

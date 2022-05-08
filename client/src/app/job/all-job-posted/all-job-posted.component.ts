@@ -9,6 +9,8 @@ import {MatDialog} from '@angular/material/dialog';
 import { DialogJobEditComponent } from 'src/app/dialog/dialog-job-edit/dialog-job-edit.component';
 import { DialogBidComponent } from 'src/app/dialog/dialog-bid/dialog-bid.component';
 import { SmeProfileComponent } from 'src/app/dialog/sme-profile/sme-profile.component';
+import { jobDetails } from 'src/app/_models/jobDetails';
+import { BidService } from 'src/app/_services/bid.service';
 
 
 
@@ -21,6 +23,7 @@ import { SmeProfileComponent } from 'src/app/dialog/sme-profile/sme-profile.comp
 export class AllJobPostedComponent implements OnInit {
  displayedColumns : string[] =['jobTitle','desc','timeframe','budget' , 'Action'];
  dataSource : MatTableDataSource<any>;
+ jobDetails : jobDetails;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,16 +32,18 @@ export class AllJobPostedComponent implements OnInit {
   constructor(private sharedService : SharedService,
     public accountService : AccountsService,
     private toastr : ToastrService, 
-    private dialog : MatDialog
+    private dialog : MatDialog,
+    private bidService : BidService
     ) { }
 
   ngOnInit(): void {
     this.getAllJob();
-    
+    this.getJobDetails();
   
    
   }
 
+  //below code was used to populate table for all jobs posted.
   getAllJob(){
 
     this.sharedService.getAllJob().subscribe(
@@ -65,10 +70,27 @@ export class AllJobPostedComponent implements OnInit {
     }
   }
 
+  getJobDetails(){
+    this.sharedService.getJobDetails().subscribe(
+      jobDetails =>{
+        this.jobDetails = jobDetails;
+        //console.log(this.jobDetails);
+
+      },error =>{
+        this.toastr.error(error.error);
+      }
+    )
+  }
+
+  createImgPath(serverPath : string){
+    return `https://localhost:5001/${serverPath}`;
+  }
+
   openDialog(row : any) {
     const dialogRef = this.dialog.open(SmeProfileComponent,{
         data: row
     });
+    this.bidService.clickToBid(row);
   }
 
   

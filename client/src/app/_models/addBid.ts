@@ -1,5 +1,5 @@
 export interface addBid{
-
-    Status: string;
+    bidId: number;
+    status: string;
 
 }

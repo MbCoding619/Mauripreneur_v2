@@ -1,0 +1,129 @@
+<div class="container" style="margin-top:2%;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <ng-container *ngIf="bidF" >
+            <div class="container">
+              <form [formGroup]='BidForm' autocomplete="off">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description" placeholder="Describe your intent for the bid">
+                    <mat-icon matSuffix>description</mat-icon>
+                    <mat-hint>Hint</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Amount</mat-label>
+                    <input matInput formControlName="bidAmount" placeholder="State the amount of your bid">
+                    <mat-icon matSuffix>paid</mat-icon>
+                    <mat-hint>Hint</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Other Details</mat-label>
+                    <input matInput formControlName="otherDetails" placeholder="Any other information you may find appropriate">
+                    <mat-icon matSuffix>info</mat-icon>
+                    <mat-hint>Hint</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="form-group" style="margin: 0; padding-left:15px;">
+                  <button mat-raised-button id="submitBid" (click)="bid()" color="primary">Submit</button>
+                  <button mat-raised-button color="warn">Cancel</button>
+                </div>
+              </form> 
+            </div>
+     
+          </ng-container>
+
+ 
+
+          <ng-container *ngIf="!bidF" >
+            <form [formGroup]='timelineForm' autocomplete="off">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>Title</mat-label>
+                  <input matInput formControlName="title" placeholder="Title">
+                  <mat-icon matSuffix>Title</mat-icon>
+                  <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <input matInput formControlName="description" placeholder="Brief description of">
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput formControlName="date" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+            </div> 
+              <div class="form-group" style="margin: 0; padding-left:15px;">
+                <button mat-raised-button (click)="addTimeline()" color="primary">Submit</button>
+                <button mat-raised-button color="warn">Cancel</button>
+              </div>
+            </form>
+          </ng-container>
+        </div>
+
+        <div class="col-xs-12 col-sm-8">
+
+          <ng-container *ngIf="bidF">
+
+            <div class="row">
+              <div class="col-md-6 order-md-6">
+          
+                <img src="https://localhost:4200/assets/bidAnalysis.svg" alt="" class="w-100" />
+              </div>
+              <!-- /.col-md-6 -->
+              <div class="col-md-6 order-md-1">
+          
+                <div class="row align-items-center h-100">
+                  <div class="col">
+                    <h1 class="display-3">Place your bid for {{jobData.jobTitle}}</h1>                                    
+                    <p class="lead">{{jobData.desc}}
+                      <br /><br />  
+                      After placing the bid for the above. you will have to submit plan of work
+                      <br /><br />
+                     <small class="text-muted">Posted by</small> <a href="" class=""> {{jobData.compName}}</a>
+                    </p>
+          
+                  </div>
+                </div>
+          
+              </div>
+              <!-- /.col-md-6 -->
+          
+            </div>
+
+          </ng-container>
+
+          <ng-container *ngIf="!bidF" >
+            <div class="text-box">
+              <h1 class="heading-primary">
+                  <span class="heading-primary-main">PlANNING</span>
+                  <span class="heading-primary-sub">TIMELINE</span>
+              </h1>
+          </div>
+          <div class="comment" id="comment" style="overflow: hidden;">
+
+            <p *ngFor="let timeline of timelineData" id={{timeline.timelineId}}>
+              {{timeline.date | date}}
+              <br>
+              {{timeline.description}}
+            </p>
+
+              <div class="vertical"></div>
+          </div>
+          </ng-container>
+
+        </div>
+    </div>
+</div>

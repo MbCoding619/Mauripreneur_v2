@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { smeProfile } from '../_models/smeProfile';
 import { profProfile } from '../_models/profProfile';
+import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class MembersService {
     return this.http.put(this.baseUrl+'prof/editProf',model).pipe(map(()=>{
       this.toastr.success("Profile updated Sucessfully");
     }))
+  }
+
+  getAllUsers(){
+    return this.http.get<User>(this.baseUrl+`user`);
   }
 
 }

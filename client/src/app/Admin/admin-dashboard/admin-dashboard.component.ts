@@ -25,6 +25,10 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['ManageUsers'],{relativeTo:this.route});
   }
 
+  manageJobsRoute(){
+    this.router.navigate(['ManageJobs'],{relativeTo:this.route});
+  }
+
 
 
 }

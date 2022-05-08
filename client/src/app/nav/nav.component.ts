@@ -72,7 +72,7 @@ export class NavComponent implements OnInit {
         this.router.navigateByUrl('Admin/Dashboard');
         console.log(response.appUserRole);
       }else{
-        this.router.navigateByUrl('User/UserProfile');
+        this.router.navigateByUrl('');
         console.log(response.appUserRole)
       }   
          
@@ -99,6 +99,10 @@ export class NavComponent implements OnInit {
   
   getUserRole(){
     this.accountService.currentUser$.pipe(take(1)).subscribe( user => this.currentUser = user);
+  }
+
+  createImgPath(serverPath : string){
+    return `https://localhost:5001/${serverPath}`;
   }
 
 }

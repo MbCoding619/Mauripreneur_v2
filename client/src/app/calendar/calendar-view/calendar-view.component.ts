@@ -30,6 +30,8 @@ import {MatDialog} from '@angular/material/dialog';
 import { DialogScheduleMeetingComponent } from 'src/app/dialog/dialog-schedule-meeting/dialog-schedule-meeting.component';
 import { CalendarService } from 'src/app/_services/calendar.service';
 import { meeting } from 'src/app/_models/meeting';
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
 
 
   const colors: any = {
@@ -100,6 +102,7 @@ export class CalendarViewComponent{
   dataSource : MatTableDataSource<any>;
   model : any ={};
   username = '';
+  user : User;
   calendarResponse : any;
 
 
@@ -113,11 +116,17 @@ export class CalendarViewComponent{
 
 
   ngOnInit(): void {
-    this.accountService.currentUser$.subscribe(response =>{
+    this.accountService.currentUser$.pipe(take(1)).subscribe(response =>{
+      this.user = response;
       this.username = response.username;
     })
 
-    this.getMeetingProf(this.username);
+    if(this.user?.appUserRole =="PROFESSIONAL"){
+      this.getMeetingProf(this.username);
+    }else if(this.user?.appUserRole =="SME"){
+      this.getMeetingBySme(this.username);
+    }
+    
    
    // this.getJobBySme(this.username);
   }
@@ -139,6 +148,28 @@ export class CalendarViewComponent{
 
   getMeetingProf(username :string){
     this.calendarService.getMeetingByProf(username).subscribe( response =>{
+      this.calendarResponse = response;
+      for(let item of this.calendarResponse){
+        this.events = [
+          ...this.events,
+          {
+            title: item['meetTitle'],
+            start: startOfDay(new Date(item['startDate'])),
+            end: endOfDay(new Date(item['endDate'])),
+            color: colors.red,
+            draggable: true,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+          },
+        ];
+      }
+    })
+  }
+
+  getMeetingBySme(username :string){
+    this.calendarService.getMeetingBySme(username).subscribe( response =>{
       this.calendarResponse = response;
       for(let item of this.calendarResponse){
         this.events = [

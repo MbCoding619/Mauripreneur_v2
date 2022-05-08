@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
+import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ActionStatus } from '../_models/ActionStatus';
 import { editJob } from '../_models/editJob';
 import { field } from '../_models/field';
 import { fieldAdd } from '../_models/fieldAdd';
+import { Job } from '../_models/job';
 import { manageUser } from '../_models/manageUser';
 
 @Injectable({
@@ -75,6 +78,34 @@ export class AdminService {
       }
 
       )
+    )
+  }
+
+  getAllJob(){
+    return this.http.get<Job[]>(this.baseUrl+'job/allJobAdmin');
+  }
+
+  approveJob(id : any,model : any){
+    return this.http.put(this.baseUrl+'admin/approveJob/'+id,model).pipe(
+      map((status : ActionStatus)=>{
+        if(status){
+          this.toastr.success("Job Approved");
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
+    )
+  }
+
+  declineJob(id:any,model:any){
+    return this.http.put(this.baseUrl+'admin/declineJob/'+id,model).pipe(
+      map((status : ActionStatus)=>{
+        if(status){
+          this.toastr.success("Job Declined");
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
     )
   }
 

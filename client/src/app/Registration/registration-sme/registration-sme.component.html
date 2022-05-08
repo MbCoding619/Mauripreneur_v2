@@ -45,6 +45,12 @@
             <app-text-input [formControl]='registerForm.controls["representPhone"]'
             [label]='"Phonenumber"' readonly ></app-text-input>
         </div>
+
+        <div class="col-sm-6 form-group">
+            
+            <input  type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;" multiple accept=".png, .jpg, .jpeg">
+            <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button> 
+        </div>
       
         <div class="col-sm-12">
             <input type="checkbox" class="form-check d-inline" id="chb" required><label for="chb" class="form-check-label">&nbsp;I accept all terms and conditions.

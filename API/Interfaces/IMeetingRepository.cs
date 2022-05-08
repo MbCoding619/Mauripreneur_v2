@@ -11,5 +11,7 @@ namespace API.Interfaces
         void Update(Meeting meeting);
 
         Task<IEnumerable<Meeting>> GetMeetingByProf(string username);
+
+        Task<IEnumerable<Meeting>> GetMeetingBySme(string username);
     }
 }

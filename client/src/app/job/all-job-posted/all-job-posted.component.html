@@ -1,5 +1,5 @@
  <!-- ======= Breadcrumbs ======= -->
- <section id="breadcrumbs" class="breadcrumbs" style="margin-top: 6%;">
+ <section id="breadcrumbs" class="breadcrumbs">
   <div class="container">
 
     <ol>
@@ -11,66 +11,19 @@
   </div>
 </section><!-- End Breadcrumbs -->
 
-<div class="container">
-    <div style="margin-top:5px;">
-        <div class="mat-elevation-z8">
-            <mat-form-field appearance="standard">
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-              </mat-form-field>
-    <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">          
 
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="jobTitle">
-              <th mat-header-cell *matHeaderCellDef> Title </th>
-              <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
-            </ng-container>
-        
-            <!-- Weight Column -->
-            <ng-container matColumnDef="desc">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
-            </ng-container>
-        
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="timeframe">
-              <th mat-header-cell *matHeaderCellDef> Timeframe </th>
-              <td mat-cell *matCellDef="let element"> {{element.timeframe}} </td>
-            </ng-container>
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="budget">
-              <th mat-header-cell *matHeaderCellDef> Budget </th>
-              <td mat-cell *matCellDef="let element"> {{element.budget | currency}} </td>
-            </ng-container>
 
-             <!-- Symbol Column -->
-             <ng-container matColumnDef="Action" >
-                <th mat-header-cell *matHeaderCellDef> Bid </th>
-                <td mat-cell *matCellDef="let element">                 
-                  <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'"  >
-                    <button mat-icon-button color="accent">
-                      <mat-icon (click)="openDialog(element)">request_quote</mat-icon>
-                  </button>
-                    
-                  </ng-container>                   
-                  
-                </td>
-              </ng-container>
-           
-        
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                         showFirstLastButtons 
-                         aria-label="Select page of periodic elements">
-          </mat-paginator>
-    </div>              
-           
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-4" *ngFor="let job of jobDetails">
+          <div class="card p-3 mb-3">
+              <div class="d-flex flex-row mb-3"><img [src]="createImgPath(job.imagePath)" width="70">
+                  <div class="d-flex flex-column ml-2"><span>{{job.jobTitle}}</span><span class="text-black-50">{{job.description}}</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
+              </div>
+              <h6>{{job.desc}}.</h6>
+              <div class="d-flex justify-content-between install mt-3"><span>Posted By {{job.compName}}</span><span style="cursor: pointer;" (click)="openDialog(job)" class="text-primary">View&nbsp;<i class="fa fa-angle-right"></i></span></div>
           </div>
-
-    </div>
+      </div>
+    
+  </div>
 </div>

@@ -20,6 +20,7 @@ export class RegistrationSmeComponent implements OnInit {
   public message: string;
   id : any;
   username : any;
+  formDataSubmit = new FormData();
 
   
 
@@ -54,7 +55,15 @@ export class RegistrationSmeComponent implements OnInit {
 
   registerSme(){
 
-    this.accountService.registerSme(this.registerForm.value).subscribe(response =>{
+    this.formDataSubmit.append('representName',this.registerForm.controls["representName"]?.value);
+    this.formDataSubmit.append('representLName',this.registerForm.controls["representLName"]?.value);
+    this.formDataSubmit.append('email',this.registerForm.controls["email"]?.value);
+    this.formDataSubmit.append('address',this.registerForm.controls["address"]?.value);
+    this.formDataSubmit.append('compName',this.registerForm.controls["compName"]?.value);
+    this.formDataSubmit.append('username',this.registerForm.controls["username"]?.value);
+    this.formDataSubmit.append('representPhone',this.registerForm.controls["representPhone"]?.value);
+
+    this.accountService.registerSme(this.formDataSubmit).subscribe(response =>{
 
       console.log(response);   
       this.router.navigateByUrl('/');
@@ -63,6 +72,17 @@ export class RegistrationSmeComponent implements OnInit {
     })
 
   }
+
+
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let fileToUpload = <File>files[0];
+    //const formData = new FormData();
+    this.formDataSubmit.append('file', fileToUpload, fileToUpload.name);  
+  };
 
   cancel(){
     this.router.navigateByUrl('/Registration/Choice');

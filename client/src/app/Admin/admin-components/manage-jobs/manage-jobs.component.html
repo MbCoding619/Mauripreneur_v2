@@ -1,0 +1,89 @@
+
+<div class="tab-pane active">
+    <div class="row justify-content-center">
+        <div class="col-11">
+            <div class="form-card">
+                <div class="row justify-content-center">
+                    <div class="text-center" id="test">Manage Users</div>
+                </div>
+                <div class="mat-elevation-z8">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Filter</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Web Design" #input>
+                      </mat-form-field>
+                    <table mat-table [dataSource]="dataSource">          
+            
+                      
+                        <!-- FieldId Column -->
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef> Job Id </th>
+                          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+                    
+                        <!-- Description Column -->
+                        <ng-container matColumnDef="jobTitle">
+                          <th mat-header-cell *matHeaderCellDef> Job Title </th>
+                          <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
+                        </ng-container>
+                    
+                        <!-- FieldStatus Column -->
+                        <ng-container matColumnDef="desc">
+                          <th mat-header-cell *matHeaderCellDef> Description </th>
+                          <td mat-cell *matCellDef="let element"> {{element.desc}} </td>
+                        </ng-container>
+
+                        <!-- FieldStatus Column -->
+                        <ng-container matColumnDef="jobStatus">
+                          <th mat-header-cell *matHeaderCellDef> Status </th>
+                          <td mat-cell *matCellDef="let element"> {{element.jobStatus}} </td>
+                        </ng-container>
+
+   
+
+                        <!-- FieldStatus Column -->
+                        <ng-container matColumnDef="filePath">
+                          <th mat-header-cell *matHeaderCellDef> File </th>
+                          <td mat-cell *matCellDef="let element"> <button class="btn btn-primary" (click)="download(element.filePath)"> Download File</button> </td>
+                        </ng-container>
+                        
+            
+                         <!-- Action Column -->
+                         <ng-container matColumnDef="Action" >
+                            <th mat-header-cell *matHeaderCellDef> Edit </th>
+                            <td mat-cell *matCellDef="let element">                 
+                              <ng-container *ngIf="(element.jobStatus)== 'PENDING'" >
+                                <button mat-icon-button color="accent">
+                                  <mat-icon (click)="approveJob(element.id)" ><span class="material-icons">
+                                    task_alt
+                                    </span></mat-icon>
+                              </button>
+                                
+                              </ng-container>                   
+                              <ng-container *ngIf="(element.jobStatus)== 'PENDING'" >
+                                <button mat-icon-button color="accent">
+                                  <mat-icon (click)="declineJob(element.id) "><span class="material-icons">
+                                    highlight_off
+                                    </span>
+                                    </mat-icon>
+                              </button>
+                                
+                              </ng-container>                   
+                              
+                            </td>
+                          </ng-container>
+                       
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                    
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                     showFirstLastButtons 
+                                     aria-label="Select page of periodic elements">
+                      </mat-paginator>
+                </div> 
+
+            </div>
+        </div>
+    </div>
+</div>
