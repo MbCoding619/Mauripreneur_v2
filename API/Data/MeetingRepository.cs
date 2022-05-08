@@ -29,6 +29,17 @@ namespace API.Data
             return meeting;
         }
 
+        public async Task<IEnumerable<Meeting>> GetMeetingBySme(string username)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username.ToLower());
+
+            var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
+
+            var meeting = await _context.Meeting.Where( m => m.SmeId == sme.Id).ToListAsync();
+
+            return meeting;
+        }
+
         public void Update(Meeting meeting)
         {
             throw new NotImplementedException();

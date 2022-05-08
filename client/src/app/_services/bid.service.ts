@@ -58,4 +58,8 @@ export class BidService {
     return this.http.get<timeline>(`${this.baseUrl}bid/getTimelines/${id}`);
   }
 
+  deleteTimelineById(id:number){
+    return this.http.delete(`${this.baseUrl}bid/deleteTimeline/${id}`);
+  }
+
 }

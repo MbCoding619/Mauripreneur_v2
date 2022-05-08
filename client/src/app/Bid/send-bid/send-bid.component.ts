@@ -125,6 +125,22 @@ export class SendBidComponent implements OnInit {
     })
   }
 
+  deleteTimelineById(id :number){
+    this.bidService.deleteTimelineById(id).subscribe(response=>{
+      if(response){
+        this.toastr.success(response.toString());
+        this.getTimeline(this.bidId);
+        const p = document.getElementById("trashIcon");
+        p.addEventListener('click',(e)=>{
+          this.test2(e);
+        })
+      }
+    })
+
+    
+    
+  }
+
   test(){
     const timeline = document.getElementById("comment");
     const p = document.createElement("p");
@@ -155,7 +171,7 @@ export class SendBidComponent implements OnInit {
     console.log("works");
     console.log(e.srcElement.id);
     var x = document.getElementById(e.srcElement.id).parentElement.id;
-    console.log(x);
+    //console.log(x);
     var toRemove = document.getElementById(x);
     toRemove.remove();
   }
@@ -164,5 +180,7 @@ export class SendBidComponent implements OnInit {
     
     this.bidF = !this.bidF;
   }
+
+
 
 }

@@ -118,6 +118,8 @@
               {{timeline.date | date}}
               <br>
               {{timeline.description}}
+              <br>
+              <i class="fa fa-trash" id="trashIcon" style="cursor: pointer;" (click)="deleteTimelineById(timeline.timelineId)"></i>
             </p>
 
               <div class="vertical"></div>

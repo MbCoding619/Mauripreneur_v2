@@ -246,6 +246,22 @@ namespace API.Controllers
         {
             return BadRequest();
         }
+    }
+
+    [HttpDelete("deleteTimeline/{timelineId}")]
+
+    public async Task<ActionResult> deleteTimeline(int timelineId)
+    {
+        var timeline = await _context.Timeline.FindAsync(timelineId);
+        if(timeline !=null)
+        {
+            _context.Timeline.Remove(timeline);
+            await _context.SaveChangesAsync();
+            return Ok("Deleted");
+        }else
+        {
+            return BadRequest();
+        }
     }   
 
         
