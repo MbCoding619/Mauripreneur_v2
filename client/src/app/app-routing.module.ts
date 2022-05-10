@@ -8,6 +8,7 @@ import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard
 import { BidApprovedComponent } from './Bid/bid-approved/bid-approved.component';
 import { BidSentComponent } from './Bid/bid-sent/bid-sent.component';
 import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
+import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.component';
 import { SendBidComponent } from './bid/send-bid/send-bid.component';
 import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
@@ -56,6 +57,7 @@ const routes: Routes = [
   {path:'Bid/BidSent',component: BidSentComponent},
   {path:'Bid/BidApproved',component: BidApprovedComponent},
   {path:'Bid/sendBid',component: SendBidComponent},
+  {path:'Bid/ProfBidCard',component: ProfBidCardComponent},
   {path:'Members/ViewMembers',component: MemberListComponent},
   {path:'errors',component: TestErrorsComponent},
   {path:'Test/Upload',component: TestUploadComponent}, 

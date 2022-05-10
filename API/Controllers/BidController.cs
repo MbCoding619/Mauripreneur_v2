@@ -262,7 +262,44 @@ namespace API.Controllers
         {
             return BadRequest();
         }
-    }   
+    }
+
+
+       [HttpGet("getBidProfBySmeId/{smeId}")]
+
+        public  IActionResult getBidProfBySmeId(int smeId)
+        {
+            var query = _context.Bid
+                        .Join(
+                            _context.Job,
+                            bid => bid.JobId,
+                            job => job.Id,
+                            (bid,job) => new 
+                            {
+                                BidId = bid.Id,
+                                ProfId = bid.ProfessionalId,
+                                JobId = job.Id,
+                                SmeId = job.SmeId,
+                                timeline = bid.Timeline
+                            }
+                        ).Join(
+                            _context.Professionals,
+                            bidProf => bidProf.ProfId,
+                            prof => prof.Id,
+                            (bidProf,prof)=> new {
+
+                                BidId = bidProf.BidId,
+                                JobID = bidProf.JobId,
+                                SmeId = bidProf.SmeId,
+                                ProfName = prof.FName ,
+                                timeline = bidProf.timeline                              
+                            }
+                        ).Where( s => s.SmeId == smeId).ToList();
+
+            return Ok(query);
+        }
+
+
 
         
     }

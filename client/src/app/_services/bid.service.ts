@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ActionStatus } from '../_models/ActionStatus';
 import { addBid } from '../_models/addBid';
+import { bidProfCard } from '../_models/bidProfCard';
 import { jobDetails } from '../_models/jobDetails';
 import { timeline } from '../_models/timeline';
 
@@ -62,4 +63,7 @@ export class BidService {
     return this.http.delete(`${this.baseUrl}bid/deleteTimeline/${id}`);
   }
 
+  getBidProfBySme(id : number){
+    return this.http.get<bidProfCard>(`${this.baseUrl}bid/getBidProfBySmeId/${id}`);
+  }
 }

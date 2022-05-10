@@ -67,6 +67,7 @@ import { ManageJobsComponent } from './Admin/admin-components/manage-jobs/manage
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { SendBidComponent } from './bid/send-bid/send-bid.component';
+import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.component';
 
 
 
@@ -113,7 +114,8 @@ import { SendBidComponent } from './bid/send-bid/send-bid.component';
     ManageJobsComponent,
     MemberCardComponent,
     MemberListComponent,
-    SendBidComponent    
+    SendBidComponent,
+    ProfBidCardComponent    
   ],
   imports: [
     BrowserModule,
