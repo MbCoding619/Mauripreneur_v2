@@ -66,7 +66,8 @@
                   </mat-form-field>
             </div> 
               <div class="form-group" style="margin: 0; padding-left:15px;">
-                <button mat-raised-button (click)="addTimeline()" color="primary">Submit</button>
+                <button mat-raised-button *ngIf="!bidE" (click)="addTimeline()" color="primary">Submit</button>
+                <button mat-raised-button *ngIf="bidE" (click)="updateTimeline()" color="primary">Update</button>
                 <button mat-raised-button color="warn">Cancel</button>
               </div>
             </form>
@@ -120,6 +121,7 @@
               {{timeline.description}}
               <br>
               <i class="fa fa-trash" id="trashIcon" style="cursor: pointer;" (click)="deleteTimelineById(timeline.timelineId)"></i>
+              <i class="fa fa-pencil" style="cursor: pointer;" (click)="updateTimelineForm(timeline.timelineId)" aria-hidden="true"></i>
             </p>
 
               <div class="vertical"></div>
