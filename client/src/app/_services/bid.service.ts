@@ -59,6 +59,22 @@ export class BidService {
     return this.http.get<timeline>(`${this.baseUrl}bid/getTimelines/${id}`);
   }
 
+  getTimelineById(id:number){
+    return this.http.get<timeline>(`${this.baseUrl}bid/getTimelineById/${id}`);
+  }
+
+  updateTimeline(model : any){
+    return this.http.put(this.baseUrl+'bid/updateTimeline',model).pipe(
+      map((response : ActionStatus)=>{
+        if(response){
+          this.toastr.success();
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
+    )
+  }
+
   deleteTimelineById(id:number){
     return this.http.delete(`${this.baseUrl}bid/deleteTimeline/${id}`);
   }

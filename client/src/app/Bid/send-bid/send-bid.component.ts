@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { pipe } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { jobDetails } from 'src/app/_models/jobDetails';
 import { timeline } from 'src/app/_models/timeline';
@@ -9,6 +10,7 @@ import { BidService } from 'src/app/_services/bid.service';
 
 @Component({
   selector: 'app-send-bid',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './send-bid.component.html',
   styleUrls: ['./send-bid.component.css']
 })
@@ -16,15 +18,19 @@ export class SendBidComponent implements OnInit {
   BidForm : FormGroup;
   timelineForm : FormGroup;
   bidF = true;
+  bidE = false;
   jobData : jobDetails;
   model : any;
   modelT : any;
+  modelTE : any;
   username : string;
   timelineData : timeline;
+  timelineEditData : timeline;  
   bidId : number;
   constructor(private bidService : BidService,
               private toastr : ToastrService,
-              private accountService : AccountsService) { }
+              private accountService : AccountsService,
+              private fb : FormBuilder) { }
 
   ngOnInit(): void {
     this.bidService.currentJobToBid$.pipe(take(1)).subscribe(response =>{
@@ -88,10 +94,10 @@ export class SendBidComponent implements OnInit {
   }
 
   initialiseFormPlan(){
-    this.timelineForm = new FormGroup({
-      title : new FormControl(),
-      description: new FormControl(),
-      date : new FormControl()
+    this.timelineForm = this.fb.group({
+      title : ['',Validators.required],
+      description : ['',Validators.required],
+      date : ['',Validators.required]
     })
   }
 
@@ -105,12 +111,32 @@ export class SendBidComponent implements OnInit {
     }
   }
 
+  populateModelTimelineEdit(){
+    this.modelTE ={
+      'timelineId' : this?.timelineEditData?.timelineId,
+      'title' : this.timelineForm?.controls['title']?.value,
+      'description' : this.timelineForm?.controls['description']?.value,
+      'date' : this.timelineForm?.controls['date']?.value,
+    }
+  }
+
+  populateTimelineForm(){    
+    
+    this.timelineForm.patchValue({
+      title : this.timelineEditData?.title,
+      description : this.timelineEditData?.description,
+      date : this.timelineEditData?.date
+    })
+
+  }
+
   addTimeline(){
     if(this.timelineForm.value){
       this.populateModelTimeline();
       this.bidService.addTimeline(this.modelT).subscribe(response=>{
         this.toastr.success();
-        this.getTimeline(this.bidId);        
+        this.getTimeline(this.bidId);
+        this.timelineForm.reset();        
       },error =>{
         this.toastr.error(error.error);
       })
@@ -125,20 +151,67 @@ export class SendBidComponent implements OnInit {
     })
   }
 
+  getTimlineById(id :any){
+    this.bidService.getTimelineById(id).subscribe(response =>{
+      this.timelineEditData = response;      
+      this.populateTimelineForm();
+      console.log(this.timelineEditData.title);      
+    })
+  }
+
+  updateTimelineForm(id : any){
+    this.timeEdit();
+    this.getTimlineById(id);
+    //this.populateTimelineForm(id);
+ 
+  }
+
+  testData(id :any){
+    this.getTimlineById(id);
+    console.log(this.timelineEditData);
+    //console.log(this.timelineEditData.bidId);
+    //console.log(this.timelineEditData.title);
+  }
+
+  updateTimeline(){
+    this.populateModelTimelineEdit();
+    this.bidService.updateTimeline(this.modelTE).subscribe(response =>{
+      
+        this.getTimeline(this.bidId);
+        this.timeEdit();
+        this.timelineForm.reset();
+      
+    },error=>{
+      this.toastr.error(error.error);
+    })
+  }
+
   deleteTimelineById(id :number){
     this.bidService.deleteTimelineById(id).subscribe(response=>{
-      if(response){
-        this.toastr.success(response.toString());
-        this.getTimeline(this.bidId);
-        const p = document.getElementById("trashIcon");
-        p.addEventListener('click',(e)=>{
-          this.test2(e);
-        })
-      }
+      // if(response){
+      //   this.toastr.success(response.toString());
+      //   this.getTimeline(this.bidId);
+      //   const p = document.getElementById("trashIcon");
+      //   p.addEventListener('click',(e)=>{
+      //     this.test2(e);
+      //   })
+      // }
+
+      this.toastr.success("Deleted");
+      this.getTimeline(this.bidId);
     })
 
     
     
+  }
+
+  bidTest(){
+    
+    this.bidF = !this.bidF;
+  }
+
+  timeEdit(){
+    this.bidE = !this.bidE;
   }
 
   test(){
@@ -176,10 +249,7 @@ export class SendBidComponent implements OnInit {
     toRemove.remove();
   }
 
-  bidTest(){
-    
-    this.bidF = !this.bidF;
-  }
+  
 
 
 

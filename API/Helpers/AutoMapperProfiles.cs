@@ -24,6 +24,7 @@ namespace API.Helpers
             CreateMap<FieldUpdateDTO,Field>();
             CreateMap<Meeting,ATMeetingDTO>();
             CreateMap<Timeline,ATTimelineDTO>();
+            CreateMap<TimelineUpdateDTO,Timeline>();
         }
     }
 }

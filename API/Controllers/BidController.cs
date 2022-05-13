@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.DTOs.AutoDTO;
+using API.DTOs.UpdateDTO;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
@@ -91,7 +92,7 @@ namespace API.Controllers
             if(bid != null)
             {
                 _bidRepository.Delete(bid);
-                return Ok("Bid Deleted");
+                return Ok();
             }else
             {
                 return BadRequest("Something Went Wrong");
@@ -248,6 +249,41 @@ namespace API.Controllers
         }
     }
 
+    [HttpGet("getTimelineById/{timelineId}")]
+
+    public async Task<ActionResult<ATTimelineDTO>> getTimelineById(int timelineId)
+    {
+        var timeline = await _context.Timeline.FindAsync(timelineId);
+        if(timeline !=null)
+        {
+            var timelineToReturn = _mapper.Map<ATTimelineDTO>(timeline);
+            return Ok(timelineToReturn);
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+
+
+    [HttpPut("updateTimeline")]
+
+    public async Task<ActionResult> updateTimeline(TimelineUpdateDTO timelineUpdateDTO)
+    {
+        var timeline = await _context.Timeline.FindAsync(timelineUpdateDTO.TimelineId);
+        if(timeline !=null)
+        {
+            _mapper.Map(timelineUpdateDTO,timeline);
+            _context.Entry(timeline).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+
     [HttpDelete("deleteTimeline/{timelineId}")]
 
     public async Task<ActionResult> deleteTimeline(int timelineId)
@@ -257,7 +293,7 @@ namespace API.Controllers
         {
             _context.Timeline.Remove(timeline);
             await _context.SaveChangesAsync();
-            return Ok("Deleted");
+            return Ok();
         }else
         {
             return BadRequest();
@@ -269,7 +305,7 @@ namespace API.Controllers
 
         public  IActionResult getBidProfBySmeId(int smeId)
         {
-            var query = _context.Bid
+                        var query = _context.Bid
                         .Join(
                             _context.Job,
                             bid => bid.JobId,
@@ -277,24 +313,62 @@ namespace API.Controllers
                             (bid,job) => new 
                             {
                                 BidId = bid.Id,
+                                BidAmount = bid.BidAmount,
+                                BidDesc = bid.Description,                        
                                 ProfId = bid.ProfessionalId,
                                 JobId = job.Id,
+                                JobTitle = job.JobTitle,
+                                JobDescription = job.Desc,
                                 SmeId = job.SmeId,
-                                timeline = bid.Timeline
+                                timeline = bid.Timeline,
+                                
                             }
                         ).Join(
                             _context.Professionals,
-                            bidProf => bidProf.ProfId,
+                            bid => bid.ProfId,
                             prof => prof.Id,
-                            (bidProf,prof)=> new {
-
-                                BidId = bidProf.BidId,
-                                JobID = bidProf.JobId,
-                                SmeId = bidProf.SmeId,
-                                ProfName = prof.FName ,
-                                timeline = bidProf.timeline                              
+                            (bid,prof)=> new {
+                                
+                                BidId = bid.BidId,
+                                BidAmount = bid.BidAmount,
+                                BidDesc = bid.BidDesc,                        
+                                ProfId = bid.ProfId,
+                                JobId = bid.JobId,
+                                JobTitle = bid.JobTitle,
+                                JobDescription = bid.JobDescription,
+                                SmeId = bid.SmeId,
+                                timeline = bid.timeline,
+                                ProfName = prof.FName,
+                                ProfDesc = prof.BriefDesc,
+                                ProfAppId = prof.AppUserId
+                                             
                             }
-                        ).Where( s => s.SmeId == smeId).ToList();
+                        ).Join(
+                            _context.Users,
+                            bid => bid.ProfAppId,
+                            appUser => appUser.AppUserId,
+                            (bid,appUser) => new {
+
+                                BidId = bid.BidId,
+                                BidAmount = bid.BidAmount,
+                                BidDesc = bid.BidDesc,                        
+                                ProfId = bid.ProfId,
+                                JobId = bid.JobId,
+                                JobTitle = bid.JobTitle,
+                                JobDescription = bid.JobDescription,
+                                SmeId = bid.SmeId,
+                                timeline = bid.timeline,
+                                ProfName = bid.ProfName,
+                                ProfDesc = bid.ProfDesc,
+                                ProfAppId = bid.ProfAppId,
+                                //Below is implemented to get the ImagePath
+                                //This Branch does not have the image Functionality
+                                //implemented.
+                                ProfPic = appUser.imagePath
+
+                            }
+                        )
+                        .Where( s => s.SmeId == smeId).ToList();
 
             return Ok(query);
         }

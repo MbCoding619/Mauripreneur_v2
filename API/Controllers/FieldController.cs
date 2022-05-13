@@ -72,7 +72,7 @@ namespace API.Controllers
         //Need to get on the logic behind put
         [HttpPut("editField")]
 
-        public  async Task<ActionResult> UpdateField(FieldUpdateDTO fieldUpateDTO)
+        public  async Task<ActionResult<ActionStatusDTO>> UpdateField(FieldUpdateDTO fieldUpateDTO)
         {       
             var field = await _repository.GetFieldByIdAsync(fieldUpateDTO.FieldId);
             if(field !=null )
@@ -80,7 +80,9 @@ namespace API.Controllers
                 _mapper.Map(fieldUpateDTO,field);
                 _repository.Update(field);
 
-                return Ok();
+                return new ActionStatusDTO {
+                    status ="Updated"
+                };
             }
             else{
                 return BadRequest("Something went wrong");
