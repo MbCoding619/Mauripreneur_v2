@@ -17,6 +17,7 @@ import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.compo
 import { JobPostedComponent } from './job/job-posted/job-posted.component';
 import { PostJobComponent } from './job/post-job/post-job.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
+import { UserMainProfileComponent } from './Profile/user-main-profile/user-main-profile.component';
 import { UserProfileComponent } from './Profile/user-profile/user-profile.component';
 import { RegisterProfessionalComponent } from './Registration/register-professional/register-professional.component';
 import { RegistrationChoiceComponent } from './Registration/registration-choice/registration-choice.component';
@@ -24,6 +25,7 @@ import { RegistrationOrganisationComponent } from './Registration/registration-o
 import { RegistrationSmeComponent } from './Registration/registration-sme/registration-sme.component';
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { MultiStepFormTestsComponent } from './_tests/multi-step-form-tests/multi-step-form-tests.component';
 import { TestUploadComponent } from './_tests/test-upload/test-upload.component';
 
 const routes: Routes = [
@@ -38,6 +40,7 @@ const routes: Routes = [
   {path:'Job/AllJob',component: AllJobPostedComponent},
   {path:'Calendar/ViewCalendar',component: CalendarViewComponent},
   {path:'User/UserProfile',component: UserProfileComponent},
+  {path:'User/UserMainProfile',component: UserMainProfileComponent},
   {path:'Admin/Dashboard',component: AdminDashboardComponent,
       children:[
         {
@@ -61,6 +64,7 @@ const routes: Routes = [
   {path:'Members/ViewMembers',component: MemberListComponent},
   {path:'errors',component: TestErrorsComponent},
   {path:'Test/Upload',component: TestUploadComponent}, 
+  {path:'Test/MultiStep',component: MultiStepFormTestsComponent}, 
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

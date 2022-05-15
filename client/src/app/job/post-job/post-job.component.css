@@ -449,7 +449,7 @@ section {
 .blog .sidebar .recent-posts h4 a:hover {
   color: #e96b56;
 }
-.blog .sidebar .recent-posts time {
+.blog .sidebar .recent-posts span {
   display: block;
   margin-left: 95px;
   font-style: italic;

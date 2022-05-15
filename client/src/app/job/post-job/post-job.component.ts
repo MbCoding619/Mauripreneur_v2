@@ -5,6 +5,8 @@ import { SharedService } from 'src/app/_services/shared.service';
 import { ThrowStmt } from '@angular/compiler';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/_services/accounts.service';
+import { ProfService } from 'src/app/_services/prof.service';
+import { profProfile } from 'src/app/_models/profProfile';
 
 
 interface timeFrame{
@@ -36,6 +38,7 @@ export class PostJobComponent implements OnInit {
   username = '';
   formData1 : FormData;
   formDataSubmit = new FormData();
+  last4prof : profProfile;
  
   timeframes : timeFrame[] = [
 
@@ -53,7 +56,8 @@ export class PostJobComponent implements OnInit {
     private sharedService : SharedService,
     private currencyPipe : CurrencyPipe,    
     private toastr : ToastrService,
-    private accountService : AccountsService) { }
+    private accountService : AccountsService,
+    private profService : ProfService) { }
 
   ngOnInit(): void {
 
@@ -63,6 +67,8 @@ export class PostJobComponent implements OnInit {
     this.accountService.currentUser$.subscribe(uname =>{
        this.username = uname.username;
  });
+
+   this.getLast4Prof();
    
   }
 
@@ -173,6 +179,17 @@ export class PostJobComponent implements OnInit {
   pushData(){
 
     console.log(this.test);
+  }
+
+  getLast4Prof(){
+    this.profService.getLast4Prof().subscribe(response =>{
+      this.last4prof = response;
+      console.log(this.last4prof);
+    })
+  }
+
+  createImgPath(serverPath : string){
+    return `https://localhost:5001/${serverPath}`;
   }
 
 }

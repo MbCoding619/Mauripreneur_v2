@@ -19,6 +19,11 @@ namespace API.Data
             _context = context;
         }
 
+        public Task<IEnumerable<Professional>> getLastProfs()
+        {
+           return (Task<IEnumerable<Professional>>)_context.Professionals.ToList().OrderByDescending( x => x.Id).Take(4);
+        }
+
         public async Task<IEnumerable<Professional>> GetProfAsync()
         {
             return await _context.Professionals.ToListAsync();

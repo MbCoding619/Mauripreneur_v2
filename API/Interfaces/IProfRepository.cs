@@ -12,6 +12,8 @@ namespace API.Interfaces
 
         Task<IEnumerable<Professional>> GetProfAsync();
 
+        Task<IEnumerable<Professional>> getLastProfs();
+
         Task<Professional> GetProfByAppId(int id);
 
         Task<Professional> GetProfById(int id);

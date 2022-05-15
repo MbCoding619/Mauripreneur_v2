@@ -34,6 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { RegistrationOrganisationComponent } from './Registration/registration-organisation/registration-organisation.component';
 import { JobPostedComponent } from './job/job-posted/job-posted.component';
 import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
@@ -68,6 +69,11 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { SendBidComponent } from './bid/send-bid/send-bid.component';
 import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.component';
+import { UserMainProfileComponent } from './Profile/user-main-profile/user-main-profile.component';
+import { ProgressStepComponent } from './multi-step-form/progress-step/progress-step.component';
+import { ProgressStepDirective } from './multi-step-form/progress-step.directive';
+import { MultiStepFormTestsComponent } from './_tests/multi-step-form-tests/multi-step-form-tests.component';
+import { ProgressComponent } from './multi-step-form/progress/progress.component';
 
 
 
@@ -115,7 +121,13 @@ import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.componen
     MemberCardComponent,
     MemberListComponent,
     SendBidComponent,
-    ProfBidCardComponent    
+    ProfBidCardComponent,
+    UserMainProfileComponent,
+    ProgressStepComponent,
+    ProgressStepDirective,
+    MultiStepFormTestsComponent,
+    ProgressComponent,
+      
   ],
   imports: [
     BrowserModule,
@@ -142,6 +154,7 @@ import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.componen
     MatIconModule,
     MatSelectModule,
     MatRadioModule,
+    MatCheckboxModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

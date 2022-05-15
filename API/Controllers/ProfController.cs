@@ -35,6 +35,26 @@ namespace API.Controllers
             return Ok(profToReturn);
         }
 
+        [HttpGet("last4Prof")]
+        public  IActionResult getLastProf()
+        {
+            var query = _context.Professionals.
+                        Join(
+                            _context.Users,
+                            prof => prof.AppUserId,
+                            appUser => appUser.AppUserId,
+                            (prof,appUser) => new{
+                                profId = prof.Id,
+                                fName = prof.FName,
+                                lName = prof.LName,
+                                field = prof.Field,
+                                imagePath = appUser.imagePath
+                            }
+                        ).ToList().OrderByDescending(x => x.profId).Take(4);
+
+            return Ok(query);
+        }
+
         [HttpGet("{username}")]
 
         public async Task<ActionResult<ATProfessionalDTO>> GetProfByUsername(string username)

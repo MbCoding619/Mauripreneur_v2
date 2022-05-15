@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { pipe } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -18,7 +19,8 @@ export class SendBidComponent implements OnInit {
   BidForm : FormGroup;
   timelineForm : FormGroup;
   bidF = true;
-  bidE = false;
+  bidE = false; 
+  bidConfirm = false; 
   jobData : jobDetails;
   model : any;
   modelT : any;
@@ -27,10 +29,12 @@ export class SendBidComponent implements OnInit {
   timelineData : timeline;
   timelineEditData : timeline;  
   bidId : number;
+  isChecked:any=false;
   constructor(private bidService : BidService,
               private toastr : ToastrService,
               private accountService : AccountsService,
-              private fb : FormBuilder) { }
+              private fb : FormBuilder,
+              private routr : Router) { }
 
   ngOnInit(): void {
     this.bidService.currentJobToBid$.pipe(take(1)).subscribe(response =>{
@@ -209,6 +213,22 @@ export class SendBidComponent implements OnInit {
     
     this.bidF = !this.bidF;
   }
+
+  goToAllJob(){
+    if(this.isChecked){
+      this.routr.navigateByUrl('/Job/AllJob');
+      this.toastr.success("Bid sent");
+    }else{
+      this.toastr.error("Please confirm!");
+    }
+  }
+
+  onChange($event:Event){
+if($event){
+  this.bidConfirm = !this.bidConfirm;
+}
+
+ }
 
   timeEdit(){
     this.bidE = !this.bidE;
