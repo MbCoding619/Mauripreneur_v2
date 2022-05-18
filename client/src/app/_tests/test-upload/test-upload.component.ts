@@ -14,6 +14,7 @@ export class TestUploadComponent implements OnInit {
   fileUrl : string;
 
   testData : any =[];
+  fileToUpload : File;
 
 
   @Output() public onUploadFinished = new EventEmitter();
@@ -28,9 +29,9 @@ export class TestUploadComponent implements OnInit {
       return;
     }
     
-    let fileToUpload = <File>files[0];
+    this.fileToUpload = <File>files[0];
     const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('file', this.fileToUpload, this.fileToUpload.name);
     
     this.http.post('https://localhost:5001/api/FileManager/upload', formData, {reportProgress: true, observe: 'events'})
       .subscribe(event => {

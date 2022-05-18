@@ -60,7 +60,7 @@
     <ng-container  *ngIf="(accountService.currentUser$| async) as user">
 
       <div class="d-flex  dropdown" dropdown style="margin:1em 2em;">
-        <img [src]="createImgPath(user.imagePath)" class="rounded mx-auto d-block" style="width:40px;height:40px; padding-right:2%;" alt={{user.username}}>
+        <img *ngIf="user.imagePath" [src]="createImgPath(user.imagePath)" class="rounded mx-auto d-block" style="width:40px;height:40px; padding-right:2%;" alt={{user.username}}>
         
         <a class="dropdown-toggle text-light" dropdownToggle>{{user.username}}</a>
         <div class="dropdown-menu" *dropdownMenu>

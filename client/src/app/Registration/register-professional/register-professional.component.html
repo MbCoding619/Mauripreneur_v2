@@ -1,117 +1,443 @@
-<div class="container" style="margin-top:5%;">
-    <form [formGroup]='registerForm' (ngSubmit)="registerProf()"  autocomplete="off">
-        <h2 id="logoContain"><img id="formLogo" src="https://localhost:4200/assets/mauri_bleu.png" alt=""></h2>
-        <h2 class="text-center">Join Our Network- Register Professional</h2>
-    <div class="row jumbotron">
-        <div class="col-sm-6 form-group">
-            <label for="username">Username</label>
-            <input readonly type="text" class="form-control" formControlName="username"  id="username">
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="name-f">First Name</label>
-            <input type="text" class="form-control" formControlName="FName"  id="name-f"  placeholder="Enter your first name." required>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="name-l">Last name</label>
-            <input type="text" class="form-control" formControlName="LName"  id="name-l"  placeholder="Enter your last name." required>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" formControlName="Email"  id="email"  placeholder="Enter your email." required>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="address-1">Address Line</label>
-            <input type="address" class="form-control" formControlName="Address"  id="address-1"  placeholder="Locality/House/Street no." required>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="IdNum">ID Number</label>
-            <input type="IdNum" class="form-control" formControlName="IDNum"  id="IdNum"  placeholder="Trade Name/Company Name" required>
-        </div> 
-        <div class="col-sm-6 form-group">
-            <label for="field">Field</label>
-            <select id="field" formControlName="FieldId" 
-            class="form-control browser-default custom-select">
-            <option>--Select--</option>
-            <option *ngFor="let field of fieldList"
-            [value]="field.fieldId">
-                {{field.description}}
-                <!-- {{field | json}}                 -->
-        </option>            
-        </select>
-        </div>
-        <!-- <div class="col-sm-6 form-group">
-            <label for="fieldId">TEST FIELD</label>
-            <input type="fieldId" class="form-control" [(ngModel)]="model.fieldId"
-            name="fieldId" id="fieldId"  placeholder="TEST FIELD" required>
-        </div>  -->
-         
-        <div class="col-sm-6 form-group">
-            <label for="tel">Phone</label>
-            <input type="tel" formControlName="Phone" 
-             class="form-control" id="tel"  placeholder="Enter Your Contact Number." required>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="Date">Qualification 1</label>
-            <input type="Qual1" class="form-control" formControlName="Qual1"  id="Qual1"  placeholder="Qualification 1" required>
-        </div>   
-       
-        <div class="col-sm-6 form-group">
-            <label for="pass">Qualification 2</label>
-            <input type="Qual2" formControlName="Qual2" 
-             class="form-control" id="Qual2"  placeholder="Qualification 2/Optional" >
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="Qual3">LinkedIn Link</label>
-            <input type="Qual3" formControlName="LinkedInLink" 
-            class="form-control" id="LinkedInLink" placeholder="LinkedInLink/Optional" >
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="Qual3">Education Institution</label>
-            <input type="EducationInstition" formControlName="EducationInstition" 
-            class="form-control" id="EducationInstition" placeholder="Education Institution">
-        </div>
-        <div class="col-sm-6 form-group">
-            <div>
-                <label for="BriefDesc">Brief Description</label> 
-            </div>                       
-            <textarea rows="4" cols="50" formControlName="BriefDesc" >Brief Description....</textarea>
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="PortFolio">Employment History</label>
-            <input type="EmploymentHistory" formControlName="EmploymentHistory" 
-            class="form-control" id="EmploymentHistory" placeholder="Employment History">
-        </div>
-        <div class="col-sm-6 form-group">
-            <label for="EmpStatus">Employment Status</label>
-            <input type="EmpStatus" formControlName="EmploymentStatus" 
-            class="form-control" id="EmpStatus" placeholder="Employment Status">
-        </div>
-        <div class="col-sm-6 form-group">
+<!-- New template -->
+<app-progress #progress (stateChange)="onStateChange($event)" style="margin-bottom : 60% ;">
+  <!-- first Step -->
+  <app-progress-step>
 
-            <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;" multiple accept=".png, .jpg, .jpeg">
-            <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button> 
-        </div>
+    <section class="vh-100">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-        <div class="col-sm-12">
-            <input type="checkbox" class="form-check d-inline" id="chb" required><label for="chb" class="form-check-label">&nbsp;I accept all terms and conditions.
-            </label>
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-3 ml-5">Personal Informations</h3>
+
+                    <form [formGroup]='personalForm' class="mx-1 mx-md-4">
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">First Name</label>
+                          <app-text-input [formControl]='personalForm.controls["FName"]' [label]='"First Name"'>
+                          </app-text-input>
+
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example3c">Last Name</label>
+                          <app-text-input [formControl]='personalForm.controls["LName"]' [label]='"Last Name"'>
+                          </app-text-input>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-envelope fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example4c">Email</label>
+                          <app-text-input [formControl]='personalForm.controls["Email"]' [label]='"xyz@mail.com"'>
+                          </app-text-input>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-address-card fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example4cd">Address</label>
+                          <app-text-input [formControl]='personalForm.controls["Address"]'
+                            [label]='"ex :Port Louis Mauritius"'></app-text-input>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-mobile fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example4cd">Phone</label>
+                          <app-text-input [formControl]='personalForm.controls["Phone"]' [label]='"5123457"'>
+                          </app-text-input>
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fa fa-id-card fa-lg me-3" aria-hidden="true"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example4cd">ID number</label>
+                          <app-text-input [formControl]='personalForm.controls["IDNum"]' [label]='"ID number"'>
+                          </app-text-input>
+                        </div>
+                      </div>
+
+
+
+                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <button  mat-raised-button progressStepNext                          class="btn btn-primary btn-lg">next</button>
+                      </div>
+
+                    </form>
+                    
+                  </div>
+                  <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                    <div class="row">
+                      <img src="https://localhost:4200/assets/mauri_bleu.png" class="img-fluid" alt="">
+                      <img src="https://localhost:4200/assets/info-prof-reg.png" class="img-fluid" alt="Sample image">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-  
-        <div class="col-sm-6 form-group" style="display: flex;
-        justify-content: center; margin-top: 4%;">
-           <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </section>
+
+
+
+  </app-progress-step>
+
+  <!-- Second Step -Socials -->
+
+  <app-progress-step>
+    <section>
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-3 ml-5">Social Informations</h3>
+                    <form [formGroup]='personalForm' class="mx-1 mx-md-4">
+
+                      <div class="row">
+
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline flex-fill mb-0">
+                            <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                            <label class="form-label" for="form3Example1c">LinkedIn Profile</label>
+                            <app-text-input [formControl]='personalForm.controls["linkedInLink"]' [label]='"First Name"'>
+                            </app-text-input>
+
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline flex-fill mb-0">
+                            <label class="form-label" for="form3Example1c"> <i class="fa fa-user fa-lg me-3"
+                                aria-hidden="true"></i> Upload your Picture</label>
+                            <input type="file" class="form-control" #file placeholder="Choose file"
+                              (change)="uploadFile(file.files)" multiple accept=".png, .jpg, .jpeg">
+                            <div class="test" style="display: flex;">
+                              <button type="button" class="btn btn-light" (click)="file.click()"><i class="fa fa-check"
+                                  aria-hidden="true"></i></button>
+                              <div class="small text-muted mt-2 ml-2">Cick to confirm picture. Max file size 50 MB</div>
+                            </div>
+
+
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline flex-fill mb-0">
+                            <label class="form-label" for="form3Example1c"> <i class="fa fa-user fa-lg me-3"
+                                aria-hidden="true"></i> Brief Description</label>
+                            <app-text-area [formControl]='personalForm.controls["briefDesc"]' [label]='"First Name"'>
+                            </app-text-area>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-2 mb-4">
+                          <button progressStepPrev mat-raised-button color="accent">prev</button>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                          <button (click)="goNext(progress)" mat-raised-button color="primary">next</button>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                          <button (click)="getPersonalFormData()" mat-raised-button color="primary">next</button>
+                        </div>
+                      </div>
+
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-6 form-group" style="display: flex;
-        justify-content: center; margin-top: 4%">
-          <button class="btn btn-warning" routerLink='/Registration/Choice' type="button">Cancel</button>
-       </div>
-        
-    </div>
-    </form>
-  </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+  </app-progress-step>
+  <!-- End Second Step -->
+
+
+
+  <!-- Start Third Step -->
+  <app-progress-step>
+
+    <section>
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-3 ml-5">Qualifications</h3>
+                    <form [formGroup]="qualForm">
+                      <div formArrayName="qualifications">
+                        <div *ngFor="let qualification of qualifications.controls; index as idx" class="form-group">
+                          <div class="row" [formGroup]="qualification">
+                            <div *ngIf="qualForm.get('qualifications').length>1" class="col-md-12 mb-4">
+                              <button type="button" class="btn btn-danger btn-sm 
+                              pull-right"
+                              title="Delete Qualification"
+                              (click)="removeQualFormGroup(idx)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Qualification Type</label>
+                                <select id="field" formControlName="qualType" 
+                                class="form-control browser-default custom-select">
+                                <option>--Select--</option>
+                                <option *ngFor="let quali of qualificationType"
+                                [value]="quali.qualiType">
+                                    {{quali.qualiType}}
+                                    <!-- {{field | json}}                 -->
+                            </option>            
+                            </select>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Course Name</label>
+                                <app-text-input [formControl]='qualification.controls["courseName"]'
+                                  [label]='"Course"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Institution</label>
+                                <app-text-input [formControl]='qualification.controls["institution"]'
+                                  [label]='"Institution"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Date Started</label>
+                                <app-text-input [formControl]='qualification.controls["yearStarted"]'
+                                  [label]='"Date Started"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Date End</label>
+                                <app-text-input [formControl]='qualification.controls["yearFinish"]'
+                                  [label]='"Date End"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <hr/>
+
+
+                          </div>
+
+
+                        </div>
+                        <!-- <button type="button" (click)="addNameField()" class="btn btn-success" [ngClass] = "'pad'">Add More Names</button>
+                      <button (click)="deleteNameField(idx)" class="btn btn-danger">Delete</button> -->
+                      </div>
+                      <div>
+                        <button class="btn btn-primary" (click)="addQualButtonClick()">Add</button>
+                        <button class="btn btn-primary" (click)="onQualFormSubmit()">Check</button>
+                        <button progressStepPrev mat-raised-button color="accent">prev</button>
+                        <button progressStepNext mat-raised-button color="primary">next</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </app-progress-step>
+
+
+  <!-- End Third Step -->
+
+  <!-- Start Fourth Step -->
+
+  <app-progress-step>
+
+    <section>
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px;">
+              <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+                  <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-3 ml-5">Work Experience</h3>
+                    <form [formGroup]="workForm">
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline flex-fill mb-0">
+                            <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                            <label class="form-label" for="form3Example1c">Field</label>
+                            <select id="field" 
+                            class="form-control browser-default custom-select">
+                            <option>--Select--</option>
+                            <option *ngFor="let field of fieldList"
+                            [value]="field.fieldId">
+                                {{field.description}}
+                                <!-- {{field | json}}                 -->
+                        </option>            
+                        </select>
   
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline flex-fill mb-0">
+                            <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                            <label class="form-label" for="form3Example1c">Sub Field</label>
+                            <select id="field" 
+                            class="form-control browser-default custom-select">
+                            <option>--Select--</option>
+                            <option *ngFor="let field of fieldList"
+                            [value]="field.fieldId">
+                                {{field.description}}
+                                <!-- {{field | json}}                 -->
+                        </option>            
+                        </select>
   
- 
-  
-  
-  
+                          </div>
+                        </div>
+                      </div>           
+                      
+                      <div formArrayName="experiences">
+                        <div *ngFor="let experience of experiences.controls; index as idw" class="form-group">
+                          <div class="row" [formGroup]="experience">
+                            <div *ngIf="workForm.get('experiences').length>1" class="col-md-12 mb-4">
+                              <button type="button" class="btn btn-danger btn-sm 
+                              pull-right"
+                              title="Delete Qualification"
+                              (click)="removeWorkFormGroup(idw)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                            </div>
+
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Job Title</label>
+                                <app-text-input [formControl]='experience.controls["title"]'
+                                  [label]='"Job Title"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Company Name</label>
+                                <app-text-input [formControl]='experience.controls["compName"]'
+                                  [label]='"Company Name"'></app-text-input>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Years of Experience</label>
+                                <app-text-input [formControl]='experience.controls["years"]'
+                                  [label]='"Years of experience"'></app-text-input>
+
+                              </div>
+                            </div> 
+
+                            <div class="col-md-6 mb-4">
+                              <div class="form-outline flex-fill mb-0">
+                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
+                                <label class="form-label" for="form3Example1c">Date Started</label>
+                                <app-text-input [formControl]='experience.controls["cvPath"]'
+                                  [label]='"Cv"'></app-text-input>
+
+                              </div>
+                            </div> 
+
+                            <hr/>
+
+
+                          </div>
+
+
+                        </div>
+                        <!-- <button type="button" (click)="addNameField()" class="btn btn-success" [ngClass] = "'pad'">Add More Names</button>
+                      <button (click)="deleteNameField(idx)" class="btn btn-danger">Delete</button> -->
+                      </div>
+                      <div>
+                        <button class="btn btn-primary" (click)="addWorkButtonClick()">Add</button>
+                        <button class="btn btn-primary" (click)="onWorkFormSubmit()">Check</button>
+                        <button progressStepPrev mat-raised-button color="accent">prev</button>
+                        <button progressStepNext mat-raised-button color="primary">next</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </app-progress-step>
+
+<!-- End Fourth Step -->
+
+  <app-progress-step>
+
+    <button progressStepPrev mat-raised-button color="accent">prev</button>
+    <button progressStepNext mat-raised-button color="primary">next</button>
+
+  </app-progress-step>
+
+
+
+
+</app-progress>
