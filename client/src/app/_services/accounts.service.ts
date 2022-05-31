@@ -39,7 +39,7 @@ export class AccountsService {
         if(user){
           localStorage.setItem('user',JSON.stringify(user));          
           //localStorage.setItem('username',JSON.stringify(user.username));
-          this.currentUserSource.next(user);          
+          this.currentUserSource.next(user);                    
           return user;     
         }
       })
