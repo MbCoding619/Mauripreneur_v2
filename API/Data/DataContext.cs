@@ -43,6 +43,16 @@ namespace API.Data
 
         public DbSet<Timeline> Timeline {get; set;}
 
+        public DbSet<SubField> SubField {get; set;}
+
+        public DbSet<Qualification> Qualification {get; set;}
+
+        public DbSet<Experience> Experience {get; set;}
+        
+        public DbSet<Skills> Skills {get; set;}
+
+
+
         
 
 
@@ -59,7 +69,20 @@ namespace API.Data
             builder.Entity<Application>()
                 .HasOne(ap => ap.Vacancy)
                 .WithMany(ap => ap.Students)
-                .HasForeignKey(ap => ap.VacId);  
+                .HasForeignKey(ap => ap.VacId);
+
+            builder.Entity<Skills>()
+                    .HasKey(sk => new {sk.ProfId,sk.SubFieldId});
+
+            builder.Entity<Skills>()
+                    .HasOne(sk => sk.Professional)
+                    .WithMany(sk => sk.SubField)
+                    .HasForeignKey(sk => sk.ProfId);
+
+            builder.Entity<Skills>()
+                    .HasOne(sk => sk.SubField)
+                    .WithMany(sk => sk.Professional)
+                    .HasForeignKey(sk => sk.SubFieldId);          
 
             builder.Entity<Meeting>()
                 .HasKey(me => me.MeetId);

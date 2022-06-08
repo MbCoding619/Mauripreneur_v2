@@ -17,5 +17,7 @@ namespace API.Entities
         public ICollection<Student> Student { get; set; }
 
          public ICollection<Job> Job { get; set; }
+
+         public ICollection<SubField> SubField { get; set; }
     }
 }

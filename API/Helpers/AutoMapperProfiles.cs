@@ -25,6 +25,10 @@ namespace API.Helpers
             CreateMap<Meeting,ATMeetingDTO>();
             CreateMap<Timeline,ATTimelineDTO>();
             CreateMap<TimelineUpdateDTO,Timeline>();
+            CreateMap<SubField,ATSubFieldDTO>();
+            CreateMap<SubFieldUpdateDTO,SubField>();
+            CreateMap<Skills,ATSkillsDTO>();
+            CreateMap<Experience,ATExperienceDTO>();
         }
     }
 }

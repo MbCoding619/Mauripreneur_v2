@@ -68,7 +68,8 @@ namespace API.Controllers
 
           } ;
 
-        _context.Job.Add(job); 
+        _context.Job.Add(job);
+         
 
                }else{
                    return BadRequest("File Missing");

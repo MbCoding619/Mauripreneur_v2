@@ -49,6 +49,10 @@ namespace API.Entities
 
         public ICollection<Meeting> Meeting { get; set; }
 
+        public ICollection<Skills> SubField { get; set; }
+
+
+
 
 
     }

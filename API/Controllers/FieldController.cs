@@ -20,16 +20,17 @@ namespace API.Controllers
          private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IFieldRepository _repository;
+        private readonly ISubFieldRepository _subFieldRepository;
         
-        public FieldController(DataContext context, IMapper mapper, IFieldRepository repository  )
+        public FieldController(DataContext context, IMapper mapper, IFieldRepository repository, ISubFieldRepository subFieldRepository)
         {
+            _subFieldRepository = subFieldRepository;
             _repository = repository;
-            _mapper = mapper;
-            
+            _mapper = mapper;            
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("fields")]
 
         public ActionResult<IEnumerable<Field>> GetField(){
 
@@ -68,8 +69,7 @@ namespace API.Controllers
         }
 
 
-        //Below Code doesnt work. 
-        //Need to get on the logic behind put
+        
         [HttpPut("editField")]
 
         public  async Task<ActionResult<ActionStatusDTO>> UpdateField(FieldUpdateDTO fieldUpateDTO)
@@ -92,10 +92,86 @@ namespace API.Controllers
         }
 
 
+        [HttpGet("subFields")]
+        public ActionResult<IEnumerable<SubField>> getSubFields()
+        {
+                var subFields = _context.SubField.ToList();
+
+                return subFields;
+        }
+
+
+        [HttpPost("addSubField")]
+
+        public async Task<ActionResult<ActionStatusDTO>> addSubField(SubFieldAddDTO subFieldAddDTO)
+        {
+            if(!(await SubFieldExists(subFieldAddDTO.Description)))
+            {
+                  if(await FieldExists(subFieldAddDTO.FieldDescription))
+            {
+                var field = _repository.GetFieldByDescription((subFieldAddDTO.FieldDescription));
+                var newSubField = new SubField
+                {   
+                    Description = subFieldAddDTO.Description,
+                    subFieldStatus = "PENDING",
+                    FieldId = field.Id
+                };
+
+                _context.SubField.Add(newSubField);
+            }else
+            {
+                return BadRequest("Corresponding Field Doesn't exist");
+            }
+
+            }else
+            {
+                return BadRequest("SubField Already Exists");
+            }
+
+          
+
+            await _context.SaveChangesAsync();
+
+            return new ActionStatusDTO
+            {
+                status = "SubField Added"
+            };
+        }
+
+     [HttpPut("editSubField")]
+
+        public  async Task<ActionResult<ActionStatusDTO>> UpdateSubField(SubFieldUpdateDTO subFieldUpdateDTO)
+        {       
+           var subField = await _subFieldRepository.getSubFieldByIdAsync(subFieldUpdateDTO.SubFieldId);
+            if(subField !=null )
+            {
+                _mapper.Map(subFieldUpdateDTO,subField);
+                _subFieldRepository.Update(subField);
+
+                return new ActionStatusDTO {
+                    status ="Updated"
+                };
+            }
+            else{
+                return BadRequest("Something went wrong");
+            }
+
+
+        }
+
+
+    
+
+
 
     public async Task<bool>FieldExists( string description){
 
         return await _context.Fields.AnyAsync( f => f.Description.ToLower() == description.ToLower());
+    }
+
+    public async Task<bool>SubFieldExists(string description){
+
+        return await _context.SubField.AnyAsync(sbf => sbf.Description.ToLower() == description.ToLower());
     }
 
     

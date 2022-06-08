@@ -29,6 +29,11 @@ namespace API.Extensions
             services.AddScoped<IProfRepository,ProfRepository>();
             services.AddScoped<IFieldRepository,FieldRepository>();
             services.AddScoped<IMeetingRepository,MeetingRepository>();
+            services.AddScoped<ISubFieldRepository,SubFieldRepository>();
+            services.AddScoped<ISkillsRepository,SkillsRepository>();
+            services.AddScoped<IQualRepository,QualiRepository>();
+            services.AddScoped<IExperienceRepository,ExperienceRepository>();
+           
 
             
             //Iinitialising the dependency of Automapper in the App Service class

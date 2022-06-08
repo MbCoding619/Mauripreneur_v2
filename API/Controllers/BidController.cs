@@ -34,10 +34,12 @@ namespace API.Controllers
         {
              var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == bidAddDTO.username.ToLower());
              var bid = new Bid();
+             
 
              if(user !=null)
              {
                  var prof = await _context.Professionals.SingleOrDefaultAsync( p => p.AppUserId == user.AppUserId);
+                 
                 
                 var bidCheck = await _context.Bid.FirstOrDefaultAsync(b => b.JobId == bidAddDTO.JobId && b.ProfessionalId == prof.Id);
 
@@ -53,8 +55,9 @@ namespace API.Controllers
                      BidAmount = bidAddDTO.BidAmount
 
                  };
-
+                
                  _context.Bid.Add(bid);
+                 
                 }else
                 {
                     return BadRequest("Already Bid for the job");

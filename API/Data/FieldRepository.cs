@@ -16,6 +16,11 @@ namespace API.Data
             _context = context;
         }
 
+        public async Task<Field> GetFieldByDescription(string description)
+        {
+           return await _context.Fields.FirstAsync(f => f.Description == description);
+        }
+
         public async Task<Field> GetFieldByIdAsync(int id)
         {
             return await _context.Fields.FindAsync(id);
@@ -24,7 +29,11 @@ namespace API.Data
         public void Update(Field field)
         {
             _context.Entry(field).State = EntityState.Modified;
-            _context.SaveChanges(); 
+            _context.SaveChanges();
+            
+            
+            
+            
         }
     }
 }

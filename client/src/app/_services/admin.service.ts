@@ -20,7 +20,7 @@ export class AdminService {
   constructor(private http : HttpClient, private toastr: ToastrService) { }
 
   getFields(){
-    return this.http.get<field[]>(this.baseUrl+'field');
+    return this.http.get<field[]>(this.baseUrl+'field/fields');
   }
 
   addField(model:any){

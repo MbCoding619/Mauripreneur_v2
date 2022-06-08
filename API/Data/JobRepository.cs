@@ -23,6 +23,7 @@ namespace API.Data
         public async Task<IEnumerable<Job>> GetAllJobAsync()
         {
             return await _context.Job.ToListAsync();
+            
         }
 
         public Task<ATJobDTO> GetJobAsync(int id)

@@ -55,6 +55,7 @@ namespace API.Controllers
                  Token = _tokenService.CreateToken(user),
                   AppUserRole = user.AppUserRole,
                   
+                  
              };   
         }
         
@@ -210,11 +211,8 @@ namespace API.Controllers
                 IDNum = registerProfDTO.IDNum,
                 Address = registerProfDTO.Address,
                 Phone = registerProfDTO.Phone,
-                Email = registerProfDTO.Email,
-                Qual1 = registerProfDTO.Qual1,
-                Qual2 = registerProfDTO.Qual2,
-                LinkedInLink = registerProfDTO.LinkedInLink,
-                EducationInstition = registerProfDTO.EducationInstition,
+                Email = registerProfDTO.Email,               
+                LinkedInLink = registerProfDTO.LinkedInLink,               
                 BriefDesc = registerProfDTO.BriefDesc,
                 EmploymentHistory = registerProfDTO.EmploymentHistory,
                 EmploymentStatus = registerProfDTO.EmploymentStatus,
