@@ -8,6 +8,7 @@ import { AccountsService } from '../_services/accounts.service';
 import { faTwitter,  faFacebookF, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
 import { take } from 'rxjs/operators';
 import { el } from 'date-fns/locale';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -30,6 +31,7 @@ export class NavComponent implements OnInit {
   userRole ='';
   currentUser : User;
   modalReference: any;
+  baseImgUrl = environment.apiImg;
   
   
   
@@ -101,8 +103,10 @@ export class NavComponent implements OnInit {
     this.accountService.currentUser$.pipe(take(1)).subscribe( user => this.currentUser = user);
   }
 
+ 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
 }

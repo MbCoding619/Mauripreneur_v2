@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { timeline } from 'src/app/_models/timeline';
 import { BidService } from 'src/app/_services/bid.service';
+import { environment } from 'src/environments/environment';
 
 interface Status {
 	value : string;
@@ -36,6 +37,7 @@ export class BidSentComponent implements OnInit {
   timelineData : timeline;
   timelineEditData : timeline;
   public myAngularxQrCode: string = null;
+  baseImgUrl = environment.apiImg;
 
   statuses: Status [] = [
     {value: 'noneSelected', viewValue: 'None'},
@@ -96,8 +98,9 @@ export class BidSentComponent implements OnInit {
     })
   }
 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
 

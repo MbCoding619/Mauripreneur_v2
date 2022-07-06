@@ -15,6 +15,7 @@ import {User} from 'src/app/_models/user';
 import { take } from 'rxjs/operators';
 import { faPray } from '@fortawesome/free-solid-svg-icons';
 import { th } from 'date-fns/locale';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -37,6 +38,7 @@ export class AllJobPostedComponent implements OnInit {
  username ='';
  testArray :any[];
  p : number =1;
+ baseImgUrl = environment.apiImg;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -118,8 +120,10 @@ export class AllJobPostedComponent implements OnInit {
     )
   }
 
+  
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
   openDialog(row : any) {

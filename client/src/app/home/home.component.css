@@ -4,7 +4,7 @@
 #hero {
   width: 100%;
   position: relative;
-  background: url("https://localhost:4200/assets/hero-bg.png") center bottom no-repeat;
+  background: url("/assets/hero-bg.png") center bottom no-repeat;
   background-size: cover;
   padding: 200px 0 120px 0;
 }

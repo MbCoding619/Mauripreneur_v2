@@ -5,6 +5,7 @@ import { AccountsService } from './_services/accounts.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit.component';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  baseImgUrl = environment.apiImg;
   title = 'Mauripreneur';
   users: any;
 
@@ -43,7 +45,7 @@ export class AppComponent implements OnInit {
 
 
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
   logout(){

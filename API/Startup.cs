@@ -35,7 +35,7 @@ namespace API
         private readonly IConfiguration _config;
         public Startup(IConfiguration config)
         {
-           _config = config;            
+            _config = config;
         }
 
         public IConfiguration Configuration { get; }
@@ -43,14 +43,14 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationServices(_config);           
+            services.AddApplicationServices(_config);
             services.AddControllers();
             services.AddCors();
             services.AddIdentityServices(_config);
             var emailConfig = _config.GetSection("EmailConfiguration").Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailSender,EmailSender>();
-         
+            services.AddScoped<IEmailSender, EmailSender>();
+
 
             services.Configure<FormOptions>(o =>
             {
@@ -58,7 +58,7 @@ namespace API
                 o.MultipartBodyLengthLimit = int.MaxValue;
                 o.MemoryBufferThreshold = int.MaxValue;
             });
-             
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -73,36 +73,41 @@ namespace API
             app.UseHttpsRedirection();
             // the below allow static files to be served using path defined
             //below to get access to images via url.
-            app.UseStaticFiles();  
 
-                app.UseStaticFiles(new StaticFileOptions()
-                {
-                             FileProvider = new PhysicalFileProvider(
-                            Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Images")),
-                            RequestPath = new PathString("/Resources/Images")
-                });
-                app.UseStaticFiles(new StaticFileOptions()
-                {
-                             FileProvider = new PhysicalFileProvider(
-                            Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Documents")),
-                            RequestPath = new PathString("/Resources/Documents")
-                });
 
-                        
+
 
             app.UseRouting();
-            
+
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5001"));
 
             app.UseAuthentication();
 
             app.UseAuthorization();
-            
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Images")),
+                RequestPath = new PathString("/Resources/Images")
+            });
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Documents")),
+                RequestPath = new PathString("/Resources/Documents")
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index","FallBack");
             });
         }
     }

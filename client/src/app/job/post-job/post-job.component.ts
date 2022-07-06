@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { ProfService } from 'src/app/_services/prof.service';
 import { profProfile } from 'src/app/_models/profProfile';
+import { environment } from 'src/environments/environment';
 
 
 interface timeFrame{
@@ -39,6 +40,7 @@ export class PostJobComponent implements OnInit {
   formData1 : FormData;
   formDataSubmit = new FormData();
   last4prof : profProfile;
+  baseImgUrl = environment.apiImg;
  
   timeframes : timeFrame[] = [
 
@@ -188,8 +190,10 @@ export class PostJobComponent implements OnInit {
     })
   }
 
+ 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
 }

@@ -7,6 +7,7 @@ import { BidService } from 'src/app/_services/bid.service';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-prof-bid-card',
@@ -25,6 +26,8 @@ export class ProfBidCardComponent implements OnInit {
   bidProfData2 : bidProfCard;
   p =1;
   model : any;
+  baseImgUrl = environment.apiImg;
+
   constructor(private bidService : BidService, private accountService : AccountsService,
               private toastr : ToastrService) {
 
@@ -128,8 +131,9 @@ showTimelineTab(bidId :string,bidData :bidProfCard){
 
   }
 
+ 
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
 

@@ -14,6 +14,7 @@ import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/user';
 import { SharedService } from 'src/app/_services/shared.service';
 import { Job } from 'src/app/_models/job';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dialog-job-posted',
@@ -48,6 +49,7 @@ export class DialogJobPostedComponent implements OnInit {
   showAll = false;
   meetForm: FormGroup;
   model: any;
+  baseImgUrl = environment.apiImg;
   @Input() jobData: Job; //Change here
   constructor(
     /* if needed to have the other logic of using a matdialog -> enable below code
@@ -240,8 +242,9 @@ export class DialogJobPostedComponent implements OnInit {
     this.showAll = false;
   }
 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
 }

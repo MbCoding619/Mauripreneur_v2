@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrIconClasses, ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/_services/admin.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-manage-users',
@@ -16,6 +17,7 @@ export class ManageUsersComponent implements OnInit {
   displayedColumns : string[] =['appUserId','userName','appUserRole','accountStatus','imagePath','Action'];
   dataSource : MatTableDataSource<any>;
   model : any = [];
+  baseImgUrl = environment.apiImg;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) sort: MatSort;
@@ -46,9 +48,8 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
-  createImagePath(fileUrl : any){
-    console.log("https:localhost:5001/"+fileUrl);
-    return "https:localhost:5001/"+fileUrl;
+  createImagePath(fileUrl : any){   
+    return `${this.baseImgUrl}${fileUrl}`;
   }
 
   deactivateUser(appUserId : any){
@@ -69,8 +70,9 @@ export class ManageUsersComponent implements OnInit {
     this.getUsers();
   }
 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
   

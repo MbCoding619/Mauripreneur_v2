@@ -12,6 +12,7 @@ import { AccountsService } from 'src/app/_services/accounts.service';
 import { BidService } from 'src/app/_services/bid.service';
 import { SharedService } from 'src/app/_services/shared.service';
 import { SmeService } from 'src/app/_services/sme.service';
+import { environment } from 'src/environments/environment';
 import { DialogBidComponent } from '../dialog-bid/dialog-bid.component';
 
 @Component({
@@ -31,6 +32,7 @@ export class SmeProfileComponent implements OnInit {
   username = '';
   formJob: FormGroup;
   bidStatus = false;
+  baseImgUrl = environment.apiImg;
   
 
   constructor(private dialogRef : MatDialogRef<SmeProfileComponent>,@Inject(MAT_DIALOG_DATA) public smeData:jobDetails,private sharedService : SharedService,
@@ -98,8 +100,10 @@ export class SmeProfileComponent implements OnInit {
     document.body.removeChild(a);
   }
 
+ 
+
   createImgPath(serverPath : string){
-    return `https://localhost:5001/${serverPath}`;
+    return `${this.baseImgUrl}${serverPath}`;
   }
 
   initialiseForm(){
