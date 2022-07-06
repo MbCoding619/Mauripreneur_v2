@@ -6,8 +6,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { Job } from 'src/app/_models/job';
+import { jobDetails } from 'src/app/_models/jobDetails';
 import { smeProfile } from 'src/app/_models/smeProfile';
 import { AccountsService } from 'src/app/_services/accounts.service';
+import { BidService } from 'src/app/_services/bid.service';
 import { SharedService } from 'src/app/_services/shared.service';
 import { SmeService } from 'src/app/_services/sme.service';
 import { DialogBidComponent } from '../dialog-bid/dialog-bid.component';
@@ -28,20 +30,23 @@ export class SmeProfileComponent implements OnInit {
   public progress: number;
   username = '';
   formJob: FormGroup;
+  bidStatus = false;
+  
 
-  constructor(private dialogRef : MatDialogRef<SmeProfileComponent>,@Inject(MAT_DIALOG_DATA) public smeData:any,private sharedService : SharedService,
+  constructor(private dialogRef : MatDialogRef<SmeProfileComponent>,@Inject(MAT_DIALOG_DATA) public smeData:jobDetails,private sharedService : SharedService,
   private smeService : SmeService, private toastr : ToastrService,private accountService : AccountsService,private fb : FormBuilder,
-  private dialog : MatDialog, private router : Router) { }
+  private dialog : MatDialog, private router : Router,private bidService : BidService) { }
 
   ngOnInit(): void {
    // console.log(this.smeData);
    this.accountService.currentUser$.pipe(take(1)).subscribe(user =>{
-     this.username = user.username;
-   })
+    this.username = user.username;
+  })
+    this.checkBid(this.smeData.jobId,this.username);
     this.getSmeById(this.smeData.smeId);
     this.getJobById(this.smeData.jobId);
     this.initialiseForm();
-    this.initializeFormJob();
+    //this.initializeFormJob();
   }
 
   getSmeById(id:any){
@@ -147,9 +152,35 @@ export class SmeProfileComponent implements OnInit {
     })
   }
 
+
   goToBid(){
     this.router.navigateByUrl("Bid/sendBid");
     this.dialogRef.close();
+  }
+
+  bid(){
+
+    let model = {
+      'jobId' : this.smeData.jobId,
+      'username' : this.username
+    }
+
+    this.bidService.showInterest(model).subscribe(response =>{
+      console.log(response);''
+    })
+  }
+
+  checkBid(jobId : any, username : any){ 
+
+    this.bidService.checkBid(jobId,username).subscribe(response =>{
+      if(response.status ==="Bidded"){
+       this.bidStatus =true;
+       console.log(response);
+      }else {
+        this.bidStatus = false;
+        console.log(response);
+      }
+    })
   }
 
 }

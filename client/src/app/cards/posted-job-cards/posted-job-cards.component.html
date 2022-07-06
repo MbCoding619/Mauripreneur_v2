@@ -1,0 +1,12 @@
+    
+    <div class="row d-flex justify-content-center">
+        <div  *ngFor="let job of jobData | paginate: { itemsPerPage: 6, currentPage: p }" class="box red">
+            <h2 style="color :#158CBA;">{{job.jobTitle}}</h2>
+            <p style="color: #98C1D9;">{{job.desc}}</p>
+            <img (click)="sendJobDataToParent(job)" style="cursor:pointer;" src="/assets/suitcase.png" alt="">
+          </div> 
+          <div class="d-flex justify-content-center">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>       
+    </div>
+  

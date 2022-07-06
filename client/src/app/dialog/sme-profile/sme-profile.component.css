@@ -1,3 +1,4 @@
+
 .img-thumbnail {
     margin: 25px;
     width: 85%;
@@ -74,4 +75,10 @@
     border-radius: 5px;
     border: 0;
     margin-bottom: 1rem;
+    max-width: 600px;
+}
+
+.pdf-viewer{
+    max-height: 600px;
+    width: 800px;
 }

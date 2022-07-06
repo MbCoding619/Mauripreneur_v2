@@ -17,6 +17,8 @@ namespace API.DTOs
 
         public string OtherDetails { get; set; }
 
+        public int BidId { get; set; }
+
              
 
         

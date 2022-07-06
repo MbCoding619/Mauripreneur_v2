@@ -21,9 +21,11 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IFieldRepository _repository;
         private readonly ISubFieldRepository _subFieldRepository;
+        private readonly IProfRepository _profRepository;
         
-        public FieldController(DataContext context, IMapper mapper, IFieldRepository repository, ISubFieldRepository subFieldRepository)
+        public FieldController(DataContext context, IMapper mapper, IFieldRepository repository, ISubFieldRepository subFieldRepository, IProfRepository profRepository)
         {
+            _profRepository = profRepository;
             _subFieldRepository = subFieldRepository;
             _repository = repository;
             _mapper = mapper;            
@@ -100,6 +102,13 @@ namespace API.Controllers
                 return subFields;
         }
 
+        [HttpGet("subFieldsByFieldId/{id}")]
+        public ActionResult<IEnumerable<SubField>> getSubFieldsByFieldId(int id)
+        {
+            var subFields = _context.SubField.Where(sb => sb.FieldId == id).ToList();            
+            return subFields;
+        }
+
 
         [HttpPost("addSubField")]
 
@@ -107,21 +116,20 @@ namespace API.Controllers
         {
             if(!(await SubFieldExists(subFieldAddDTO.Description)))
             {
-                  if(await FieldExists(subFieldAddDTO.FieldDescription))
-            {
-                var field = _repository.GetFieldByDescription((subFieldAddDTO.FieldDescription));
-                var newSubField = new SubField
-                {   
+                var field = await _repository.GetFieldByIdAsync(subFieldAddDTO.FieldId);
+                if(field !=null)
+                {
+                 var newSubField = new SubField
+                    {   
                     Description = subFieldAddDTO.Description,
                     subFieldStatus = "PENDING",
-                    FieldId = field.Id
-                };
-
-                _context.SubField.Add(newSubField);
-            }else
-            {
-                return BadRequest("Corresponding Field Doesn't exist");
-            }
+                    FieldId = field.FieldId
+                    };
+                     _context.SubField.Add(newSubField);
+                }else
+                {
+                     return BadRequest("Corresponding Field Doesn't exist");
+                }
 
             }else
             {
@@ -158,6 +166,25 @@ namespace API.Controllers
 
 
         }
+
+
+     [HttpPut("addFieldIdToProf")]
+     public async Task<ActionResult<ActionStatusDTO>> addFieldIdToProf(AddFieldIdToProfDTO addFieldIdToProfDTO)
+     {
+        var prof = await _context.Professionals.FindAsync(addFieldIdToProfDTO.ProfessionaId);
+        if(prof !=null)
+        {
+            prof.FieldId = addFieldIdToProfDTO.FieldId;
+            _profRepository.Update(prof);
+
+            return new ActionStatusDTO{
+                status ="fieldId added"
+            };
+        }else
+        {
+            return BadRequest("Prof not Found");
+        }
+     }   
 
 
     

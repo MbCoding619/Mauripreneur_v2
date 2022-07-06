@@ -14,6 +14,10 @@ import { acceptBid } from '../_models/acceptBid';
 import { meetingResponse } from '../_models/meetingResponse';
 import { environment } from 'src/environments/environment';
 import { jobDetails } from '../_models/jobDetails';
+import { subField } from '../_models/subField';
+import { ActionStatus } from '../_models/ActionStatus';
+import { field } from '../_models/field';
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +31,17 @@ export class SharedService {
 
  
 
-  getFields():Observable<any[]>{
+  getFields():Observable<field[]>{
 	
-    return this.http.get<any>(this.baseUrl+'field');
+    return this.http.get<field[]>(this.baseUrl+'field/fields');
+  }
+
+  getSubFields(){
+    return this.http.get<subField[]>(this.baseUrl+'field/subFields');
+  }
+
+  getSubFieldsByFieldId(id : number){
+    return this.http.get<subField[]>(this.baseUrl+`field/subFieldsByFieldId/${id}`);
   }
 
   // openSnackBar(message: string , action : string){
@@ -49,6 +61,10 @@ export class SharedService {
       })
     )
 
+  }
+
+  getJobByUsernameStatus(username : string , status : string){
+    return this.http.get<Job>(`${this.baseUrl}Job/jobBySmeByStatus/${username}/${status}`);
   }
 
   getJobByUsername(username : string){
@@ -126,6 +142,14 @@ export class SharedService {
     return this.http.get<any>(`${this.baseUrl}bid/getBidSent/${username}`)
   }
 
+  getBidSentByStatus(username :any , status :any){
+    return this.http.get<any>(`${this.baseUrl}bid/getBidSent/${username}/${status}`)
+  }
+
+  getRoleId(appUserId : any){
+    return this.http.get<any>(`${this.baseUrl}user/getUserRoleId/${appUserId}`)
+  }
+
   scheduleMeeting(model : any){
 
     return this.http.post(this.baseUrl+'meeting/createMeeting',model).pipe(
@@ -137,6 +161,8 @@ export class SharedService {
       })
     )
   }
+
+
 
 
   //testing

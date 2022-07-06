@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
+<nav  class="navbar navbar-expand-lg navbar-dark bg-primary" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><img id="navlogo" src="https://localhost:4200/assets/Mauripreneur-logos_white.png" alt=""></a>
     <button class="navbar-toggler" type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" >
@@ -6,9 +6,9 @@
     </button>
 
     <div class="collapse navbar-collapse" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" id="navbarColor01">
-      <ng-container *ngIf="(accountService.currentUser$| async) !=null">
+      <ng-container  *ngIf="(accountService.currentUser$| async) !=null">
     
-      <ul class="navbar-nav me-auto">
+      <ul hidden class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link active" href="#">Home
             <span class="visually-hidden">(current)</span>
@@ -57,12 +57,12 @@
       </ul>      
     </ng-container>
 
-    <ng-container  *ngIf="(accountService.currentUser$| async) as user">
+    <!-- <ng-container  *ngIf="(accountService.currentUser$| async) as user">
 
-      <div class="d-flex  dropdown" dropdown style="margin:1em 2em;">
-        <img *ngIf="user.imagePath" [src]="createImgPath(user.imagePath)" class="rounded mx-auto d-block" style="width:40px;height:40px; padding-right:2%;" alt={{user.username}}>
+      <div  class="d-flex  dropdown" dropdown style="margin:1em 2em;">
+        <img *ngIf="user.imagePath" [src]="createImgPath(user.imagePath)" class="rounded mx-auto d-block" style="max-height: 50px;border : 2px solid #fff; display: inline;" alt={{user.username}}>
         
-        <a class="dropdown-toggle text-light" dropdownToggle>{{user.username}}</a>
+        <a class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>{{user.username}}</a>
         <div class="dropdown-menu" *dropdownMenu>
           <a class="dropdown-item" routerLink="/User/UserProfile">Edit Profile</a>          
           <div class="dropdown-divider"></div>
@@ -71,7 +71,7 @@
       
     </div>
 
-    </ng-container>
+    </ng-container> -->
    
      
       <div class="d-flex fixed-right" *ngIf="(accountService.currentUser$ | async) === null">     
@@ -136,3 +136,5 @@
    
   </ng-template>  
 </nav>
+
+

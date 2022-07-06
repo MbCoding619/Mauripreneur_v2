@@ -1,10 +1,10 @@
   <!-- ======= Hero Section ======= -->
   
-  <section id="hero" class="clearfix">
+  <section *ngIf="!(accountService.currentUser$| async)" id="hero" class="clearfix">
     <div class="container" *ngIf="!registerMode"  data-aos="fade-up">
 
       <div class="hero-img" data-aos="zoom-out" data-aos-delay="200">
-        <img src="https://localhost:4200/assets/hero-img.svg" alt="" class="img-fluid">
+        <img src="/assets/hero-img.svg" alt="" class="img-fluid">
       </div>
 
       <div class="hero-info" data-aos="zoom-in" data-aos-delay="100">
@@ -28,8 +28,8 @@
     </div>
   </section><!-- End Hero Section -->
 
-   <!-- ======= About Section ======= -->
-   <section id="about">
+   <!-- ======= About Section Not Logged======= -->
+   <section *ngIf="!(accountService.currentUser$| async)"  id="about">
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
@@ -65,13 +65,13 @@
         </div>
 
         <div class="col-lg-6 background order-lg-2" data-aos="zoom-in">
-          <img src="https://localhost:4200/assets/about-img.svg" class="img-fluid" alt="">
+          <img src="/assets/about-img.svg" class="img-fluid" alt="">
         </div>
       </div>
 
       <div class="row about-extra">
         <div class="col-lg-6" data-aos="fade-right">
-          <img src="https://localhost:4200/assets/about-extra-1.svg" class="img-fluid" alt="">
+          <img src="/assets/about-extra-1.svg" class="img-fluid" alt="">
         </div>
         <div class="col-lg-6 pt-5 pt-lg-0" data-aos="fade-left">
           <h4>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h4>
@@ -86,7 +86,7 @@
 
       <div class="row about-extra">
         <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left">
-          <img src="https://localhost:4200/assets/about-extra-2.svg" class="img-fluid" alt="">
+          <img src="/assets/about-extra-2.svg" class="img-fluid" alt="">
         </div>
 
         <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-right">
@@ -106,6 +106,10 @@
 
     </div>
   </section><!-- End About Section -->
+
+  <div class="" *ngIf="!(accountService.currentUser$| async)" >
+    <app-footer></app-footer>
+  </div> 
 
 
   

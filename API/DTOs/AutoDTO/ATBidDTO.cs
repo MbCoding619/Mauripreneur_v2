@@ -21,6 +21,10 @@ namespace API.DTOs.AutoDTO
 
         public string OtherDetails { get; set; }
 
+        public int bidScore { get; set; }
+
+        public string bidNotes { get; set; }
+
         public int JobId { get; set; }
 
         

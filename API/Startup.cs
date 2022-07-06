@@ -80,11 +80,20 @@ namespace API
                              FileProvider = new PhysicalFileProvider(
                             Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Images")),
                             RequestPath = new PathString("/Resources/Images")
-                });        
+                });
+                app.UseStaticFiles(new StaticFileOptions()
+                {
+                             FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Documents")),
+                            RequestPath = new PathString("/Resources/Documents")
+                });
+
+                        
 
             app.UseRouting();
             
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5001"));
 
             app.UseAuthentication();
 

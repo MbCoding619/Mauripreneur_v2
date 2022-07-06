@@ -13,10 +13,11 @@
 
 
 
-<div class="container mt-5">
+<div  class="container mt-5">
   <div class="row">
-      <div class="col-md-4" *ngFor="let job of jobDetails">
+      <div class="col-md-4" *ngFor="let job of jobDetails | paginate: { itemsPerPage: 6, currentPage: p }">
           <div class="card p-3 mb-3">
+
               <div class="d-flex flex-row mb-3"><img [src]="createImgPath(job.imagePath)" width="70">
                   <div class="d-flex flex-column ml-2"><span>{{job.jobTitle}}</span><span class="text-black-50">{{job.description}}</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
               </div>
@@ -24,6 +25,12 @@
               <div class="d-flex justify-content-between install mt-3"><span>Posted By {{job.compName}}</span><span style="cursor: pointer;" (click)="openDialog(job)" class="text-primary">View&nbsp;<i class="fa fa-angle-right"></i></span></div>
           </div>
       </div>
+
+      <div class="d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>      
     
   </div>
 </div>
+
+

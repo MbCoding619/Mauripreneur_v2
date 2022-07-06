@@ -34,6 +34,8 @@ namespace API.Entities
 
         public Sme Sme { get; set; }
 
-         public ICollection<Bid> Bid { get; set; }
+        public ICollection<Bid> Bid { get; set; }
+
+       
     }
 }

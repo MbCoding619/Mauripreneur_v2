@@ -27,20 +27,31 @@ namespace API.Controllers
         [HttpPost("addSkill")]
         public async Task<ActionResult<ActionStatusDTO>> addSkill(ATSkillsDTO skillsDTO)
         {
-            
+            var prof = await _context.Professionals.FindAsync(skillsDTO.ProfId);
+            if(prof !=null)
+            {
                 var newskill = new Skills{
                     ProfId = skillsDTO.ProfId,
                     SubFieldId = skillsDTO.SubFieldId,
                     Proficiency = skillsDTO.Proficiency
                 };
-                _context.Skills.Add(newskill);
+                
+                _context.Skills.Add(newskill);            
                 
                 await _context.SaveChangesAsync();
-
-                return new ActionStatusDTO{
+                 return new ActionStatusDTO{
                     status = "Skills added"
-                };           
+                };
+            }else
+            {
+                return Unauthorized("Prof Not Found");
+            }
+
+
+                          
             
         }
+
+    
     }
 }

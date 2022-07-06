@@ -9,6 +9,8 @@ using API.DTOs;
 using API.DTOs.AutoDTO;
 using API.DTOs.UpdateDTO;
 using API.Entities;
+using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -102,21 +104,22 @@ namespace API.Controllers
 
     [HttpGet("allJob")]
 
-    public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJob(){
+    public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJob([FromQuery]JobParams jobParams){
 
-        var jobs = await _jobRepository.GetJobMAsync();        
+        var jobs = await _jobRepository.GetAllJobAsync(jobParams);        
         
-        var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+        Response.AddPaginationHeader(jobs.CurrentPage,jobs.PageSize,jobs.TotalCount,jobs.TotalPages);
 
-        return Ok(jobToReturn);
+        return Ok(jobs);
     }
 
 
     [HttpGet("allJobAdmin")]
 
     public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobAdmin(){
-
-        var jobs = await _jobRepository.GetAllJobAsync();        
+        //NEED TO REDO THIS FUNCTION FROM SCRATCH> FCKED IT UP
+        // EASY TO DO. JUST A RETURN SIMPLE QUERY
+        var jobs = await _jobRepository.GetJobMAsync();        
         
         var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
 
@@ -143,6 +146,24 @@ namespace API.Controllers
         }
 
          
+    }
+
+    [HttpGet("jobBySmeByStatus/{username}/{status}")]
+    public async Task<ActionResult<IEnumerable<ATJobDTO>>> GetJobBySmeByStatus (string username,string status)
+    {
+        var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == username.ToLower());
+        if(user !=null)
+        {
+            var sme = await _context.Sme.SingleOrDefaultAsync(s => s.AppUserId == user.AppUserId);
+            var jobs = await _jobRepository.GetJobBySmeByStatusAsync(sme.Id,status);
+
+            var jobToReturn = _mapper.Map<IEnumerable<ATJobDTO>>(jobs);
+
+            return Ok(jobToReturn);
+        }else
+        {
+            return BadRequest();
+        }
     }
 
 
@@ -186,7 +207,7 @@ namespace API.Controllers
                           orderby f.Description
                           select new {
                             jobId = j.Id,
-                            JobTitle = j.JobTitle,
+                            JobTitle = j.JobTitle,                            
                             smeId = s.Id,
                             SocialLink = s.SocialLink,
                             Description = f.Description,

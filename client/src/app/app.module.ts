@@ -59,6 +59,7 @@ import { TestUploadComponent } from './_tests/test-upload/test-upload.component'
 import { TextAreaComponent } from './_forms/text-area/text-area.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { EditFieldsComponent } from './admin/admin-components/edit-fields/edit-fields.component';
 import { ManageUsersComponent } from './Admin/admin-components/manage-users/manage-users.component';
 import { SmeProfileComponent } from './dialog/sme-profile/sme-profile.component';
@@ -74,6 +75,16 @@ import { ProgressStepComponent } from './multi-step-form/progress-step/progress-
 import { ProgressStepDirective } from './multi-step-form/progress-step.directive';
 import { MultiStepFormTestsComponent } from './_tests/multi-step-form-tests/multi-step-form-tests.component';
 import { ProgressComponent } from './multi-step-form/progress/progress.component';
+import { PaginationModule} from 'ngx-bootstrap/pagination';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DialogJobPostedComponent } from './dialog/dialog-job-posted/dialog-job-posted.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { PostedJobCardsComponent } from './cards/posted-job-cards/posted-job-cards.component';
+import { TestTimelineComponent } from './_tests/test-timeline/test-timeline.component';
 
 
 
@@ -127,6 +138,9 @@ import { ProgressComponent } from './multi-step-form/progress/progress.component
     ProgressStepDirective,
     MultiStepFormTestsComponent,
     ProgressComponent,
+    DialogJobPostedComponent,
+    PostedJobCardsComponent,
+    TestTimelineComponent,
       
   ],
   imports: [
@@ -155,6 +169,11 @@ import { ProgressComponent } from './multi-step-form/progress/progress.component
     MatSelectModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatProgressBarModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
@@ -164,7 +183,13 @@ import { ProgressComponent } from './multi-step-form/progress/progress.component
     MatPaginatorModule,
     MatSortModule,
     TabsModule.forRoot(),
-    QRCodeModule
+    QRCodeModule,
+    PaginationModule.forRoot(),
+    NgxPaginationModule,
+    NgxExtendedPdfViewerModule,
+    AccordionModule.forRoot()
+    
+    
     
        
     

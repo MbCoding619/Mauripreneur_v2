@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 namespace API.DTOs
 {
     public class SubFieldAddDTO
-    {
+    {   
+
+        public int FieldId { get; set; }
         
         public string Description { get; set; }            
                 
-        public string FieldDescription { get; set; }
+        //public string FieldDescription { get; set; }
+        
 
        
     }

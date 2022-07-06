@@ -1,0 +1,12 @@
+Question:
+1. Format of Comparison -> Pros and Cons or descriptive details on each system features alongside SS.
+2. Problem statement : How to related the 3 stakeholders under a same issue (covid? , social? )
+3. Questionnaires -> 3 questionaire-> Student/Professional/SME??? 
+	-> What is the target population per category? (10?,20?,20+?)
+4. Methodologies -> Need to describe all methodologies?
+5. If agile is chosen -> affect WBS and Deliverables.
+6. How to process Economical? Using hour rate for period defined? (if no hardware involvement?
+ 
+
+
+Mauritus Research Council

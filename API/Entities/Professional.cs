@@ -20,24 +20,13 @@ namespace API.Entities
 
         public int Phone { get; set; }
 
-        public string Email { get; set; }
-
-        public string EducationInstition { get; set; }
-
-        public string Qual1 { get; set; }
-
-
-        public string Qual2 { get; set; }
+        public string Email { get; set; } 
+        
 
         public string LinkedInLink { get; set; }
 
-        public string BriefDesc { get; set; }
+        public string BriefDesc { get; set; }        
 
-        public string EmploymentHistory { get; set; }
-
-        public string EmploymentStatus { get; set; }
-
-        
         public  AppUser User { get; set; }
         public int AppUserId { get; set; }
 
@@ -50,6 +39,10 @@ namespace API.Entities
         public ICollection<Meeting> Meeting { get; set; }
 
         public ICollection<Skills> SubField { get; set; }
+
+        public ICollection<Experience> Experience { get; set; }
+
+        public ICollection<Qualification> Qualification { get; set; }           
 
 
 

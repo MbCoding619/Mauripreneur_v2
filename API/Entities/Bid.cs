@@ -24,8 +24,12 @@ namespace API.Entities
 
         public string Description { get; set; }
 
-        public int BidAmount { get; set; }
+        public int? BidAmount { get; set; }
         public string OtherDetails { get; set; }
+
+        public int? bidScore { get; set; }
+
+        public string bidNotes { get; set; }
 
         public int JobId { get; set; }
 

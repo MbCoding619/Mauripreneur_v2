@@ -49,7 +49,7 @@ namespace API.Data
 
         public DbSet<Experience> Experience {get; set;}
         
-        public DbSet<Skills> Skills {get; set;}
+        public DbSet<Skills> Skills {get; set;}        
 
 
 
@@ -142,7 +142,20 @@ namespace API.Data
             builder.Entity<Bid>()
                    .HasOne(bd => bd.Professional)
                    .WithMany(bd => bd.Bid)
-                   .HasForeignKey(bd => bd.ProfessionalId);  
+                   .HasForeignKey(bd => bd.ProfessionalId);
+
+
+            builder.Entity<Experience>()
+                    .HasOne(exp => exp.Professional)
+                    .WithMany(exp => exp.Experience)
+                    .HasForeignKey(exp => exp.ProfId);
+                             
+            builder.Entity<Qualification>()
+                    .HasOne(qual => qual.Professional)
+                    .WithMany(qual => qual.Qualification)
+                    .HasForeignKey(qual => qual.ProfId);
+                             
+
 
      
 

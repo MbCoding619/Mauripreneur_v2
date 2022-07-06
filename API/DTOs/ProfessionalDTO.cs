@@ -8,5 +8,7 @@ namespace API.DTOs
     public class ProfessionalDTO
     {
         public int AppUserId { get; set; }
+
+        public int ProfessionalId { get; set; }
     }
 }

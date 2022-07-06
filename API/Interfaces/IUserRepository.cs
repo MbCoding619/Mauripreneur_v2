@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
 using API.DTOs.AutoDTO;
+using API.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Interfaces
 {
@@ -19,7 +21,10 @@ namespace API.Interfaces
 
         Task<AppUser> GetUserByUsernameAsync(string username);
 
-        Task<IEnumerable<ATMemberDTO>> GetMembersAsync();
+        Task<PagedList<ATMemberDTO>> GetMembersAsync(UserParams userParams);
+
+       
+        
 
         Task<ATMemberDTO> GetMemberAsync(string username);
     }

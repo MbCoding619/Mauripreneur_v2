@@ -53,7 +53,7 @@ namespace API.Controllers
              {
                  Username = user.UserName,
                  Token = _tokenService.CreateToken(user),
-                  AppUserRole = user.AppUserRole,
+                 AppUserRole = user.AppUserRole,
                   
                   
              };   
@@ -185,8 +185,9 @@ namespace API.Controllers
            public async Task<ActionResult<ProfessionalDTO>> RegisterProf([FromForm] RegisterProfDTO registerProfDTO)
         {
             var user = await _context.Users.SingleOrDefaultAsync(b => b.UserName == registerProfDTO.Username.ToLower());
+            var professional = new Professional();
 
-            if(await UserExists(registerProfDTO.Username))
+            if(user !=null)
             {
             try
             {
@@ -204,7 +205,7 @@ namespace API.Controllers
              user.AppUserRole ="PROFESSIONAL";
              user.imagePath = dbPath;
 
-            var professional = new Professional
+             professional = new Professional
             {
                 FName = registerProfDTO.FName,
                 LName = registerProfDTO.LName,
@@ -214,8 +215,8 @@ namespace API.Controllers
                 Email = registerProfDTO.Email,               
                 LinkedInLink = registerProfDTO.LinkedInLink,               
                 BriefDesc = registerProfDTO.BriefDesc,
-                EmploymentHistory = registerProfDTO.EmploymentHistory,
-                EmploymentStatus = registerProfDTO.EmploymentStatus,
+                //EmploymentHistory = registerProfDTO.EmploymentHistory,
+               // EmploymentStatus = registerProfDTO.EmploymentStatus,
                 FieldId = registerProfDTO.FieldId,
                 AppUserId = user.AppUserId
 
@@ -249,7 +250,8 @@ namespace API.Controllers
             // Need to add condition where if User doesn't exist or Taken return Null in SMEDTO
             return new ProfessionalDTO{
 
-                AppUserId = user.AppUserId
+                AppUserId = user.AppUserId,
+                ProfessionalId = professional.Id
             };
                          
         }

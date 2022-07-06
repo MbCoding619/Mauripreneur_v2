@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs.AutoDTO;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -20,10 +22,15 @@ namespace API.Data
             _context = context;
         }
 
-        public async Task<IEnumerable<Job>> GetAllJobAsync()
+        public async Task<PagedList<ATJobDTO>> GetAllJobAsync(JobParams jobParams)
         {
-            return await _context.Job.ToListAsync();
-            
+            var query = _context.Job.AsQueryable();
+            query = query.Where(jb => jb.FieldId == jobParams.FieldId);
+
+            return await PagedList<ATJobDTO>.CreateAsync(
+                query.ProjectTo<ATJobDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+                jobParams.PageNumber,jobParams.PageSize
+            );            
         }
 
         public Task<ATJobDTO> GetJobAsync(int id)
@@ -41,9 +48,14 @@ namespace API.Data
             return await _context.Job.Where( jb => jb.SmeId == id && jb.jobStatus =="APPROVED").Include(jb => jb.Bid).ToListAsync();
         }
 
+        public async Task<IEnumerable<Job>> GetJobBySmeByStatusAsync(int id, string jobStatus)
+        {
+           return await _context.Job.Where(jb => jb.SmeId == id && jb.jobStatus == jobStatus).Include(jb => jb.Bid).ToListAsync();
+        }
+
         public async Task<IEnumerable<Job>> GetJobMAsync()
         {
-            return await _context.Job.Where(jb => jb.jobStatus == "APPROVED").ToListAsync();
+            return await _context.Job.ToListAsync();
         }
 
         public Task<IEnumerable<ATJobDTO>> GetJobsAsync()

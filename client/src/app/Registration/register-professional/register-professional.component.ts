@@ -5,6 +5,8 @@ import { FaProps } from '@fortawesome/angular-fontawesome';
 import { isThisSecond } from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import { ProgressComponent } from 'src/app/multi-step-form/progress/progress.component';
+import { Professional } from 'src/app/_models/professional';
+import { subField } from 'src/app/_models/subField';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { SharedService } from 'src/app/_services/shared.service';
 
@@ -28,19 +30,23 @@ export class RegisterProfessionalComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any ={}; 
   fieldList: any;
+  subFieldList : subField[];
   username:any;
   formDataSubmit = new FormData();
+  workFormDataSubmit = new FormData();
   testUse = this.accountService.currentUser$.subscribe(response =>{
 
     this.username = response.username;
 
-  })
+  })  
   registerForm: FormGroup;
   personalForm : FormGroup;
   socialForm: FormGroup;
   qualForm : FormGroup;
+  skillForm : FormGroup;
   workForm : FormGroup;
   qualificationType : qualificationType[];
+  Prof : Professional;
 
   constructor(private sharedService : SharedService,
     private accountService: AccountsService,
@@ -49,12 +55,19 @@ export class RegisterProfessionalComponent implements OnInit {
     private fb : FormBuilder) {}
 
   ngOnInit(): void {
+
+    this.accountService.currentUser$.subscribe(response =>{
+
+      this.username = response.username;
+  
+    }) 
     
     this.initializePersonalDet();
     this.initializeSocialForm();
     this.initializeQualForm();
     this.initializeWorkForm();
     this.getFields();
+    this.getSubFields();
     this.getQualificationType();
 
     
@@ -76,7 +89,7 @@ export class RegisterProfessionalComponent implements OnInit {
   }
 
   getPersonalFormData(){
-    this.formDataSubmit.append('username','testProfForm');
+    this.formDataSubmit.append('username',this?.username);
     this.formDataSubmit.append('fName',this.personalForm.controls["FName"]?.value);
     this.formDataSubmit.append('lName',this.personalForm.controls["LName"]?.value);
     this.formDataSubmit.append('email',this.personalForm.controls["Email"]?.value);
@@ -85,12 +98,19 @@ export class RegisterProfessionalComponent implements OnInit {
     this.formDataSubmit.append('phone',this.personalForm.controls["Phone"]?.value);
     this.formDataSubmit.append('linkedInLink',this.personalForm.controls["linkedInLink"]?.value);
     this.formDataSubmit.append('briefDesc',this.personalForm.controls["briefDesc"]?.value);
-    this.formDataSubmit.append('fieldId','1');
+    this.formDataSubmit.append('fieldId',this.workForm.controls["fieldId"]?.value);
+    //this.formDataSubmit.append('fieldId','1');
 
     this.accountService.registerProf(this.formDataSubmit).subscribe(response =>{
       
-      console.log(response);
-      this.router.navigateByUrl('/');
+      //console.log(response);
+      this.Prof = response;
+      console.log(this.Prof.professionalId);
+      
+        this.onQualFormSubmit();        
+        this.onWorkFormSubmit();
+      
+      //this.router.navigateByUrl('/');
 
     },error =>{
       this.toastr.error(error.error);
@@ -113,15 +133,37 @@ export class RegisterProfessionalComponent implements OnInit {
     })
   }
 
+  // initializeSkillForm(){
+  //   this.skillForm = this.fb.group({
+  //     skills : this.fb.array([
+  //       this.addSkillFormGroup()
+  //     ])
+  //   })
+  // }
+
   initializeWorkForm(){
     this.workForm = this.fb.group({
       fieldId : ['',Validators.required],
-      subFieldId : ['',Validators.required],
+      skills : this.fb.array([
+               this.addSkillFormGroup()
+            ]),
         experiences : this.fb.array([
           this.addWorkFormGroup()
         ])
     })
   }
+
+  registerProfFieldId(){
+    let profFieldData = {
+      'fielId' : this.workForm.controls["fieldId"]?.value,
+      'professionalId' : this.Prof?.professionalId
+    }
+    this.accountService.registerProfFieldId(profFieldData).subscribe(response =>{
+      console.log(response);
+    })
+  }
+
+
 
   get qualifications() : FormArray{
     return this.qualForm.get('qualifications') as FormArray;
@@ -131,18 +173,22 @@ export class RegisterProfessionalComponent implements OnInit {
     return this.workForm.get('experiences') as FormArray;
   }
 
+  get skills() : FormArray{
+    return this.workForm.get('skills') as FormArray;
+  }
+
   addQualFormGroup() : FormGroup{
     return this.fb.group({
       qualType : ['',Validators.required],
       courseName : ['',Validators.required],
-      institution : ['',Validators.required],
-      yearStarted : ['',Validators.required],
-      yearFinish : ['',Validators.required]
+      institution : ['',Validators.required],      
+      yearEnding : ['',Validators.required]
     })
   }
 
   addQualButtonClick(){
     (<FormArray>this.qualForm.get('qualifications')).push(this.addQualFormGroup());
+   
   }
 
   onQualFormSubmit(){
@@ -151,9 +197,13 @@ export class RegisterProfessionalComponent implements OnInit {
       let qualFormSubmit = {
         'qualType' : qualFormData['qualType'],
         'courseName' : qualFormData['courseName'],
-        'yearStarted' : qualFormData['yearStarted'],
-        'yearFinish': qualFormData['yearFinish']
+        'yearEnding' : qualFormData['yearEnding'],
+        'profId' : this.Prof?.professionalId        
       };
+
+      this.accountService.registerProfQual(qualFormSubmit).subscribe(response =>{
+        console.log(response);
+      });
       console.log(qualFormSubmit);
     }
   }
@@ -162,13 +212,28 @@ export class RegisterProfessionalComponent implements OnInit {
     (<FormArray>this.qualForm.get('qualifications')).removeAt(qualIndex);
   }
 
+  addSkillFormGroup(): FormGroup{
+    return this.fb.group({
+      subFieldId : ['',Validators.required],
+      proficiency : ['',Validators.required]
+    })
+  }
+
+  addSkillButtonClick(){
+    (<FormArray>this.workForm.get('skills')).push(this.addSkillFormGroup());
+  }
+
+  removeSkillFormGroup(skillIndex : number){
+    (<FormArray>this.workForm.get('skills')).removeAt(skillIndex);
+  }
+
   addWorkFormGroup(): FormGroup{
 
     return this.fb.group({ 
       title : ['',Validators.required],
       compName : ['',Validators.required],
       years : ['',Validators.required],
-      cvPath : ['',Validators.required]
+      //cvPath : ['',Validators.required]
     })
   }
 
@@ -183,17 +248,34 @@ export class RegisterProfessionalComponent implements OnInit {
   onWorkFormSubmit(){
     for(let i=0; i < this.experiences.length;i++){
       let workFormData = this.experiences.at(i).value;
-      let workFormSubmit ={
-        'title' : workFormData['title'],
-        'compName' : workFormData['compName'],
-        'years' : workFormData['years'],
-        'cvPath' : workFormData['cvPath']
+      this.workFormDataSubmit.append('jobTitle',workFormData['title']);
+      this.workFormDataSubmit.append('compName',workFormData['compName']);
+      this.workFormDataSubmit.append('yearsExperience',workFormData['years']);
+      this.workFormDataSubmit.append('profId',this.Prof?.professionalId);
+      
+      this.accountService.registerProfExperience(this.workFormDataSubmit).subscribe(response =>{
+        console.log(response);
+      })         
+    }
+
+    for(let i=0;i<this.skills.length;i++){
+      let skillFormData = this.skills.at(i).value;
+      let skillFormSubmit ={
+        'subFieldId' : skillFormData['subFieldId'],
+        'proficiency' : skillFormData['proficiency'],
+        'profId' : this.Prof?.professionalId
       }
-      console.log(workFormSubmit);
+      //console.log(skillFormSubmit);
+      this.accountService.registerProfSubField(skillFormSubmit).subscribe(response =>{
+        console.log(response);
+      })
     }
   }
 
+registerProfNew(){
+  this.getPersonalFormData();
 
+}
   testClick(){
     console.log("WA");
     console.log(this.qualForm.value);
@@ -256,6 +338,23 @@ export class RegisterProfessionalComponent implements OnInit {
     })
   }
 
+  getSubFields(){
+    this.sharedService.getSubFields().subscribe(response =>{
+      this.subFieldList = response;
+    })
+  }
+
+  getSubFieldsByFieldId(id : any){
+    if(id === '--Select--'){
+      this.getSubFields();
+    }else{
+      this.sharedService.getSubFieldsByFieldId(id).subscribe(response =>{
+        this.subFieldList = response;
+        //console.log(id);
+      })
+    }   
+  }
+
   getQualificationType(){
     this.qualificationType =[
       {
@@ -265,6 +364,14 @@ export class RegisterProfessionalComponent implements OnInit {
       {
         qualId :1 ,
         qualiType : "Diploma"
+      },
+      {
+        qualId :2 ,
+        qualiType : "Degree"
+      },
+      {
+        qualId :3 ,
+        qualiType : "Masters"
       }
     ]
   }
@@ -280,6 +387,16 @@ export class RegisterProfessionalComponent implements OnInit {
     //this.personalForm.controls['imagePath'].value[fileToUpload.name];
      
   };
+
+  public uploadCv = (files) =>{
+    if(files.length === 0) {
+      return;
+    }
+
+    let cvToUpload = <File>files[0];
+    this.workFormDataSubmit.append('cvPath',cvToUpload,cvToUpload.name);
+    
+  }
 
   goNext(progress : ProgressComponent){
     progress.next();

@@ -6,37 +6,10 @@
 
 }
 
-body {
-
-  color: #2b2c48;
-
-  font-family: "Jost", sans-serif;
-
-  background-image: url(https://cdn.staticaly.com/gh/Seo90/underman/df866c97/virm.webp);
-
-  background-repeat: no-repeat;
-
-  background-size: cover;
-
-  background-position: center;
-
-  background-attachment: fixed;
-
-  min-height: 100vh;
-
-  display: -webkit-box;
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  padding: 20px;
-
-}
 
 .card {
 
-  max-width: 340px;
+  max-width: 600px;
 
   margin: auto;
 
@@ -128,8 +101,7 @@ body {
 
 .card.is-active .card-jobtitle {
 
-  left: 86px;
-
+  left: 86px;  
   -webkit-transform: none;
 
           transform: none;
@@ -760,7 +732,7 @@ body {
 
 .round{
   border-radius: 50%;
-  background: #15B097;
+  ;
 }
 
 .bidscore{

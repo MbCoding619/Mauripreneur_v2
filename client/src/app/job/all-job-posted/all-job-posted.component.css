@@ -40,5 +40,31 @@ table {
     content: "/";
   }
   
+  .container .intent-overlay{
+    width: 120px;   
+    color: white;
+    padding: 10px;
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+    font-size: 12px;
+    text-align: center;
+    position: relative;
+    left: -26px;
+    bottom:12px;
+  }
+
+  .container .intent-overlay a{
+    cursor: pointer;
+  }
+
+  .container .intent-overlay::before{
+    content: "";
+    position: absolute;
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent #10AA8C #10AA8C transparent;
+    left: 0px;
+    top: -8px;
+  }
   
   

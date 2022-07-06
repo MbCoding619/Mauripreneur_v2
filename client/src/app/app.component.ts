@@ -4,6 +4,7 @@ import { User } from './_models/user';
 import { AccountsService } from './_services/accounts.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogJobEditComponent } from './dialog/dialog-job-edit/dialog-job-edit.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,9 @@ export class AppComponent implements OnInit {
 
 
   //creating a constructor for the HttpClient module
-  constructor(private acountService: AccountsService,
-    private dialog : MatDialog){}
+  constructor(public acountService: AccountsService,
+    private dialog : MatDialog,
+    private router : Router){}
 
   //this is generated when making the AppComponent implementing OnInit -> creating a life cycle hook
   //NgOnInit can be used to call method when the app is initialised
@@ -37,6 +39,18 @@ export class AppComponent implements OnInit {
     this.dialog.open(DialogJobEditComponent, {
      
     });
+  }
+
+
+  createImgPath(serverPath : string){
+    return `https://localhost:5001/${serverPath}`;
+  }
+
+  logout(){
+    this.acountService.logout();
+    this.router.navigateByUrl('/');  
+    
+    
   }
 }
 

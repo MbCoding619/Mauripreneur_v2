@@ -31,7 +31,7 @@ export class BidService {
 
   placeBid(model : any){
 
-    return this.http.post(this.baseUrl+'bid/addBid',model).pipe(
+    return this.http.post(this.baseUrl+'bid/showInterest',model).pipe(
 
       map((bid : addBid)=>{
 
@@ -39,6 +39,48 @@ export class BidService {
          this.toastr.show(bid.status)
           return(bid);                  
         }
+      })
+    )
+  }
+  placeBid2(model : any){
+
+    return this.http.put(this.baseUrl+'bid/addBidDetails',model).pipe(
+
+      map((bid : addBid)=>{
+
+        if(bid){
+         this.toastr.success(bid.status)
+          return(bid);                  
+        }
+      })
+    )
+  }
+  showInterest(model : any){
+
+    return this.http.post(this.baseUrl+'bid/showInterest',model).pipe(
+
+      map((bid : addBid)=>{
+
+        if(bid){
+         this.toastr.show(bid.status)
+          return(bid);                  
+        }
+      })
+    )
+  }
+
+  checkBid(jobId : any, username : any){
+    return this.http.get<ActionStatus>(`${this.baseUrl}bid/bidCheck/${jobId}/${username}`);
+  }
+
+  addBidScore(model: any){
+    return this.http.put(this.baseUrl+'bid/addBidScore',model).pipe(
+      map((response : ActionStatus)=>{
+        if(response){
+          return response;
+        }
+      },error =>{
+        this.toastr.error(error.error);
       })
     )
   }
@@ -55,7 +97,7 @@ export class BidService {
     )
   }
 
-  getTimeline(id:number){
+  getTimeline(id:any){
     return this.http.get<timeline>(`${this.baseUrl}bid/getTimelines/${id}`);
   }
 
@@ -79,7 +121,48 @@ export class BidService {
     return this.http.delete(`${this.baseUrl}bid/deleteTimeline/${id}`);
   }
 
-  getBidProfBySme(id : number){
-    return this.http.get<bidProfCard>(`${this.baseUrl}bid/getBidProfBySmeId/${id}`);
+  getBidProfByJobId(id : number, bidResponse : string){
+    return this.http.get<bidProfCard>(`${this.baseUrl}bid/getBidProfByJobId/${id}/${bidResponse}`);
   }
+
+  getBidProfByJobId2(id:any){
+    return this.http.get<bidProfCard[]>(`${this.baseUrl}bid/getBidProfByJobId/${id}`);
+  }
+
+  insertBidNotes(model: any){
+    return this.http.put(this.baseUrl+'bid/addBidNotes',model).pipe(
+      map((response : ActionStatus)=>{
+        if(response){
+          this.toastr.success("Note added");
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
+    )
+  }
+
+  acceptBid(model :any){
+    return this.http.put(this.baseUrl+'bid/acceptBid',model).pipe(
+      map((response : ActionStatus)=>{
+        if(response){
+          return response;
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
+    )
+  }
+
+  declineBid(model :any){
+    return this.http.put(this.baseUrl+'bid/declineBid',model).pipe(
+      map((response : ActionStatus)=>{
+        if(response){
+          return response;
+        }
+      },error =>{
+        this.toastr.error(error.error);
+      })
+    )
+  }
+
 }

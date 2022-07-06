@@ -2,13 +2,13 @@
 # Footer
 --------------------------------------------------------------*/
 #footer {
-    background: #00428a;
+    background: #158CBA;
     padding: 0 0 30px 0;
     color: #eee;
     font-size: 14px;
   }
   #footer .footer-top {
-    background: #004a99;
+    background: #158CBA;
     padding: 60px 0 30px 0;
   }
   #footer .footer-top .footer-info {
@@ -109,8 +109,7 @@
     background: #0062cc;
   }
   #footer .copyright {
-    text-align: center;
-    padding-top: 30px;
+    text-align: center;    
   }
   #footer .credits {
     text-align: center;
@@ -122,4 +121,8 @@
   }
   #footer .credits a:hover {
     color: #f1f7ff;
+  }
+
+  .copyright-container{
+    height:50px;
   }

@@ -11,6 +11,10 @@ import { DialogBidComponent } from 'src/app/dialog/dialog-bid/dialog-bid.compone
 import { SmeProfileComponent } from 'src/app/dialog/sme-profile/sme-profile.component';
 import { jobDetails } from 'src/app/_models/jobDetails';
 import { BidService } from 'src/app/_services/bid.service';
+import {User} from 'src/app/_models/user';
+import { take } from 'rxjs/operators';
+import { faPray } from '@fortawesome/free-solid-svg-icons';
+import { th } from 'date-fns/locale';
 
 
 
@@ -24,6 +28,15 @@ export class AllJobPostedComponent implements OnInit {
  displayedColumns : string[] =['jobTitle','desc','timeframe','budget' , 'Action'];
  dataSource : MatTableDataSource<any>;
  jobDetails : jobDetails;
+ style = '#90afc5';
+ user : User;
+ textIntent = "Bid";
+ bidChek = false;
+ appRole : any;
+ roleId : any;
+ username ='';
+ testArray :any[];
+ p : number =1;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,12 +47,28 @@ export class AllJobPostedComponent implements OnInit {
     private toastr : ToastrService, 
     private dialog : MatDialog,
     private bidService : BidService
-    ) { }
+    ) { 
+      this.accountService.currentUser$.subscribe(response =>{
+        this.user = response;
+        this.username = response.username;
+        this.appRole = response.appUserRole;
+      })
+    }
 
   ngOnInit(): void {
-    this.getAllJob();
-    this.getJobDetails();
-  
+
+    //this.getAllJob(); -> This api call not working
+    this.getJobDetails();    
+    console.log(this.username);
+    console.log(this.bidChek);
+    
+    
+    
+    if(this.appRole === "PROFESSIONAL"){
+      this.getRoleId(this.user.appUserId);
+     
+    }
+    
    
   }
 
@@ -74,8 +103,15 @@ export class AllJobPostedComponent implements OnInit {
     this.sharedService.getJobDetails().subscribe(
       jobDetails =>{
         this.jobDetails = jobDetails;
-        //console.log(this.jobDetails);
-
+        this.testArray =Object.values(jobDetails);
+        //console.log(this.testArray);
+        this.testArray.forEach(element=>{
+         // console.log(element.jobId);          
+          //this.checkBid(element.jobId,this.username);
+          
+        })
+                       
+       
       },error =>{
         this.toastr.error(error.error);
       }
@@ -92,6 +128,43 @@ export class AllJobPostedComponent implements OnInit {
     });
     this.bidService.clickToBid(row);
   }
+
+  checkBid(jobId : any, username : any){ 
+
+    this.bidService.checkBid(jobId,username).subscribe(response =>{
+      if(response.status ==="Bidded"){
+        //this.style ='#13C8A6';
+        //this.textIntent = "Already Bid";
+        this.jobDetails.jobBid = "BID";
+        //return "BID";
+      }else {
+        //this.style ='#90afc5';
+        //this.textIntent = "Bid";
+        //console.log("wa");
+        this.jobDetails.jobBid = "NOT";
+       // return "NOT";
+      }
+    })
+  }
+
+  getRoleId(appUserId : any){
+    this.sharedService.getRoleId(appUserId).subscribe(respsone =>{
+      this.roleId = respsone;
+    })
+  }
+
+ find = function() {
+    try {
+      return Array.prototype.slice.call(arguments).reduce(function(acc, key) {
+        return acc[key]
+      }, this)
+    }
+    catch(e) {
+      return 
+    }
+  }
+
+
 
   
 

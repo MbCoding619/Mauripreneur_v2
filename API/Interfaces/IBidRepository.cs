@@ -23,5 +23,7 @@ namespace API.Interfaces
         Task<IEnumerable<Bid>> GetBidByJobIdAsync(int jobId);
 
         Task<Bid> GetBidByJobIdProfId(int jobId,int profId);
+
+       
     }
 }

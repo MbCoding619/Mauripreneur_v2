@@ -11,6 +11,7 @@ import { BidSmeComponent } from './Bid/bid-sme/bid-sme.component';
 import { ProfBidCardComponent } from './Bid/prof-bid-card/prof-bid-card.component';
 import { SendBidComponent } from './bid/send-bid/send-bid.component';
 import { CalendarViewComponent } from './calendar/calendar-view/calendar-view.component';
+import { CarouselComponent } from './carousel/carousel.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { AllJobPostedComponent } from './job/all-job-posted/all-job-posted.component';
@@ -26,6 +27,7 @@ import { RegistrationSmeComponent } from './Registration/registration-sme/regist
 import { RegistrationStudentComponent } from './Registration/registration-student/registration-student.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { MultiStepFormTestsComponent } from './_tests/multi-step-form-tests/multi-step-form-tests.component';
+import { TestTimelineComponent } from './_tests/test-timeline/test-timeline.component';
 import { TestUploadComponent } from './_tests/test-upload/test-upload.component';
 
 const routes: Routes = [
@@ -64,7 +66,9 @@ const routes: Routes = [
   {path:'Members/ViewMembers',component: MemberListComponent},
   {path:'errors',component: TestErrorsComponent},
   {path:'Test/Upload',component: TestUploadComponent}, 
-  {path:'Test/MultiStep',component: MultiStepFormTestsComponent}, 
+  {path:'Test/MultiStep',component: MultiStepFormTestsComponent},
+  {path:'Test/Carousel',component: CarouselComponent}, 
+  {path:'Test/Timeline',component: TestTimelineComponent}, 
   {path:'**',component: HomeComponent,pathMatch:'full'}  
 ];
 

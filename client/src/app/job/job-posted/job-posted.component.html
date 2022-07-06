@@ -1,4 +1,4 @@
-<section id="breadcrumbs" class="breadcrumbs" style="margin-top:8%">
+<section *ngIf="!showJob" id="breadcrumbs" class="breadcrumbs">
     <div class="container">
 
       <ol>
@@ -10,11 +10,11 @@
     </div>
   </section><!-- End Breadcrumbs -->
 
-  <div class="container">
-    <div style="margin-top:5px;">
-        <div class="mat-elevation-z8">
-            <mat-form-field appearance="standard">
-                <mat-label>Filter</mat-label>
+  <div hidden  class="container mt-10" >
+    <div class="">
+        <div class="mat-elevation-z8 table-parent">
+            <mat-form-field style="text-align:center; font-size: 150%;" appearance="standard">
+                <mat-label >Filter</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
               </mat-form-field>
     <div class="mat-elevation-z8">
@@ -52,8 +52,8 @@
                     <button  mat-icon-button color="primary">
                       <mat-icon (click)="openDialog(element)">edit </mat-icon>
                   </button> 
-                  <button mat-icon-button color="warn">
-                      <mat-icon>delete</mat-icon>
+                  <button (click)="openDialogJobPosted()" mat-icon-button color="warn">
+                      <mat-icon>visibility</mat-icon>
                   </button> 
                   </ng-container>
                   <ng-container *ngIf="(accountService.currentUser$| async).appUserRole =='PROFESSIONAL'" >
@@ -80,4 +80,55 @@
           </div>
 
     </div>
+</div>
+
+<div *ngIf="!showJob" class="container accordion-container">
+  <accordion [closeOthers]="oneAtATime" [isAnimated]="true">
+    <accordion-group [isOpen]="isOpen"
+    heading="Aprroved Job Posted">
+    <div *ngIf="itemCount ==0" class="d-flex justify-content-center">
+      <h1>Your post/(s) is being reviewed.</h1>
+    </div>
+    
+    <div class="mat-elevation-z8">
+      <app-posted-job-cards 
+      (itemCount)="getItemCount($event)"
+      (sendJobData)="getJobData($event)"
+       [params]="'APPROVED'"
+      >        
+      </app-posted-job-cards>
+    </div>
+
+    </accordion-group>
+
+    <accordion-group heading="Pending Job Posted">
+      <div *ngIf="itemCount ==0" class="d-flex justify-content-center">
+        <h1>Your post/(s) is being reviewed.</h1>
+      </div>
+      <div class="mat-elevation-z8">
+        <app-posted-job-cards [params]="'PENDING'"
+        (sendJobData)="getJobData($event)"
+        >        
+        </app-posted-job-cards>
+      </div>
+
+    </accordion-group>
+    <accordion-group heading="Declined Job Posted">
+      <div *ngIf="itemCount ==0" class="d-flex justify-content-center">
+        <h1>Your post/(s) is being reviewed.</h1>
+      </div>
+      <div class="mat-elevation-z8">
+        <app-posted-job-cards [params]="'DECLINED'"
+        (sendJobData)="getJobData($event)"
+        >        
+        </app-posted-job-cards>
+      </div>
+    </accordion-group>
+  </accordion>
+</div>
+
+
+<div *ngIf="showJob" class="row">
+<app-dialog-job-posted [jobData] ="jobDataR"
+></app-dialog-job-posted>
 </div>

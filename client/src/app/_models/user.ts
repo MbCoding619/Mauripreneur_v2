@@ -1,3 +1,5 @@
+import { Professional } from "./professional";
+
 export interface User{
     username:string;
     userName : string;
@@ -5,4 +7,5 @@ export interface User{
     appUserRole: string;
     appUserId : number;
     imagePath: string;
+    professional : Professional
 }

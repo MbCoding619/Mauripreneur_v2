@@ -1,11 +1,104 @@
 <app-nav></app-nav>
-<div style="margin-bottom:5%;">
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav *ngIf="(acountService.currentUser$ |async) !=null" mode="side" opened  class="mat-elevation-z8">
 
-<div class="" >
-  <app-footer></app-footer>
-</div>
+    <ng-container *ngIf="(acountService.currentUser$ |async) as user" >
+
+      <img class="avatar mat-elevation-z8" *ngIf="user.imagePath" [src]="createImgPath(user.imagePath)" />
+
+      <h4 class="name">{{user.username}}</h4>
+      <p class="designation">{{user.appUserRole}}</p>
+
+    </ng-container>
+
+
+
+<mat-divider></mat-divider>
+
+    <button mat-button href="#" class="menu-button">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>      
+  </button>
+  <button routerLink="/Members/ViewMembers" mat-button class="menu-button">
+      <mat-icon>people</mat-icon>
+      <span>Members</span>
+  </button>
+  <button mat-button class="menu-button">
+      <mat-icon>info</mat-icon>
+      <span>About</span>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-button class="menu-button" [matMenuTriggerFor]="projects" >
+    <mat-icon>work</mat-icon>
+    <span>Projects</span>
+</button>
+<mat-menu #projects="matMenu">
+  <ng-container *ngIf="(acountService.currentUser$| async).appUserRole =='SME'" >
+    <button routerLink="/Job/PostJob" mat-menu-item>
+      <mat-icon>assignment_returned</mat-icon>
+      <span>Post Project</span>
+    </button>
+    <button routerLink="/Job/JobPosted" mat-menu-item>
+      <mat-icon>view_list</mat-icon>
+      <span>Project Posted</span>
+    </button>
+  </ng-container>
+  <button  routerLink="/Job/AllJob"  mat-menu-item>
+    <mat-icon>dns</mat-icon>
+    <span>All Projects</span>
+  </button>
+</mat-menu>
+  <button mat-button class="menu-button" [matMenuTriggerFor]="bidsMenu">
+    <mat-icon>table_chart</mat-icon>
+    <span>Bids</span>    
+  </button>
+  <mat-menu #bidsMenu="matMenu">
+    <button routerLink="/Bid/BidSent" mat-menu-item>
+      <mat-icon>show_chart</mat-icon>
+      <span>Bid Sent</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>contact_mail</mat-icon>
+      <span>Ongoing Bid</span>
+    </button>
+  </mat-menu>
+  <button routerLink="/Calendar/ViewCalendar" mat-button class="menu-button">
+      <mat-icon>calendar_month</mat-icon>
+      <span>Calendar</span>
+  </button>
+
+
+
+  <button mat-button class="menu-button" [matMenuTriggerFor]="menu">
+    <mat-icon>person</mat-icon>
+    <span>See more</span>
+    
+  </button>
+  <mat-menu #menu="matMenu">
+    <button routerLink="/User/UserProfile" mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button  (click)="logout()"  mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+
+  
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <div style="overflow: hidden;" >
+          <router-outlet></router-outlet>
+        </div>       
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
 
 
 

@@ -10,7 +10,9 @@ namespace API.DTOs.AutoDTO
                         
         public string JobTitle { get; set; }
 
-        public int yearsExperience { get; set; }
+        public string yearsExperience { get; set; }
+
+        public string CompName { get; set; }
 
         public string cvPath { get; set; }
 

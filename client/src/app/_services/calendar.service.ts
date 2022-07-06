@@ -20,4 +20,9 @@ export class CalendarService {
     return this.http.get<meeting>(this.baseUrl+'meeting/meetingBySme/'+username);
   }
 
+
+  getMeetingBySmeByBid(smeId : any, bidId: any){
+    return this.http.get<meeting[]>(this.baseUrl+`meeting/meetingBySmeByBid/${smeId}/${bidId}`);
+  }
+
 }

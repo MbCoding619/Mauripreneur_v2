@@ -1,5 +1,5 @@
 import { Component, OnInit , Inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { AccountsService } from 'src/app/_services/accounts.service';
@@ -16,6 +16,9 @@ export class DialogBidComponent implements OnInit {
   private accountService : AccountsService,
   private toastr : ToastrService ) { }
 
+  
+
+
   BidForm : FormGroup;
   model : any ={};
   username ='';
@@ -24,13 +27,13 @@ export class DialogBidComponent implements OnInit {
 
     console.log(this.bidData);
     this.initialiseForm();
+    //this.initialiseBidEval();    
     this.accountService.currentUser$.subscribe(uname =>{
       this.username = uname.username;
 });
 
   }
-
-
+ 
 
   initialiseForm(){
     this.BidForm = new FormGroup({
@@ -39,6 +42,8 @@ export class DialogBidComponent implements OnInit {
       otherDetails : new FormControl()
     })
   }
+
+  
 
   onNoClick(): void {
     this.dialogRef.close();

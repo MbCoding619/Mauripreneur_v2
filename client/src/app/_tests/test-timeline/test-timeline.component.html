@@ -1,0 +1,32 @@
+
+			   <div class="card-section justify-content-center">
+        
+                <div class="card-content">
+          
+                  <div class="card-subtitle">Bid Timeline </div>
+          
+                  <div *ngIf="timelineL >0" class="card-timeline">
+          
+                    <div class="card-item" *ngFor="let timeline of timelines" attr.data-year="{{timeline.date | date :'shortDate'}}">
+          
+                      <div class="card-item-title">{{timeline.title}}</div>
+          
+                      <div class="card-item-desc">
+                        <p>{{timeline.description}}</p>
+                        <div class="action-icon">
+                            <i class="fa fa-trash" id="trashIcon" style="cursor: pointer;"></i>
+                            <i class="fa fa-pencil" style="cursor: pointer;" aria-hidden="true"></i> 
+                        </div>
+                    </div>
+          
+                    </div>  
+            
+                  </div>
+
+                  <div *ngIf="timelineL === 0" class="d-flex justify-content-center">
+                    No timeline yet submitted
+                  </div>
+          
+                </div>
+          
+              </div>

@@ -40,6 +40,7 @@ namespace API.Controllers
 
                     MeetTitle = meetingAddDTO.MeetTitle,
                     SmeId = sme.Id,
+                    BidId = meetingAddDTO.BidId,
                     meetingDetails = meetingAddDTO.meetingDetails,                    
                     ProfId = meetingAddDTO.ProfId,
                     startDate = Convert.ToDateTime(meetingAddDTO.startDate),
@@ -57,6 +58,7 @@ namespace API.Controllers
 
                         MeetTitle = meetingAddDTO.MeetTitle,
                         SmeId = meetingAddDTO.SmeId,
+                        BidId = meetingAddDTO.BidId,
                         meetingDetails = meetingAddDTO.meetingDetails,
                         ProfId = prof.Id,
                         startDate = Convert.ToDateTime(meetingAddDTO.startDate),
@@ -88,10 +90,30 @@ namespace API.Controllers
             return Ok(meetingToReturn);
         }
 
+        [HttpGet("meetingByProfByBid/{profId}/{bidId}")]
+        public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> meetingBypROFByBid(int profId,int bidId)
+        {
+            var meeting = await _meetingRepository.GetMeetingByProfByBidId(profId,bidId);
+
+            var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
+
+            return Ok(meetingToReturn);
+        }
+
         [HttpGet("meetingBySme/{username}")]
         public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> GetMeetingBySme(string username)
         {
             var meeting = await _meetingRepository.GetMeetingBySme(username);
+
+            var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
+
+            return Ok(meetingToReturn);
+        }
+
+        [HttpGet("meetingBySmeByBid/{smeId}/{bidId}")]
+        public async Task<ActionResult<IEnumerable<ATMeetingDTO>>> meetingBySmeByBid(int smeId,int bidId)
+        {
+            var meeting = await _meetingRepository.GetMeetingBySmeByBid(smeId,bidId);
 
             var meetingToReturn = _mapper.Map<IEnumerable<ATMeetingDTO>>(meeting);
 

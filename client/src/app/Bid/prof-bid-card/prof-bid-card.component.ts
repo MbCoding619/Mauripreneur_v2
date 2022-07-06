@@ -1,7 +1,12 @@
 import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { bidProfCard } from 'src/app/_models/bidProfCard';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { BidService } from 'src/app/_services/bid.service';
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/_models/user';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-prof-bid-card',
@@ -9,17 +14,37 @@ import { BidService } from 'src/app/_services/bid.service';
   styleUrls: ['./prof-bid-card.component.css']
 })
 export class ProfBidCardComponent implements OnInit {
+  @Input() params : any;
+  @Input() bidResponse :string;
+  @Output() sendData  = new EventEmitter<{bidId : string}>();
+  @Output() sendBidData = new EventEmitter<bidProfCard>();
+  bidData :any;
+  user : User;
+  biD:string;
   bidProfdata : bidProfCard;
-  constructor(private bidService : BidService) { }
+  bidProfData2 : bidProfCard;
+  p =1;
+  model : any;
+  constructor(private bidService : BidService, private accountService : AccountsService,
+              private toastr : ToastrService) {
+
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user =>{
+        this.user = user;
+       
+    })
+   }
 
   ngOnInit(): void {
-    this.getBidProfBySme(1);
+
+    
+
+    this.getBidProfByJobId(this.params,this.bidResponse);
   }
 
 
 
-getBidProfBySme(id :number){
- this.bidService.getBidProfBySme(id).subscribe(response => {
+  getBidProfByJobId(id :number,bidResponse:string){
+ this.bidService.getBidProfByJobId(id,bidResponse).subscribe(response => {
    if(response){
      this.bidProfdata = response;
      console.log(this.bidProfdata);
@@ -28,6 +53,45 @@ getBidProfBySme(id :number){
    }
  })
 } 
+
+acceptBid(bidData :bidProfCard){
+  this.model = {
+    "bidId" : bidData.bidId,
+    "username" : this.user?.username
+  }
+
+  this.bidService.acceptBid(this.model).subscribe(response =>{
+    this.toastr.success(response.status);
+  });
+}
+
+declineBid(bidData : bidProfCard){
+  this.model = {
+    "bidId" : bidData.bidId,
+    "username" : this.user?.username
+  }
+
+  this.bidService.declineBid(this.model).subscribe(response => {
+    this.toastr.success(response.status);
+  })
+}
+
+showTimelineTab(bidId :string,bidData :bidProfCard){
+  // this.bidData = {
+  //   "bidId" : bidId,
+  //   "timelineShow" : true
+  // };
+  // console.log(this.bidData,"wa 2eme la sa");
+  this.biD = bidId;
+  console.log(this.biD);
+    this.sendData.emit({bidId : this.biD});
+    this.bidProfData2 = bidData;
+    this.sendBidData.emit(this.bidProfData2);
+}
+
+
+
+
 
   activateCard(i : any,e : Event) {
     let btnClass ="card-btn"
@@ -67,10 +131,6 @@ getBidProfBySme(id :number){
   createImgPath(serverPath : string){
     return `https://localhost:5001/${serverPath}`;
   }
-
-
-
-
 
 
 

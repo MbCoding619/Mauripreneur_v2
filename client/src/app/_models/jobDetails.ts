@@ -1,3 +1,5 @@
+import { Bid } from "./Bid";
+
 export interface jobDetails{
     jobId : number;
     jobTitle : string;
@@ -9,5 +11,7 @@ export interface jobDetails{
     compName: string;
     representName : string;
     imagePath: string;
+    //jobBid : Bid[];
+    jobBid : string;
 
 }

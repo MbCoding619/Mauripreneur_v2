@@ -130,10 +130,9 @@
                             <label class="form-label" for="form3Example1c"> <i class="fa fa-user fa-lg me-3"
                                 aria-hidden="true"></i> Upload your Picture</label>
                             <input type="file" class="form-control" #file placeholder="Choose file"
-                              (change)="uploadFile(file.files)" multiple accept=".png, .jpg, .jpeg">
+                              (change)="uploadFile(file.files)" multiple accept=".png, .jpg, .jpeg" hidden>
                             <div class="test" style="display: flex;">
-                              <button type="button" class="btn btn-light" (click)="file.click()"><i class="fa fa-check"
-                                  aria-hidden="true"></i></button>
+                              <button type="button" class="btn btn-light" (click)="file.click()"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
                               <div class="small text-muted mt-2 ml-2">Cick to confirm picture. Max file size 50 MB</div>
                             </div>
 
@@ -203,11 +202,17 @@
                       <div formArrayName="qualifications">
                         <div *ngFor="let qualification of qualifications.controls; index as idx" class="form-group">
                           <div class="row" [formGroup]="qualification">
-                            <div *ngIf="qualForm.get('qualifications').length>1" class="col-md-12 mb-4">
-                              <button type="button" class="btn btn-danger btn-sm 
+                            <div class="col-md-12 mb-4">
+                              <button type="button" class="btn btn-success btn-sm 
                               pull-right"
                               title="Delete Qualification"
-                              (click)="removeQualFormGroup(idx)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                              (click)="addQualButtonClick()"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></button>
+                              <div  *ngIf="qualForm.get('qualifications').length>1">
+                                <button type="button" class="btn btn-danger btn-sm 
+                                pull-right"
+                                title="Delete Qualification"
+                                (click)="removeQualFormGroup(idx)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                              </div>
                             </div>
 
                             <div class="col-md-6 mb-4">
@@ -247,21 +252,12 @@
                               </div>
                             </div>
 
-                            <div class="col-md-6 mb-4">
-                              <div class="form-outline flex-fill mb-0">
-                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
-                                <label class="form-label" for="form3Example1c">Date Started</label>
-                                <app-text-input [formControl]='qualification.controls["yearStarted"]'
-                                  [label]='"Date Started"'></app-text-input>
-
-                              </div>
-                            </div>
 
                             <div class="col-md-6 mb-4">
                               <div class="form-outline flex-fill mb-0">
                                 <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
                                 <label class="form-label" for="form3Example1c">Date End</label>
-                                <app-text-input [formControl]='qualification.controls["yearFinish"]'
+                                <app-text-input [formControl]='qualification.controls["yearEnding"]'
                                   [label]='"Date End"'></app-text-input>
 
                               </div>
@@ -278,7 +274,7 @@
                       <button (click)="deleteNameField(idx)" class="btn btn-danger">Delete</button> -->
                       </div>
                       <div>
-                        <button class="btn btn-primary" (click)="addQualButtonClick()">Add</button>
+                        <button class="btn btn-primary">Add</button>
                         <button class="btn btn-primary" (click)="onQualFormSubmit()">Check</button>
                         <button progressStepPrev mat-raised-button color="accent">prev</button>
                         <button progressStepNext mat-raised-button color="primary">next</button>
@@ -314,12 +310,13 @@
                     <h3 class="mb-4 pb-2 pb-md-0 mb-3 ml-5">Work Experience</h3>
                     <form [formGroup]="workForm">
                       <div class="row">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-12 mb-8">
                           <div class="form-outline flex-fill mb-0">
                             <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
                             <label class="form-label" for="form3Example1c">Field</label>
-                            <select id="field" 
-                            class="form-control browser-default custom-select">
+                            <select #fieldSelect formControlName="fieldId"
+                            class="form-control browser-default custom-select"
+                            (change)="getSubFieldsByFieldId(fieldSelect.value)"  >
                             <option>--Select--</option>
                             <option *ngFor="let field of fieldList"
                             [value]="field.fieldId">
@@ -330,33 +327,80 @@
   
                           </div>
                         </div>
-                        
-                        <div class="col-md-6 mb-4">
-                          <div class="form-outline flex-fill mb-0">
-                            <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
-                            <label class="form-label" for="form3Example1c">Sub Field</label>
-                            <select id="field" 
-                            class="form-control browser-default custom-select">
-                            <option>--Select--</option>
-                            <option *ngFor="let field of fieldList"
-                            [value]="field.fieldId">
-                                {{field.description}}
-                                <!-- {{field | json}}                 -->
-                        </option>            
-                        </select>
-  
+
+                        <hr/>                        
+
+                      </div> 
+
+                      <div formArrayName="skills">
+                      <div *ngFor="let skill of skills.controls;index as ids" class="form-group">
+                        <div class="row" [formGroup]="skill">
+                          <div class="col-md-12 mb-4">
+                            <button type="button" class="btn btn-success btn-sm 
+                            pull-right"
+                            title="Delete Qualification"
+                            (click)="addSkillButtonClick()"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></button>
+                            <div  *ngIf="workForm.get('skills').length>1">
+                              <button type="button" class="btn btn-danger btn-sm 
+                              pull-right"
+                              title="Delete Qualification"
+                              (click)="removeSkillFormGroup(idw)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                            </div>
                           </div>
-                        </div>
-                      </div>           
+                          <div class="col-md-6 mb-4">
+                            <div class="form-outline flex-fill mb-0">
+                              <i class="fa fa-briefcase" aria-hidden="true"></i>
+                              <label class="form-label" for="form3Example1c" >  Sub Field</label>
+                              <select id="subField" [formControl]='skill.controls["subFieldId"]'
+                              class="form-control browser-default custom-select">
+                              <option>--Select--</option>
+                              <option *ngFor="let subfield of subFieldList"
+                              [value]="subfield.subFieldId">
+                                  {{subfield.description}}
+                                  <!-- {{field | json}}                 -->
+                          </option>            
+                          </select>
+    
+                            </div>
+                          </div>
+  
+                          <div class="col-md-6 mb-4">
+                            <div class="form-outline flex-fill mb-0">                           
+                              <div class="example-radio-group ">
+                                <div class="label">
+                                  <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                  <label class="form-label" for="form3Example1c" >Sub Field</label>
+                                </div>                             
+                                <mat-radio-group class="example-radio-button" [formControl]='skill.controls["proficiency"]' >
+                                  <mat-radio-button value="Beginner">Beginner</mat-radio-button>
+                                  <mat-radio-button value="Intermediate">Intermediate</mat-radio-button>
+                                  <mat-radio-button value="Expert">Expert</mat-radio-button>
+                                </mat-radio-group>
+                              </div>                           
+                            </div>
+                          </div>
+                        </div> 
+                        <hr/>
+                      </div>                    
+                      </div>                      
+                      
+                  
                       
                       <div formArrayName="experiences">
                         <div *ngFor="let experience of experiences.controls; index as idw" class="form-group">
                           <div class="row" [formGroup]="experience">
-                            <div *ngIf="workForm.get('experiences').length>1" class="col-md-12 mb-4">
-                              <button type="button" class="btn btn-danger btn-sm 
+
+                            <div class="col-md-12 mb-4">
+                              <button type="button" class="btn btn-success btn-sm 
                               pull-right"
                               title="Delete Qualification"
-                              (click)="removeWorkFormGroup(idw)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                              (click)="addWorkButtonClick()"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></button>
+                              <div  *ngIf="workForm.get('experiences').length>1">
+                                <button type="button" class="btn btn-danger btn-sm 
+                                pull-right"
+                                title="Delete Qualification"
+                                (click)="removeWorkFormGroup(idw)"><i class="fa fa-times-circle fa-lg" aria-hidden="true"></i></button>
+                              </div>
                             </div>
 
 
@@ -390,15 +434,19 @@
                               </div>
                             </div> 
 
-                            <div class="col-md-6 mb-4">
+                            <div *ngIf="idw ==0" class="col-md-6 mb-4">
                               <div class="form-outline flex-fill mb-0">
-                                <i class="fa fa-user fa-lg me-3" aria-hidden="true"></i>
-                                <label class="form-label" for="form3Example1c">Date Started</label>
-                                <app-text-input [formControl]='experience.controls["cvPath"]'
-                                  [label]='"Cv"'></app-text-input>
-
+                                <label class="form-label" for="form3Example1c"> <i class="fa fa-file-text fa-lg" aria-hidden="true"></i> Upload your Curriculum Vitae</label>
+                                <input type="file" class="form-control" #cV placeholder="Choose file"
+                                  (change)="uploadCv(cV.files)" multiple accept=".pdf" hidden>
+                                <div class="test" style="display: flex;">
+                                  <button type="button" class="btn btn-light" (click)="cV.click()"><i class="fa fa-file-text fa-lg" aria-hidden="true"></i></button>
+                                  <div class="small text-muted mt-2 ml-2">Cick to confirm picture. Max file size 50 MB</div>
+                                </div>
+    
+    
                               </div>
-                            </div> 
+                            </div>
 
                             <hr/>
 
@@ -425,12 +473,13 @@
         </div>
       </div>
     </section>
-
   </app-progress-step>
 
 <!-- End Fourth Step -->
 
   <app-progress-step>
+
+    <button class="btn btn-primary" (click)="registerProfNew()">Register</button>
 
     <button progressStepPrev mat-raised-button color="accent">prev</button>
     <button progressStepNext mat-raised-button color="primary">next</button>

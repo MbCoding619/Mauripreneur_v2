@@ -71,9 +71,25 @@ section {
 
   table {
     width: 100%;
+    font-size: larger;
   }
   
   .mat-form-field {
     font-size: 14px;
     width: 100%;
   }
+
+  .table-parent{
+    margin-top:7%;
+    text-align: center;
+  }
+
+  .table-parent th{
+    text-align: center;
+  }
+
+  .accordion-container{
+    max-height: 100vh;
+  }
+  
+  

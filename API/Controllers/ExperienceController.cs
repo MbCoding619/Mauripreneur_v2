@@ -52,6 +52,7 @@ namespace API.Controllers
                    JobTitle = experienceDTO.JobTitle,
                    yearsExperience =  experienceDTO.yearsExperience,
                    cvPath = dbPath,
+                   CompName = experienceDTO.CompName,
                    ProfId = experienceDTO.ProfId
                };
                _context.Experience.Add(experience);

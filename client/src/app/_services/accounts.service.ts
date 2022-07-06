@@ -8,6 +8,7 @@ import { Professional } from '../_models/professional';
 import { Student } from '../_models/student';
 import { Organisation } from '../_models/organisation';
 import { environment } from 'src/environments/environment';
+import { ActionStatus } from '../_models/ActionStatus';
 
 
 //this is called an angular service
@@ -91,6 +92,40 @@ export class AccountsService {
     )
 
   }
+
+  registerProfQual(model : any){
+    return this.http.post(this.baseUrl+'qualification/addQualification',model).pipe(
+      map((response : ActionStatus)=>{
+        return response;
+      })
+    )
+  }
+
+  registerProfFieldId(model :any){
+    return this.http.post(this.baseUrl+'field/addFieldIdToProf',model).pipe(
+      map((response : ActionStatus)=>{
+        return response;
+      })
+    )
+  }
+
+  registerProfSubField(model: any){
+    return this.http.post(this.baseUrl+'skills/addSkill ',model).pipe(
+      map((response : ActionStatus)=>{
+        return response;
+      })
+    )
+  }
+
+  registerProfExperience(model :any){
+    return this.http.post(this.baseUrl+'experience/addExperience  ',model).pipe(
+      map((response : ActionStatus)=>{
+        return response;
+      })
+    )
+  }
+
+ 
 
   registerStud(model : any){
 

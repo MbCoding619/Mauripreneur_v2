@@ -29,11 +29,8 @@ namespace API.Data
         public void Update(Field field)
         {
             _context.Entry(field).State = EntityState.Modified;
-            _context.SaveChanges();
-            
-            
-            
-            
+            _context.SaveChanges();         
+                        
         }
     }
 }

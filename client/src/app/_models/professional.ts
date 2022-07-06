@@ -1,5 +1,9 @@
 export interface Professional{
 
-    AppUserId: string;
+    appUserId: string;
+    professionalId : string;
+    id : string;
+    fieldId : string;
+
 
 }

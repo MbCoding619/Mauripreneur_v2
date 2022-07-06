@@ -1,16 +1,22 @@
 import { timeline } from '../_models/timeline';
 export interface bidProfCard {
-    bidId: number;
-    bidAmount : number;
-    profId: number;
-    jobId : number;
+    bidId: string;
+    bidAmount : string;
+    bidResponse : string;
+    bidDesc : string;
+    bidDate : Date;
+    bidOtherDetails :string;
+    bidNotes : string;
+    bidScore :string;
+    profId: string;
+    jobId : string;
     jobTitle : string;
     jobDescription: string;    
-    smeId : number;    
+    smeId : string;    
     profName : string;
     profDesc : string;
-    profAppId: number;
-    profPic: number;
+    profAppId: string;
+    profPic: string;
     timeline : timeline[];
 
 }
