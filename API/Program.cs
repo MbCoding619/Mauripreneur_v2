@@ -13,7 +13,7 @@ namespace API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().RunAsync();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
