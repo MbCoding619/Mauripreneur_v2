@@ -30,7 +30,7 @@ namespace API
                 logger.LogError(ex,"An error occured during migrations");
             }
 
-            await host.RunAsync();
+            host.Run();
             
         }
 
